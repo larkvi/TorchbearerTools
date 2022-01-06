@@ -1,0 +1,1535 @@
+<!HTML>
+<html>
+<head>
+	
+	<title>Torchbearer Tools</title>
+	
+	<link rel="stylesheet" href="torchbearer.css" type="text/css" media="screen" />
+	
+</head>
+<body>
+
+<img src="prescott_torchbearer_sketch.jpg" />
+
+<script>
+
+//data from the Torchbearer 2E books, by Thor Olavsrud and Luke Crane.
+const typeOfCamp = []
+typeOfCamp[0] = [ // Ancient
+// change to resolve all die rolls and other random bits
+'Collapse. This ancient structure can bear no more grief. It collapses with a mournful sigh. Nothing can be done to prevent this. Camp ends, remain in adventure phase.',
+'Collapse. This ancient structure can bear no more grief. It collapses with a mournful sigh. Nothing can be done to prevent this. Camp ends, remain in adventure phase.',
+'Pits of despair. The flooring has eroded and gives way under your weight. The party is dumped into a dungeon or natural cave system below. The watch cannot prevent this disaster. Camp ends, remain in adventure phase.',
+'Terror. This place is haunted by screaming terrors which emerge howling from your nightmares. What could the watch possibly do to prevent this? Test Will against Ob 8 to remain sane. Suggested failure result: afraid. Camp ends, remain in adventure phase.',
+'Lair. This entire ruin is the lair for some indescribable fell entity— and you are perched in its maw. If you set watch, the watch may spend a check to make a test to escape before being swallowed or engage in a conflict to avert the disaster. Otherwise, remain in adventure phase as camp ends and your packs, sacks and animals slide to their doom.',
+'Cursed. One of your number becomes entangled in evil magic: They suffer -1s to all actions until the curse is removed. The one affected is: the first to enter, the first to eat or drink, the first to speak, or the first to leave (game master&#8217;s choice).',
+'Wild magic and strange gods. Memorizing a spell in this place will burn the spell out of your spell book. If an attempt at purification fails, it will backfire and increase Immortal burden by margin of failure instead of decreasing it. Also, theurges and magicians suffer a +1 Ob penalty to cast spells and perform invocations during this camp phase.',
+'Strange corrosion. One piece of gear rusts, rots or crumbles away in the night. Roll randomly to select the player. Roll 1d6 to determine gear from one of the following inventory locations: 1 Torso 4 2Belt 5 3Head 6 Pouch Pack or satchel Feet',
+'Pestilence. Your food bursts with maggots, water turns to piss and wine turns to blood.',
+'Whispers. Strange voices speak to those who close their eyes: +1 Ob to recover from afraid and exhausted during this camp.',
+'Penetrating chill. The air of the ruin—and the very stone itself—emanates a sharp chill: +1 Ob to recover from sick and injured during this camp phase.',
+'Safe camp.',
+'Safe camp.',
+'Rare herbs. The flora of this place can be harvested to make healing poultices that grant +1D to Healer tests.',
+'Mirror font. Drinking the cool water from this glass-like font grants +1D to recover from angry and afraid. Roll 1d6 for every draught taken. On a 1, the font&#8217;s potency is expended.',
+'Ancient engravings. You may spend a check to make an Ob 6 Scholar test to decipher these ancient engravings. If successful, roll on the Tome of Ancient Lore Loot subtable.',
+'Shrine of the Immortals. Behold an ancient shrine, untouched by the ravages of time and chaos. Magicians do not need to spend a check to memorize spells; shamans and theurges do not need to spend a check for purification rituals.',
+'Sanctuary. This ruin still holds ancient magic and will shelter up to eight from weather and cold: +1D to recover from all conditions when camping in this sanctuary.',
+'Votive statues. You discover lost treasures. Roll on the Works of Art Loot subtable in the Lore Master&#8217;s Manual.',
+'Artifact. Hidden within this forgotten place is a welter of ephemera. Roll on the Magic Loot subtable.',
+'Impossible distances. Stepping into an inky black portal within this ruin will transport you to another doorway from your past. However, one item on your person always disappears before you emerge from the other side.'
+];
+typeOfCamp[1] = [ // Dungeon
+'Flood. The room rapidly fills with filthy, swirling water. If you set watch, make tests to get to safety or to save packs and gear. Otherwise, remain in adventure phase as camp ends as packs and gear are lost in the torrent.',
+'Roof or floor collapses. If you set watch, they may spend a check to test to lead the group to safety. If no watch, remain in adventure phase as camp ends and packs, sacks and animals are all crushed.',
+'Foul vapors. The inviting place you&#8217;ve picked to camp is suffused with foul vapors. No watch will save you. Camp ends as you flee choking. Remain in adventure phase.',
+'Monsters attack. If you set watch, the watch may spend a check to make a test or engage in a conflict to avert the disaster. Otherwise, remain in adventure phase as camp ends and you flee or combat the interlopers. Roll 1d6 for interlopers: 1 Oozes (1d3) 3-4 Troll rats (2d6) 2 Goblins (3d6) 5-6 Strix (2d6)',
+'Curiosity. The commotion of your camp draws the attention of a curious creature. If you set watch, the watch may spend a check to attempt to trick or drive away the creature. If the watch cannot drive them away, remain in adventure phase. Roll 1d6 for creature: 1 Black dragon 3-5 Stone spider 2 Troll haunt 6 Owlbear',
+'Vermin. Vermin get into one character&#8217;s pack and ruin their rations (game master&#8217;s choice). Roll 1d6 for amount ruined.',
+'Offal. This camp is surrounded by filth and waste left by vermin and other foul creatures: All suffer +1 Ob to recover from sick. In addition, injured characters must make an Ob 3 Health test. Suggested failure: sick condition or a twist that their wound becomes infected and may not be treated by the Healer skill.',
+'Breakage. During your travails, 1d3 of your bottles, jugs, pots, flasks and vials were crushed. The game master distributes the damage as appropriate.',
+'Dust. You disturb a thick layer of dust while making camp: +1 Ob to all tests during this camp phase.',
+'Wear and tear. Something ripped a hole in your pack, and a piece of gear dropped out. Roll randomly for the character. They lose the object in the bottom-most slot(s) of their backpack or satchel.',
+'Safe camp.',
+'Safe and sound. You&#8217;re able to thoroughly secure the entrances to your camp, making you feel at ease: +1D to recover from exhausted and afraid during this camp phase.',
+'Clear water. The site you pick has a ready source of potable water from an old well, broken pipe or basin formed by seepage. It provides three draughts of water during each camp phase.',
+'Luck. You find an old leather pouch containing coins of various provenance worth 2D (pack 1).',
+'Fungus. You find a patch of glowing fungi. If picked, each stalk acts as a candle or as cooking supplies. There are 1d6 stalks.',
+'Gear. You find a serviceable piece of gear. Roll on the Gear subtable in the Loot chapter.',
+'Connections. You find a secret entrance into another section of the dungeon.',
+'Treasure. One of the flagstones is loose. Beneath it you find treasure! Roll on the Treasure & Valuables subtable 1.',
+'Antiquity. You discover the entrance to a lost, sunken temple. During this camp phase, all may remove the sick or injured conditions and reduce Immortal burden by 1. In addition, the lost temple grants a +2D bonus to purification rituals (instead of the standard +1D). Should you return to this camp, the lost temple&#8217;s magics are expended and no longer cure conditions or burden, but the purification bonus remains.',
+'Etchings. Wiping away the dust in this room, you find a series of petroglyphs. Roll on the Tome of Ancient Lore subtable in the Loot chapter.',
+'Death grip. A skeleton lies in a heap in the corner. It&#8217;s clutching something. Roll on the Magic subtable in the Loot chapter.'
+];
+typeOfCamp[2] = [ // Natural Cave
+'Cave-in. The area you&#8217;re camping in is obliterated. If you set watch, they may spend a check to make a test to sound the alarm and get the group to safety. Otherwise, remain in the adventure phase as camp ends as you scramble to safety, and all packs and gear are destroyed in the chaos. Run!',
+'Lair. This cave is the lair of something terrifying. If you set watch, they may spend a check to drive off the creature. Otherwise, remain in adventure phase as camp ends and you flee in terror. Roll 1d6 to determine whose lair it is: 1 Red dragon 2 Black dragon 3 Manticore 4 Owlbear 5 Linnorm 6 Troll bear',
+'Rock fall. One of the passages leading to your camp site collapses in a shower of stone and dirt. If there was just one passage, you best have set a watch. If you set watch, the watch may spend a check to make a test to drag you to safety before the way is sealed. If no watch, remain in adventure phase: You&#8217;re trapped.',
+'Flood. Torrential rain on the surface causes a flood below. If you set watch, they may spend a check to sound the alarm and get you to safety. Otherwise, remain in adventure phase as camp ends and your packs and gear float off in the torrent and the water continues to rise.',
+'Foul air. The air here quickly goes stale and you all begin to asphyxiate. If you set watch, they may spend a check to vent the air or get the group to safety. Otherwise, remain in adventure phase as camp ends and your eyes bulge and tongue swells as you choke on fumes.',
+'Raid. A bold group of subterranean denizens raids your camp seeking food or captives. If you set watch, the watch may spend a check to confront the raiders. Otherwise, remain in the adventure phase as camp ends and chaos erupts. Roll 1d6: 1-2 Kobolds (2d6) 5 Troll bats (3d6) 3-4 Goblins (2d6) 6 Orcs (2d6)',
+'Bad temperature. Extreme cold (or heat in hot caves) makes you uncomfortable: +1 Ob to all tests during this camp phase.',
+'Lost. Lose your bearings while you rest. After breaking camp, you must test Cartographer or Dungeoneer to get back on track.',
+'Damp. Cloying moisture soaks clothing and gear. You may not recover from the exhausted condition during this camp phase.',
+'Claustrophobia. The tight space and the rock above starts to weigh on you. You suffer a +1 Ob penalty to recover from angry and afraid during this camp phase.',
+'Unlucky. One character drops a carried a item and it either breaks or disappears down a crevasse. Game master chooses.',
+'Safe camp.',
+'Safe camp.',
+'Cache. You stumble upon a cache of torches or rope left by previous explorers. Roll 1d6 to determine the number of items left behind.',
+'Fungus. You find a patch of edible fungi here. Each stalk acts as a unit of forage or as supplies for Cook tests. There are 1d3 stalks.',
+'Creature comfort. The site you pick is dry and comfortable: +1D to recover from exhausted during this camp phase.',
+'Dictionary. This site has magnificent speleothems to look at (draperies, curtains, stalactites, stalagmites, cave crystals, etc.): +1D to recover from angry and afraid during this camp phase.',
+'Spring. You find a clear, cold spring bubbling through a crack in the rocks. It can provide four draughts of water during each camp phase.',
+'Remains. You find the remains of a less fortunate explorer clutching a bit of marked up leather between their finger bones. Roll on the Books & Maps subtable in the Loot chapter.',
+'Gem cluster. You find a cluster of gems glinting among the rock formations. Roll on the Gems Loot subtable.',
+'Basin. You find a naturally occurring basin of water with healing properties: Each draught grants +2D to recover from sick or injured. There is enough water for three draughts. It may be stored in a container and carried away.',
+];
+typeOfCamp[3] = [ // Near Town
+'Brushfire (or blizzard). Run. If you set watch, they may spend a check to make a test to sound the alarm to get the group to safety. Otherwise, remain in adventure phase as camp ends and all packs and animals are lost.',
+'Brushfire (or blizzard). Run. If you set watch, they may spend a check to make a test to sound the alarm to get the group to safety. Otherwise, remain in adventure phase as camp ends and all packs and animals are lost.',
+'Bad weather. Without shelter, you&#8217;re too exposed. If you have shelter and set a watch, the watch may spend a check to test to get everyone under cover (or hold down the shelter from blowing away). Otherwise, remain in adventure phase as camp ends and your possessions whirl away in the winds.',
+'Raiding beasts. The raiders who claw at the walls of civilization stumble into your camp. If you set watch, the watch can spend a check to attempt to kill or drive off the raiders. If no watch, camp ends as a conflict erupts with the raiders attempting to capture the adventurers. Roll 1d6 to discover who your new friends are: 1-2 Dragefolk raiders (2d6) 5 Hobgoblins (2d6) 3-4 Gnolls (2d3) 6 Bugbears (2d3)',
+'Bandits. A group of 2d6 bandits surround the camp or attempt to ambush the group. If you set watch, the watch may spend a check to make a test or engage in a conflict to keep the peace. Otherwise, remain in adventure phase as camp ends as the bandits politely insist you donate food and coin to their cause.',
+'Trespassing. You&#8217;re camping on someone&#8217;s land. The local authorities summon knights, warriors or huscarls to perform their duties and see you off (always twice the number of the adventurers). If you set watch, the watch may spend a check to test to see off these annoying busybodies. If not, remain in adventure phase as camp ends as you are forced to deal with this distraction.',
+'Traps. You run afoul of some rather formidable animal traps laid in the area. If you set watch, the watch may spend a check to detect or disarm these snares. Otherwise, remain in adventure phase as camp ends as you&#8217;re ensnared and trapped.',
+'Fouled stream. Local industry has fouled this stream, making it undrinkable. Any who drink it must make an Ob 3 Health test. Suggested condition: sick; or twist: you cannot hold down food and liquid until treated by a healer.',
+'Barren lands. This area has been hunted and foraged clean. There&#8217;s nothing edible to be had for miles: you may not make Hunter or Scavenger tests when camping in this area.',
+'Hanged man. There&#8217;s a corpse hanging from a tree nearby, full of ill omen. You cannot recover from the angry or afraid conditions while camping in this area.',
+'Burial mound. This place is full of ghosts. Memorizing spells and purifying burden is impossible while camping in this area.',
+'Safe camp.',
+'Safe camp.',
+'Midden. You camp near a massive pile of garbage: +1D to Scavenger tests to find wilderness and town items while camping in this area.',
+'Sympathetic children. The local farm kids leave out portions of food and wine for you all.',
+'Fell off the wagon. You find a useful item by the side of the road. Roll on the Gear subtable in the Loot chapter.',
+'Domesticated beasts. There are herds and flocks in these precincts: +1D to Hunter tests during this camp phase. But don&#8217;t let the farmers catch you.',
+'Fruit-bearing trees. If the Immortals didn&#8217;t want you to eat this fruit, they shouldn&#8217;t have planted these orchards here in nice neat rows. The group may collect 2d6 portions of forage.',
+'Abandoned structure. You find an abandoned house or barn: +1D to all recovery tests when camping in this quaint structure.',
+'Friendly camp. A like-minded group of adventurers have taken up residence here. They offer to share their fire and wine with you, and they&#8217;ll feed any who look put out. Once everyone is settled, they share a rumor from the Tavern Rumors table. The adventurers are equal to the party&#8217;s highest level plus one. Hopefully, you&#8217;ll return the favor some day.',
+'Shelter. This place is comfortable, hidden and sheltered from weather and prying eyes. When you return to this place to camp, you are granted a +1 bonus to the Near Town Camp Events table in addition to other bonuses.'
+];
+typeOfCamp[4] = [ // Squatting
+'Fire. Someone or something sets fire to the place (it certainly was not your sputtering hobo fire). If you set watch, the watch may spend a check to douse the incipient inferno. Otherwise, remain in adventure phase as camp ends and this place is destroyed and may not be used further as a camp.',
+'Fire. Someone or something sets fire to the place (it certainly was not your sputtering hobo fire). If you set watch, the watch may spend a check to douse the incipient inferno. Otherwise, remain in adventure phase as camp ends and this place is destroyed and may not be used further as a camp.',
+'Collapse. This old structure can handle no more abuse. It comes down on your heads with a relieved moan. If you set watch, the watch may spend a check to drag you to safety. If no watch, remain in adventure phase as camp ends as your packs and gear are buried in the rubble. Either way the structure is destroyed and may not be used further as a camp.',
+'Late night lurker. Something sinister slinks into to the structure late at night. If you set watch, the watch may spend a check to make a test to drive off the interlopers. Otherwise, remain in adventure phase as camp ends and you find yourself in a sticky situation. Roll 1d6 to determine what lurks in ze night: 1-2 Ghouls (1d2+1) 5 Wererats (1d6) 3-4 Strixes (2d6) 6 Sprikken (1d3)',
+'Eviction. The town watch comes to evict you (and also collect on any debts you might owe). The town watch sends three times as many thugs (see the Denizens chapter for stats) as squatters. If you set watch, the watch may spend a check to make a test to send away these irksome roustabouts. Otherwise, remain in adventure phase as camp ends and negotiations begin. How fun.',
+'Feculence. Some cretin has defiled this place with a substantial pile of human waste. The party cannot recover from sickness in camp. If eating or drinking in camp, make an Ob 2 Health test. Suggested failure: sick condition or a twist that you can&#8217;t stomach the stench and vomit (and thus can&#8217;t recover from hungry and thirsty during this camp phase). The watch can&#8217;t help you here, only the Lords of Fevers and Plagues.',
+'Rats. This place is infested with very bold rats. The party cannot recover from afraid or exhausted in camp. In addition, the rats steal the top-most item from one pack or satchel. If you set watch, they may spend a check to test to avert the theft. Otherwise, the rats return their spoils to their king, deep below the town.',
+'Decomposing human corpse. Someone has died in here—or perhaps died elsewhere and been dumped here to rot in peace: +1 Ob to recover from afraid and sick while the corpse remains in this area. If the corpse is not removed, future camps in this area suffer a -1 penalty to the camp events roll in addition to other penalties.',
+'Drips. The roof leaks or the room floods. Water seeps into your gear, ruining it. Roll 1d6: 1-3: torches (1d3), 4-6: rations (1d3).',
+'Mold. The place is home to a wretched mold that causes crushing headaches. The group cannot recover from exhaustion, memorize spells or perform purification rituals while camped in this area.',
+'Stench. The locals use this place as a garbage pit. The stench makes it impossible to keep anything down: You cannot alleviate the hungry and thirsty condition in camp, but you are granted +1D to all Scavenger tests.',
+'Dalliance. Teenagers use this place for their trysts. If you set watch, the watch may spend a check to make a test to intimidate, persuade or manipulate the impressionable youth. If the group does not pay the check or the test is failed, the teenagers report the incident to their parents or friends in the guilds. Roll 1d6, two teenagers are here to: 1-2 Consummate a passionate love 3-4 Dabble in magic 5-6 Play a cruel trick on a friend',
+'Safe camp. You are undisturbed, and all is well.',
+'Midden. You camp near a massive pile of garbage: +1D to Scavenger tests to find town items while camping in this area.',
+'Youth. Children come to explore and play in this structure. You go unnoticed: +1D to recover from angry or afraid.',
+'Eavesdropping. You overhear a whispered conversation outside. Roll 1d6 to discern its oddly relevant topic: 1-2 A cult 5 A political matter 3-4 A local secret 6 One of the town&#8217;s guilds',
+'Allies. You link up with another band of friendly squatters. They will give food, water or even wine if the group looks put out (they have 1d6 portions total per encounter). Otherwise, they offer to trade rumors. Roll on the Tavern Rumors table with a +1 bonus.',
+'Connection. You discover a secret connection (tunnel, canal, catwalk or crawl space) to an adjoining, occupied building.',
+'Hidden loot. There&#8217;s something buried beneath the floorboards or flagstones. Roll on the Treasure & Valuables 1 subtable.',
+'Disembodied eyes. A house goblin is curious about you. Feed it (one fresh or preserved ration), and it will treat you kindly, granting +1D to all recovery tests during the camp phase to the one who feeds it. Once found, the house goblin will remain visible. Should you return to this camp site, you may again opt to feed the house goblin. However, if you fail to feed the house goblin, roll 1d6: 1-4 The house goblin disturbs your sleep and you are +1 Ob to recover from exhausted, sick or injured 5 Steals an object from you 6 Revokes its friendship and disappears',
+'The room. You discover a previously hidden but furnished room from another era that is eerily intact. This squat now counts as a free flophouse if used as accommodations during the town phase.'
+];
+typeOfCamp[5] = [ // Wilderness
+'Sinkhole. The earth subsides and takes you with it. If you set watch, they may spend a check to make a test to get the group to safety. If you didn&#8217;t set watch, enjoy your new underground home, and remain in adventure phase as camp ends.',
+'Evil weather. Lightning, wind, rain or snow destroys your shelter and douses your fire. If you set watch, they may spend a check to make a test to save your gear and animals. If no watch, each character loses their pack, an animal or a companion, and remain in adventure phase as camp ends.',
+'Falls in the woods. A tree, rock or meteor falls onto your camp. One character must make an Ob 5 Health test. If you set watch, the watch may help the Health test. Suggested failures: injured condition or a twist that their pack is destroyed instead of their skull. Otherwise, remain in adventure phase as camp ends.',
+'Gnits. Swarms of biting insects makes camping impossible. No watch can save you against the gnits. Remain in adventure phase as camp ends.',
+'Wildfire. Run. This area is ravaged by wildfire. If you set watch, the watch may spend a check to make a test to save packs and gear. Otherwise, all packs and their contents burn, and remain in adventure phase as camp ends. This this area may not be used as a future camp.',
+'Wandering monsters. Something wicked this way comes. If you set watch, the watch may spend a check to make a test or engage in a conflict to avert the attack. Otherwise, remain in adventure phase as camp ends with a stand off. Roll 1d6 for friends: 1-2 Dire wolves (1d6) 5 Bugbears (1d6) 3-4 Gnolls (2d3) 6 Devil boars (1d3)',
+'Wandering monsters. Something wicked this way comes. If you set watch, the watch may spend a check to make a test or engage in a conflict to avert the attack. Otherwise, remain in adventure phase as camp ends with a stand off. Roll 1d6 for friends: 1-2 Dire wolves (1d6) 5 Bugbears (1d6) 3-4 Gnolls (2d3) 6 Devil boars (1d3)',
+'Foul water. No clean water source to be found. If you sought water as a camp amenity, the source is dry or foul.',
+'Lost. Lose your bearings while you rest. You must make a Pathfinder or Cartographer test to get back on track. Add the site to your map to find it again.',
+'Vermin. Mice or other vermin crawl all over your camp and spoil 2d3 rations.',
+'Wear and tear. One character breaks a piece of equipment. Roll randomly for the player. Then roll to determine what is broken or worn out: 1d6 for backpack slot or 1d3 for satchel slot. Multislot items go if either slot is rolled.',
+'Safe camp.',
+'Safe camp.',
+'Lovely view. The site has majestic views: +1D to your next Pathfinder or Cartographer test after camp.',
+'Verdant wilderness. Birds, ungulates and fish abound: +1D to Hunter, Scavenger and Fisher tests in camp.',
+'Sweet water. This site has a freshwater spring or stream.',
+'Game trail. You find an easy trail and are granted +2D to your next Pathfinder or Scout test after breaking camp.',
+'Greens. You find a patch of edible plants. If harvested, you collect 2d6 portions of forage.',
+'Out of the wind. The site you pick is sheltered from the wind and weather: +1D to recover from angry and exhausted when camping in this area.',
+'Fellow traveler. Meet a helpful fellow wanderer. Their level is two higher than the highest-level character. If the highest level is 9, then this is a retired adventurer. If treated with hospitality, the wanderer will share wine, information in the form of warnings, advice relevant to the adventurers&#8217; current endeavor or they will leave a gift (roll on Loot Table 3). Roll 1d6 for class: 1 Ranger 2 Outcast 3 Magician 4 Warrior 5 Burglar 6 Theurge',
+'Standing stones. You find a circle of standing stones or faerie ring. Everyone automatically recovers from the angry and afraid conditions, no tests necessary. The circle remains and may be returned to. After each use, roll 1d6. On a roll of 1, the magic of the place is expended.'
+]
+const townEventsTable = [];
+townEventsTable[0] = [ // Bustling Metropolis
+'Black plague. This place is a charnel house. Bodies lay piled in the streets. Mark this city as a ruin on your map, say your prayers to the Immortals and move on.',
+'Black plague. This place is a charnel house. Bodies lay piled in the streets. Mark this city as a ruin on your map, say your prayers to the Immortals and move on.',
+'Black plague. This place is a charnel house. Bodies lay piled in the streets. Mark this city as a ruin on your map, say your prayers to the Immortals and move on.',
+'Raging fire. This town is in flames. There is no safe place to rest; no market open. Remain in the adventure phase until the fire is put out or dies down or until you move on to another town.',
+'Riots. The citizens protest for their rights and the ruling class provokes them to riot. Remain in the adventure phase until the riots subside or until you journey to a new town.',
+'Civil war. The populace of this town has split into factions or has taken up arms against its ostensibly allied neighbor. Remain in the adventure phase until the war subsides or until you reach a different town.',
+'Festival. The streets are blocked by parades, and the market is closed.',
+'New fashion rampant. A fashion craze grips the city. All suffer a +1 Ob penalty to Circles tests until they are wearing the latest fashion (usually finery or its equivalent).',
+'New law decreed. Roll 1d6 to determine the type of law: 1-2 Criminal law (choose one) 4-5 Civil law (choose one) 3 Sumptuary law (choose one) 6 Religious law (choose one)',
+'Labor strike. The guild hall is closed. No services available.',
+'Fad. The city has been taken by a harmless new custom or fad. Everyone in the drinking halls and taverns is complaining about it. The folks at the well gossip about it. Children all envy it.',
+'Foreign visitors. Roll 1d6: 1-2 The town is full of chatter in a new tongue 3-4 They are curious about the customs 5-6 They apologetically jostle you in the street',
+'Natural death of a prominent figure. Roll 1d6: 1-2 They die of old age 3-4 They die during childbirth 5-6 They die of illness',
+'Public performance. Jugglers, boxers and acrobats put on a comical show. The crowd roars with laughter. Make a free test to recover from angry or afraid.',
+'A polite request. An impoverished, aging dowager mistakes you for someone else. She sends her ancient servant to politely inquire with you because she needs a gift for a young noble&#8217;s upcoming birthday. She can pay with gratitude. Will you create a fine gift for her? Succeed and add a new friend. If the widow is befriended and this result is rolled again, you encounter her and she invites you to stay with her while you are visiting this town.',
+'Actually. On the street, you hear a fool prattling on to their lady friend about the nature of the moon and the stars. Tip your hat and correct them using Scholar vs their Scholar 4. Suggested twist: you make a new enemy. If you make an enemy and roll this event again, you encounter them while entering town. No debate necessary!',
+'Holy day. The streets are packed with pilgrims and tourists.<ul><li>All are granted +1D to all Orator, Criminal and Scavenger tests</li><li>Any religious item may be sold for 1D of copper coins</li><li>Everyone may conduct one free bit of personal business without adding to lifestyle cost</li></ul>',
+'Jubilee. The nobility celebrates the birth of a great leader. Everyone receives one boon in the following order:<ol><li>If you are hungry or thirsty, you are given alms in the form of one portion of fresh rations</li><li>If you are ill, a priest-healer treats you and removes the sick condition</li><li>If you are neither hungry or sick, they commute any sentence or ban against you or forgive your outstanding debts in this town</li></ol>',
+'Craze. The city is going wild for something again. Roll 1d6 to discover what they&#8217;re on about: 1 Fine hats or shoes. Sell them at the market for 4D of silver coins. 2 Elves. Elves are granted +1D to Resources and Circles tests. 3 Dwarven-made items. Any dwarven-made item can be sold for +1D (minimum value of 1D). 4 Home-cooked meals. All fresh, home-cooked meals can be sold for 1D of copper coins. 5 Wizards. A magician who casts a spell on a supplicant (or fakes it) can charge them 2D silver coin. This practice is considered highly illegal by the Magicians and Alchemists guild. 6 Prophets. Anyone who performs an invocation in public (or fakes it) is showered with 2d2 dice worth of silver coins. This practice will bring down the wrath of the temple priests and their acolytes.',
+'Investment opportunity. Hey, you look like a smart customer. I have a golden opportunity for you. Just cherry. How would you like to get in on something that is really going to pay off? Your group may invest in a caravan, expedition or ship, or may purchase a business in the city. Reduce Precedence requirement by one for this once-in-a-lifetime offer. You may invest even if not in respite. See the Lore Master&#8217;s Manual for costs and payouts.'
+];
+townEventsTable[1] = [ // Busy Crossroad
+'Catastrophic fire. The town burns to the ground with a rapidity that shocks even the cynical. Remain in the adventure phase. Mark the town as a ruin on your map.',
+'Catastrophic fire. The town burns to the ground with a rapidity that shocks even the cynical. Remain in the adventure phase. Mark the town as a ruin on your map.',
+'Catastrophic fire. The town burns to the ground with a rapidity that shocks even the cynical. Remain in the adventure phase. Mark the town as a ruin on your map.',
+'Plague. Town closed. Remain in the adventure phase until you reach a new town or until the plague is miraculously cured.',
+'Famine. There is no food available. Remain in the adventure phase until you reach a new town or until the famine is miraculously relieved.',
+'Infestation. Town closed. Remain in adventure phase until infestation is driven out or until you arrive at another town. 1 Weevils eat all clothing 3 Worms devour all leather 2 Locusts blanket town 4-6 Tiny devils everywhere',
+'Robbery. A thief attempts to rob one character. The game master chooses the target. They test Criminal vs Criminal 6. If the thief succeeds, they remove one belt or carried item from the victim.',
+'Hard luck. One of your friends is in town and is at loose ends. They desperately need 2D of coin or two portions of food and wine.',
+'Fire. One facility was badly damaged in a fire. Roll 2d6 for facility: 2-3 Guild hall 4 Homes 5 Stables 6-7 Tavern 8 Market 9 Inn 10 Flophouse 11+ Shrine',
+'Enemy at the gates. An enemy awaits (game master&#8217;s choice).',
+'Visiting nobility. They smell nice, are polite and make no imposition.',
+'A bell tolls. All is well.',
+'Small gifts. A child emerges and presents you with: 1 A flower 2 An empty cup 3 An icon of an Immortal 4 A key 5 A pair of wooden toy oxen 6 A tooth',
+'Market glut. Reduce the Resources obstacle for affected goods by one. If an item is reduced to Ob 0, you may purchase two for the price of one instead. Roll 1d6 for affected commodity: 1 Wheat or millet (fresh rations) 2 Wine 3 Oil, tar, pitch (torches, lanterns) 4 Iron (weapons, heavy armor) 5 Wool (clothing, cloaks) 6 Paper (writing kit, spell books)',
+'Wedding. A wedding spills into the square. Dance a jig with the bride and groom and recover one point of taxed Nature.',
+'Right of way. A noble desires to have the right of way. However, they want no trouble and toss down 1D of copper coins and urge you to step aside. What will you do? Any tests made add to your lifestyle cost.',
+'Exotic goods. A caravan or ship arrives selling exotic goods. You have the opportunity to purchase at discount prices. Roll 1d6 for what they&#8217;re selling: 1 Elixirs (Ob 2): Calming Scalp Balm or a Vial of Purifying Heavy Water 2 Silks, lace and satin (Ob 4): 2d3 supplies for crafting finery 3 Spices (Ob 1 per parcel): Roll 2d3 for parcels. Each parcel is worth 2D of treasure 4 Weaponry: Roll twice on the Weapons loot subtable 5 Oils and unctions (Ob 4): Roll once on the Potions subtable 6 Religious amulets (Ob 1): +1D Maneuver weapon in spiritual conflicts (neck/worn)',
+'Stray dog. A cheerful dog trots out of an alley and adopts one of you as her own. Feed her one portion of fresh or preserved rations to keep her. She&#8217;ll stick with you through thick and thin.',
+'Victory celebration. The local overlord returns victorious from campaign and distributes gifts among the populace. Roll 1d6 to find what each character receives: 1 Captive: you must either marry or emancipate them 2 A small sack of silver coins worth 2D (pack 2) 3 Livestock: a horse, pony, cow or ox 4 Fine silks and brocades: counts as finery (worn/torso 3 or pack 4) 5 A weapon won in battle (roll on the Weapons Loot Table) 6 A piece of jewelry (roll on the Jewelry subtable)',
+'Abandoned supply wagon. A wagon sits on the road outside of town with no mules or drivers to be seen. Plunder it for 2d2 rolls on the Gear table or return it to the guild hall and be granted a reward of two small sacks of silver coins (2D, pack 2 each).'
+];
+townEventsTable[2] = [ // Dwarven Halls
+'Dug too deep. In their greed, the miners and artificers have dug too deep and awoken something sinister and terrible. The halls are empty, the dwarves within slain, and something twisted and loathsome has taken their place. Mark these halls as a ruin on your map. Remain in the adventure phase.',
+'Dug too deep. In their greed, the miners and artificers have dug too deep and awoken something sinister and terrible. The halls are empty, the dwarves within slain, and something twisted and loathsome has taken their place. Mark these halls as a ruin on your map. Remain in the adventure phase.',
+'Dug too deep. In their greed, the miners and artificers have dug too deep and awoken something sinister and terrible. The halls are empty, the dwarves within slain, and something twisted and loathsome has taken their place. Mark these halls as a ruin on your map. Remain in the adventure phase.',
+'Struggle for power. The dwarf princes plot against one another. The halls have split into factions. Remain in the adventure phase until the struggle subsides or until you reach a new town.',
+'Famine. No food is available in the halls or the surrounding lands. Remain in adventure phase until you reach a new town or until the famine is miraculously relieved.',
+'Devastating flood. The avenues are rivers, staircases waterfalls and towers islands. All is chaos. Remain in the adventure phase until you reach a new town.',
+'Under siege. The dwarves are resisting a besieging army, but their halls are open to allies. Increase all Resources and Circles obstacles by 1, but sell kit and salvage at a +1D cash markup. Roll 1d6 to determine the besiegers: 1 Giants 2 Goblins 3 Humans 4 Dwarves 5 Elves 6 Orcs',
+'Surly watch. The axe bearers on watch at the gates are particularly surly. To gain entry to the halls, ask permission of the Gate Master Sergeant. Test Persuader vs Persuader 4. Suggested failure: angry or a twist that you must offer a bribe to enter.',
+'Traffic. The caravan line waiting to approach the dwarven halls is days long, and no one seems to be in charge. Make an Ob 3 Steward test to get your crew through before you die of old age. Suggested failure results: angry or a twist that entry requires a bribe valued at 2D of cash.',
+'Nogfest. It&#8217;s Nogfest time at the dwarven halls! The taverns are packed full of merry, singing folk. Increase accommodations costs by 1, but haggling at the market is free.',
+'Dwarven penny. You find a copper penny stamped with the face of a heroic dwarf sovereign; on the obverse sits a majestic rune.',
+'Jocular guards. The axe bearers on watch gently tease you about your inferior blades as they happily point you to the tavern.',
+'Misplaced baggage. A bundle falls from the wagon of a trader heading in the opposite direction. Will you hail them and return it? If opened, roll 1d6 to determine what it contains: 1 An infant child 2 A pouch of silver worth 1D 3 A large snake 4 Charcoal 5 A sack of flour 6 A decapitated head',
+'Unattended till. As you enter the halls, you see a dwarf vendor leave their till open and unattended while they fulfill a customer&#8217;s request. To snag the take, test Criminal test vs Beginner&#8217;s Luck Health 5. Success nets 2D of silver coins. Suggested failure: a twist in which they summon the axe bearers on watch to arrest you.',
+'Lucky duck. Nothing goes better with nog than a throw of the dice. Sit. Play. I insist. Each character who can stake 1D of coins or loot must play a round of Wizard, Krazzik or a hand of Diamondback (as detailed in the Gambling chapter of the Lore Master&#8217;s Manual). If you win, take a satchel of silver coins. If you lose, you lose your stake.',
+'Artificer&#8217;s indulgence. An eccentric local artificer is willing to part with some of their work for a price. Roll 1d6 once: 1 Dwarven helmet (Ob 3). 2 Dwarven shield (Ob 4). 3 Dwarven coat of plates (Ob 5): Coat of plates that wards off damage on a roll of 3-6. 4 Dwarven belt and buckle (Ob 4): Increases belt inventory by one. 5 Dwarven canteen (Ob 4): Two-slot liquid container (belt 1). 6 Gold pendant set with ruby (Ob 5): This pendant is worth 10D in any other settlement (worn/neck).',
+'New hall opens. The industrious dwarves open a new hall in their sprawling holding. They invite you to stay for free! What could go wrong? Roll 1d6 to see: 1 Due to unforeseen complications, the hall collapses as you enter. Your hosts offer you each 2D of gold as compensation, provided you never speak a word of it. Also, you must find new accommodations. 2 Bare halls (equivalent to stables) 3 Spartan halls (equivalent to flophouse) 4 Homey halls (equivalent to inn) 5 Palatial hall (equivalent to hotel) 6 The dwarven proportions of this inn are uncomfortable for elves and humans. These guests suffer +1 Ob to recovery tests while staying at these accommodations, but they learn something: gain Dwarf-wise.',
+'You I like. A friendly trader tips their hat as you enter the gates. If you successfully tell tales at the tavern, in addition to the standard results, add a new town friend in the dwarven halls. The game master determines their profession and name.',
+'Gold flows like wine. In an ostentatious show, the dwarf artificers make gold flow through the halls in rivers. Each character may dip one container into the stream and fill it. Each inventory slot counts as 2D of gold coins (pack 1). They must have the container on their person at the start of the town phase (and the container is ruined).',
+'Immortal task. An Immortal in need visits the dwarven halls in search of the skills of their artificers. The Immortal requires a special item created for a special task—a mighty hammer, a golden boar, golden hair, etc. The artificers work diligently and do not want to be disturbed. However, if the characters happen to be carrying the item in question, they can offer it to the Immortal. The Immortal will grant a boon for this service (restore a Nature descriptor, raise the recently deceased, gift a greater relic, etc.). However, striking this bargain makes an enemy of the Master Artificer of the dwarven halls. If the characters refrain from interfering, they may dig through the cast off from the artificers&#8217; forges. Everyone is too focused on the artisanal task to notice. Roll 1d6 once to determine what is found: 1 Dwarven forge mask (see the Magical Items list in the Loot chapter). 2 Dwarven helmet (Ob 3): Counts a reinforced helmet. 3 Dwarven shield (Ob 4): Counts as a reinforced shield. 4 Dragonslaying sword: The sword is Dragon-wise and grants +1 Might. 5 Gold slag worth 8D (pack 4). 6 Dwarven artificer tools (special tools for Smith and Jeweler that replace default skill tools and grant a +1D bonus to all crafting tests).'
+];
+townEventsTable[3] = [ // Elfhome
+'Pass on to the Shining Realm. The elves here have decided this mortal world is no longer for them. They have, en masse, passed on to their eternal home. No trace remains. Erase this settlement from your map and remain in the adventure phase.',
+'Pass on to the Shining Realm. The elves here have decided this mortal world is no longer for them. They have, en masse, passed on to their eternal home. No trace remains. Erase this settlement from your map and remain in the adventure phase.',
+'Pass on to the Shining Realm. The elves here have decided this mortal world is no longer for them. They have, en masse, passed on to their eternal home. No trace remains. Erase this settlement from your map and remain in the adventure phase.',
+'Betrayal. Spiteful elves have set to kinslaying. A war rages within, and no outsiders are permitted. Remain in the adventure phase until the bloodletting ceases or you find a new settlement to shelter in.',
+'Ancient war. The greedy and the bloodthirsty seek to plunder the fabled riches of Elfhome. A war rages in the fields before the secret citadel. Remain in the adventure phase until the attackers are driven off, the elves are defeated or you skulk off to another settlement. 1 Giants 2 Orcs 3 Humans 4 Dwarves 5 Dragons 6 Werewolves',
+'Immortal quarrel. An Immortal visits Elfhome to quarrel with the dreamwalkers about troubling visions. The way is shut until this matter is settled. Remain in the adventure phase until you find another settlement in which to shelter.',
+'Dreamlands call. Omens hang heavy in the air. Elves from all tribes have been called to enter the dreamlands to assess the portents. Roll to determine which services are closed: 1 Tavern 2 Stables 3 Inn and Homes  4-6 Market',
+'Lamentations. The elves are singing laments to grieve for those elves who have died of pierced and broken hearts. The tavern is closed. Also, all who hear the lament must make an Ob 3 Will test. Success indicates they grieve for broken dreams and lost loves along with the elves. Suggested failure results: angry or a twist that the character falls into a state of wonderment and racks up +1 lifestyle cost as they sit for days and marvel at the elvish songs.',
+'Suspicion. The elves are furious over some crime committed by outlanders in Elfhome. They search all pouches, pockets, sacks, satchels, packs and baggage for contraband. Roll 1d6 to see what they confiscate: 1 All strange idols 2 A potion 3 All knives and daggers 4 A relic 5 A scroll 6 A dwarven- or elven-made item',
+'Enraptured. Your friend has found their way into Elfhome and now cannot bring themselves to leave this beautiful, peaceful place. Will you guide them on their journey home, or will you leave them to remain with the elves forever? The game master chooses which friend.',
+'It&#8217;s a bright, clear day.',
+'Eye contact. An elf smiles enigmatically at you as you enter Elfhome.',
+'Shafts of sunlight. Trunks of ancient trees stretch to the sky; shafts of golden sunlight gently flow to the earth. All is well here.',
+'Omens. A strange elf approaches. They touch your face and speak to you directly of your dreams—your deepest, unshared secrets. Test Lore Master (Ob 3) to interpret their omens. If successful, remove the angry, afraid or exhausted condition. Suggested failure results: afraid or a twist that you experience terrifying nightmares that cause +1 Ob to all recovery tests until the next town phase. The game master chooses the character approached.',
+'Song of merriment. The elves are at feast. Join them and satisfy any hunger or thirst. Also, all are granted +1D to recover from angry, exhausted or sick. If you have no conditions, cadge some food or wine from the table (fresh rations or a bottle) for later.',
+'Wanderer&#8217;s gift. An ancient elf matron approaches you with a gift of elven waybread. The waybread acts as preserved rations, but it is pack 1 for six portions. However, when used with Cook or Grace of the Lords of Plenty, each piece acts as fresh rations.',
+'Remembrance day. The elves remember the Shining Lands and all that has befallen them since leaving. All elves recover all taxed Nature. If not taxed, mark a pass or fail for Nature. If one test would advance you, you must mark it. All others may rewrite their creed, even if this town phase is not a respite.',
+'Restful memory. You carry with you the peace and tranquility of Elfhome, even after you leave this place. The memory suffuses you with a warm glow and grants +1D to all recovery tests until the next town phase.',
+'Doomsayer. The elven etharch walks among their people, speaking to them of their travels and travails. The etharch automatically alleviates the most dire condition afflicting a character. If unafflicted, the etharch removes any curse carried by the character. If unafflicted and uncursed, the etharch passes on to others. However, if a character misbehaves in Elfhome during this town phase, the etharch summons them and reads their doom. The game master then changes the character&#8217;s belief or goal. It cannot be changed by the player until the next town phase.',
+'Enter the Dreamlands. While you sleep, you dream too deeply and lose a bit of yourself to this place. Non-elf characters must replace one Nature descriptor with Singing, Remembering or Hiding. Elves may conduct all business in town in dream. Reduce their lifestyle cost for each activity by one (minimum 0—but market prices are unaffected). If an elf fails their Resources test to leave Elfhome, they must take the exhausted condition in addition to other effects.'
+];
+townEventsTable[4] = [ // Religious Bastion
+'Cast down. The Immortals rage at the impertinence of this bastion. They cast the structure down and ruin it. Inhabitants flee in terror. Mark the bastion as a ruin on your map. Remain in the adventure phase until you reach a new settlement.',
+'Cast down. The Immortals rage at the impertinence of this bastion. They cast the structure down and ruin it. Inhabitants flee in terror. Mark the bastion as a ruin on your map. Remain in the adventure phase until you reach a new settlement.',
+'Cast down. The Immortals rage at the impertinence of this bastion. They cast the structure down and ruin it. Inhabitants flee in terror. Mark the bastion as a ruin on your map. Remain in the adventure phase until you reach a new settlement.',
+'Demonic catastrophe. Remain in the adventure phase until the catastrophe is abated or until you hurry off to a safer settlement. Roll 1d6 for the type of catastrophe: 1 The powers of the world are deaf to the prayers of this town: no invocations work, and demagogues preach the apocalypse. 2 A demon (N6, M5) springs forth from the forehead of a seventh son of a seventh son and claims the bastion in the name of its infernal master. 3 Fire ceases to burn. 4 Water ceases to quench. 5 Everyone over the age of 17 has been turned to stone. 6 All language sounds like the bleating of sheep.',
+'Besieged. The bastion is sealed tight against an invading force. Remain in the adventure phase until you reach another settlement or lift the siege. Roll 1d6 to determine the besieging force: 1 Giants 2 Goblins 3 Humans 4 Dwarves 5 Undead 6 Demons',
+'Proscription. Trade and are travel forbidden. Remain in the adventure phase (waiting outside of the bastion) until the ban is lifted in 2d3 days. If attempting to leave, the religious authorities arrest you.',
+'New law decreed. Roll 1d6 below: 1 Criminal law (choose one) 4 Civil law (choose one) 2-3 Sumptuary law (choose one) 5-6 Religious law (choose one)',
+'Currency debased. The authorities of the bastion attempt to stamp out inflation by debasing their currency. In the bastion from this day forward: Copper coins are worthless, silver coins are 1D/pack 2 and gold coins are 1D/pack 1.',
+'Easy prey. Missionaries demand you join their ranks. Either hand over your hirelings or a companion or pay an Ob 3 Resources fee.',
+'Festival to a forgotten Immortal. The streets are blocked by parades.',
+'The market is closed, but everyone gets free sweet pancakes.',
+'Religious procession. The procession is respectfully observed or mostly unattended—game master chooses.',
+'Execution. A judicial murder is carried out with no fanfare or with a great sigh of relief from the townsfolk. Game master&#8217;s choice.',
+'Holy day of the Sower and the Reaper. The hetairai and hetairoi have the bastion in an amorous mood. If you leave a 1D offering at their shrine, you may indulge in the company of another and automatically recover from exhausted. If not exhausted, take the exhausted condition but test to recover from angry and afraid.',
+'Ritual blessing. The Immortals bestow their blessing on your labors: The eldest character is granted +1D to their next Peasant, Laborer or Steward test.',
+'Summa Theologica. Two local theologians debate how many Immortals can dance in a wine cup. Join in the debate and test Theologian vs their Theologian 4. Success makes a friend; failure makes an enemy.',
+'Festival of the Lord of Victory. The scholars and theologians are celebrating the Immortals (again). Each character must play a round of Wizard, Krazzik or a hand of Diamondback (as described in the Lore Master&#8217;s Manual). If you win, take 1D of copper coins.',
+'Cult uprising. A new sect rises up to claim the bastion. Members of the risen temple all count the bastion as their hometown going forward. All other temple memberships are voided as the priests are turned out. Roll for the Immortal cult that rises to the top: 1 Lords of Light and Darkness 2 Lords of Life and Death 3 Lords of Chaos and Law 4 Lords of Plenty and Want 5 Lords of Valor and Terror 6 Lords of Fate',
+'High holy day. Make an offering at the temple worth 1D of cash and you may stay for free (accommodations equivalent to a flophouse). In addition, while you rest at the temple you may eat in the mess hall with the acolytes (free food and wine).',
+'Ascension. One of the bastion&#8217;s leaders ascends to the rank of high priest. To celebrate, they distribute gifts among the devout. Roll 1d6 to determine what each character receives: 1 A jug of holy wine (pack 3, contains 3 draughts) 2 Vials of holy water (pack 1 for 3 vials) 3 Holy vestments (finery, worn/torso 3 or pack 4) 4 Innocent creature: a lamb, a cat, a calf, a chick, etc. 5 Holy vessel: 3D, pack 1 or roll on the Silver & Plate subtable of the Richer Loot chapter in the Lore Master&#8217;s Manual 6 Soul: an orphaned child',
+'Favor of the Immortal. The bastion&#8217;s Immortal patron reveals itself to the devout. All must mark one pass or fail Theologian advancement (your choice). In addition, any who have a creed related to the Immortal&#8217;s spheres of influence must replace a Nature descriptor with Worshipping, Praying or Believing. If you are missing a Nature descriptor, you must take one of these descriptors, regardless of your creed.'
+];
+townEventsTable[5] = [ // Remote Village
+'Emptied. The village has been emptied of all inhabitants. The structures still stand, but the place has been picked clean by scavengers. Maybe you can find something if you dig around. Remain in the adventure phase. This place isn&#8217;t safe. Mark the village as a ruin on your map.',
+'Emptied. The village has been emptied of all inhabitants. The structures still stand, but the place has been picked clean by scavengers. Maybe you can find something if you dig around. Remain in the adventure phase. This place isn&#8217;t safe. Mark the village as a ruin on your map.',
+'Emptied. The village has been emptied of all inhabitants. The structures still stand, but the place has been picked clean by scavengers. Maybe you can find something if you dig around. Remain in the adventure phase. This place isn&#8217;t safe. Mark the village as a ruin on your map.',
+'Devastating flood. The village is in ruins. There is no safe place to rest. Remain in the adventure phase and move on.',
+'Drought. There is not a drop to drink in this village; all locations are closed. Remain in the adventure phase until you reach a new town or the drought abates.',
+'Civil war. The residents of this fine village have split into factions or has set themselves against their ostensibly allied neighbor. Remain in the adventure phase until the war resolves or until you reach a new town.',
+'Bandits. The village is beset with bandits (3d6 in number). Remain in the adventure phase until the bandits are driven off or until you arrive at a different settlement.',
+'Tax time. The tax collector demands a head of livestock or a payment (Resources Ob 3). If you confront the tax collector over your precious pony, remain in the adventure phase.',
+'Billeted army. The soldiers overwhelm the town. No room at the accommodations, they&#8217;re occupied by officers. No room at the tavern, they&#8217;re crowded with soldiers. No room at the stables, they&#8217;re crammed full of cavalry. All live and rolling stock is claimed by the army. You can sleep on the streets or, if you mess with the soldiers, remain in the adventure phase.',
+'Broken axle. A friend of a friend (or cousin or enemy) is hauling a load of manure out of the village and their cart has thrown an axle. Will you help them repair it so they can be on their way? (Ob 3 Peasant test). Make this additional test in the adventure phase before entering town. Maybe make a new friend.',
+'Pleasant smells. You scent wood smoke on the wind. The kitchen aromas remind you of a welcoming home.',
+'Halloo. You receive a friendly Halloo! from your neighbors.',
+'Fair day. Folks have come from all around to attend the fair. The village hosts a market and at least one relationship character (friend, parents, mentor) is present. The game master chooses which relationship.',
+'Stuck. The tinker&#8217;s cart is stuck in the mud. Heave it out using Laborer (Ob 5). If successful, the tinker offers a small reward. Roll on the Gear subtable or decline the reward and add a new friend. If you befriend the tinker and roll this result again, the tinker invites you to stay at their shack (flophouse) on the outskirts of the village.',
+'Help. The proprietor of your accommodations frantically asks you for help. One of their other patrons is violently ill. Make an Ob 4 Healer test to treat the mysterious traveler. If successful, they offer a small reward as recompense for your time. Roll on the Books & Maps subtable.',
+'Gambling fever. Everyone in the village is gambling away their earnings. Each character may play a round of Wizard, Krazzik or a hand of Diamondback (as described in the Lore Master&#8217;s Manual). If you win, take 1D of copper coins.',
+'Bumper crop. There&#8217;s a good harvest in (or last season&#8217;s harvest is being turned out). Take as many supplies for Cook as you can carry (pack 1 each).',
+'Festival for the Lord of Sowing and the Lady of Reaping. Offer a prayer at the shrine and gain the blessing of the Immortals: +1D to Peasant and Steward tests until the next town phase.',
+'One of the family. The village elders mistake you for one of the family and offer you a home in the village at a discount if you can afford it (Ob 6 Resources test). The offer stands until the end of the next town phase. Suggested failure: twist, they realize their error and accuse you of trying to swindle them.',
+'Prosperity. The village&#8217;s struggles have borne fruit. Add a new facility to the village. If two new town facilities are added, this remote village becomes a busy crossroads. Roll 1d6 for facility: 1-2 Tavern 5 Inn 3-4 Temple 6 Guild hall'
+];
+townEventsTable[6] = [ // Wizard's Tower
+'Gone. With a rumble of thunder and crash of lightning, the tower disappears along with all of its inhabitants. The entire settlement relocates to a new, unknown locale. The place is no longer here. Erase it from your map. Remain in the adventure phase until you find your way back from this mirror dimension.',
+'Gone. With a rumble of thunder and crash of lightning, the tower disappears along with all of its inhabitants. The entire settlement relocates to a new, unknown locale. The place is no longer here. Erase it from your map. Remain in the adventure phase until you find your way back from this mirror dimension.',
+'Gone. With a rumble of thunder and crash of lightning, the tower disappears along with all of its inhabitants. The entire settlement relocates to a new, unknown locale. The place is no longer here. Erase it from your map. Remain in the adventure phase until you find your way back from this mirror dimension.',
+'Magical catastrophe. Remain in the adventure phase until the catastrophe abates or until you find a saner place to shelter. Roll 1d6 below to determine what madness grips this place: 1 The laws of gravity are reversed. 2 All townsfolk become invisible but buildings remain visible, or all buildings become invisible but townsfolk remain visible. 3-4 Magic ceases to work. The master of the tower is very upset. 5 All flesh turns bright red upon entering town. People are unhappy. 6 The town leadership has been turned into fowl.',
+'Siege. The master of the tower has angered their enemies. A small force blocks entrance to the place until their demands are met. Remain in the adventure phase. Roll 1d6 for the invading force: 1 Giants 2 Goblins 3 Humans 4 Dragon 5 Elves 6 Demons',
+'Dust to dust. All food in the area has turned to colorful dust. Remain in adventure phase until you reach another settlement or until the magical famine is reversed.',
+'Shortage. Supplies are thin. Roll 1d6 to determine which com-modity is unavailable for purchase during this town phase: 1 Paper or ink (writing kits and spell books) 2 Iron (weapons and chain and plate armors) 3 Food or wine 4 Oil, tar and pitch (torches, lanterns and flasks of oil) 5 Wood (shields, weapons, poles, tools and supplies) 6 Leather (leather armor, satchels, backpacks and helmets)',
+'Fire. One town location was badly damaged in a mysterious fire and is unavailable until it is rebuilt. Roll 1d6 for facility: 1 Stables 2 Inn 3 Homes 4 Shrine 5 Hedge witch 6 Tavern',
+'Weird phenomena. Strange things happen, even when the sun is shining: lights in the sky, voices in empty chambers, children writhing down staircases. Make an Ob 3 Will test to stay sane. Suggested failure results: afraid condition or a twist in which each time you eat, maggots fall from your mouth in clots and clumps. You are unable to eat and remain so cursed until you seek the help of a theurge or magician with the ability to break such evil magics.',
+'Mentorship. Your mentor is here and needs help with a powerful ritual or financial assistance in acquiring alchemical supplies.',
+'Grim tidings. Natural death of a prominent figure. Roll 1d6 to determine their end: 1-2 They die of old age, but maybe too old. 3-4 They die during childbirth, or the child is born bizarrely deformed and dies. 5-6 They die of a heretofore unseen illness.',
+'Greeted by silence. No bird chirps, no dog barks, no child cries as you shuffle into the settlement around the tower.',
+'A funeral celebration. Some old bastard is dead, and folks are celebrating in the streets. Someone offers you a cup of strange wine. Remove hungry and thirsty or if not hungry and thirsty, you wake up hungry and thirsty and hung over the next morning. In the latter case, you may remove angry or afraid if you have them.',
+'Pit fighting. Enterprising adventurers have sold some wretched creatures to the wizard&#8217;s fighting pits. All may choose one of the following options: <ul><li>Watch the fights and alleviate angry.</li><li>Watch the fights and take angry and recover one point of taxed Nature.</li><li>Gamble and bet 1D of coins and roll 1d6: 1-3: lose your bet, 4-6: double your money.</li></ul>',
+'Black cat crosses your path. A black cat with a broken tail scurries out from beneath a disabled wagon. She&#8217;s injured and sick and plainly tells you so. Scoop her up and treat her maladies, and she&#8217;ll remain your friend forever. She&#8217;ll travel with you, but she prefers to live in a base camp or a home.',
+'Unearthly aura. Like a color out of space, items begin to vibrate. Close your eyes, roll 1d6 and choose a number from one to six: 1 Gems glow with an unearthly light equivalent to a candle until the next town phase. 2 Your very bones shine with a ghostly white light. In the dark, you can see the glow faintly emanating from beneath the skin. Exposed bone acts as a torch until next town phase (except your teeth—keep your mouth shut, you&#8217;re letting the maggots out). 3 Liquids glow with a weird, green light equivalent to a candle. You may make an Alchemist test to distill the effect. 4 Metal sparks and crackles with a blue faerie fire until the next town phase. Carrying any metal renders sneaking, hiding or stalking impossible. Research with an Ob 3 Lore Master test to gain the knowledge to write a treatise on the effect. 5-6 Spirit simulacra. A ghostly doppelgänger appears at the shoulder of the youngest character, mimicking their movements. The doppelgänger will absorb one point of damage in a convince, abjure, trick or kill conflict. But if it does so, it dissipates with a shriek and shatters one random gear item possessed by the character. The game master decides which piece.',
+'The cat&#8217;s away. The master of the tower is away on business. All are granted +1D to all Resources and Circles tests for this town phase.',
+'The master comes down. The master descends to the town to hear the complaints of their servants. They will hear any injustice or complaint and seek to ameliorate it—short of casting a spell. Each adventurer may offer one complaint, but anything deemed frivolous will incite the master of the tower to enmity.',
+'Lucky star. Your lucky star transits the heavens. Portents are good. Apply the following effects to each character as appropriate:<ul><li>>If your Nature is taxed, restore it to its maximum.</li><li>If your Nature is untaxed, alleviate all conditions.</li><li>If untaxed with no conditions, become fresh when you leave town.</li><li>If current max Nature is 1, change one descriptor to Wandering, Seeing or Whispering.</li></ul>',
+'Lord of Whispers. The Lord of Whispers visits the wizard&#8217;s tower to look into the well being of her students. She invites the people to challenge her with wit, knowledge or magic. Should the challenger win, she will grant a boon (of the game master&#8217;s choice). Should she win, she laughs and curses them, replacing a Nature descriptor with Whispering. The character may no longer speak above a whisper. If missing a Nature descriptor, she writes Whispering in the empty slot.'
+];
+townEventsTable[7] = [ // Borderland Fortress
+'Conquered. The folk outside the walls rise up as one and conquer this place. The fortress is a smoking ruin, but maybe you can find something if you dig around. Mark this fortress as a ruin on your map. Remain in the adventure phase until you reach another settlement.',
+'Conquered. The folk outside the walls rise up as one and conquer this place. The fortress is a smoking ruin, but maybe you can find something if you dig around. Mark this fortress as a ruin on your map. Remain in the adventure phase until you reach another settlement.',
+'Conquered. The folk outside the walls rise up as one and conquer this place. The fortress is a smoking ruin, but maybe you can find something if you dig around. Mark this fortress as a ruin on your map. Remain in the adventure phase until you reach another settlement.',
+'Devastating fire. The fortress is badly damaged. There is no safe place to rest and no goods for sale. Remain in the adventure phase until you reach another settlement.',
+'Drought. Water is scarce at the fortress, and all town facilities are closed. Remain in the adventure phase until you alleviate the drought or you reach a new town.',
+'Civil war. The fortress has split into factions: the castellan against the priest of the shrine. The soldiers and the staff of the fortress take sides. Remain in the adventure phase until you resolve the fracture or until you reach another settlement.',
+'Raiders. Raiders beset the fortress. Remain in the adventure phase until you drive off the raiders or until you arrive at a different settlement. Roll 1d6 to determine the raiders: 1 Hobgoblins (6d6) 2 Orcs (6d6) 3 Dragefolk (3d6) 4 Gruxu (2d6) 5 Gnolls (6d6) 6 Bugbears (3d6)',
+'Collections. The castellan takes up a collection for the defense of the keep. Make an Ob 3 Resources test or instead give over carts and bulk food.',
+'Billeted war band. There&#8217;s no room at the accommodations; they&#8217;re occupied by officers. There&#8217;s no room at the stables; it&#8217;s crammed full of cavalry. Any horses owned by the group are claimed by the war band. You can sleep on the streets.',
+'Toppled cart. A friend of a friend (or cousin or enemy) was hauling a load of firewood to the fortress when their cart toppled over. Will you help them right it so they can be on their way? Make tests to right the cart in the current adventure phase before entering town. Maybe make a new friend.',
+'Challenged. The border guards challenge your approach. Announce yourself and your companions (with Boasting, Singing or Orator vs their Demanding Nature 4 plus 2D of help). Perhaps, if they are satisfied, they will permit you to enter. If unsatisfied, they demand a substantial bribe (Resources Ob 2). Make these tests in the current adventure phase before entering town.',
+'Halloo. You receive a friendly Halloo! from the watchers on the wall.',
+'Delivery. A caravan attends to the needs of the garrison. At least one relationship character—friend, parents, mentor—travels with them (game master&#8217;s choice).',
+'Herculean task. The stables need cleaning, and the stable-hands want help. Muck them out with an Ob 5 Laborer test. While you work, you find something: Roll on the Gear loot subtable. Steal it—or return it to the stable- hands and make a new friend. If you befriended the stable-hand and roll this result again, the stable-hands invite you to crash at the stables for free.',
+'Doctor. The proprietor of your accommodations frantically asks you for help. One of their other patrons is violently ill. Make an Ob 4 Healer test to treat the mysterious traveler. If successful, they offer a small reward as recompense for your time: Roll on the Books & Maps loot subtable.',
+'Gambling fever. Everyone in the fortress is gambling away their pay. Each character may play a round of Krezzik, Wizard or Diamondback. See the Gambling chapter. If the character wins, they earn 1D of copper coins.',
+'Spoils of war. A patrol returns from a victorious raid, piling their spoils in the courtyard for all to partake. Roll on the Weapons loot subtable for each character.',
+'Festival for Sigrun, Lady of Battle. Offer a prayer at the shrine and gain the blessing of the Immortals: +1D to Commander and Strategist tests until the start of the next town phase.',
+'Commission. Word of your deeds has reached the lord commander of this fortress. They offer a commission as a sergeant (warriors, rangers, outcasts) or a steward (magicians, burglars, skalds, thieves) at a steep discount (Ob 6 Resources). Buying the commission increases your Precedence by one. In addition, the commission pays 2D of copper coins at the start of each respite spent at the fortress. The offer stands until the end of the next town phase. Theurges and shamans get no such offer.',
+'Reinforcements. The fortress receives reinforcements. Repair a damaged or destroyed facility or add a new one: docks, flophouse, inn, tavern, a private home, canal, temple or wizard&#8217;s tower as appropriate (game master&#8217;s choice). The facility is completed during the next respite.'
+];
+townEventsTable[8] = [ // Dilapidated Port
+'Black plague. This place is a charnel house. Bodies lay piled in the streets. Say your prayers to the Immortals and move on. Mark this port as a ruin on your map. Remain in the adventure phase until you reach a different settlement.',
+'Black plague. This place is a charnel house. Bodies lay piled in the streets. Say your prayers to the Immortals and move on. Mark this port as a ruin on your map. Remain in the adventure phase until you reach a different settlement.',
+'Black plague. This place is a charnel house. Bodies lay piled in the streets. Say your prayers to the Immortals and move on. Mark this port as a ruin on your map. Remain in the adventure phase until you reach a different settlement.',
+'Devastating floods. This town is under water. There is no safe place to rest and nothing for sale. Remain in the adventure phase until the waters recede or until you move on to another town.',
+'Riots. Rioting, the unbeatable high. Adrenaline shoots your nerves to the sky. Remain in the adventure phase until the riots subside or until you reach a different settlement.',
+'Civil war. The town has split into factions or has taken up arms against its ostensibly allied neighbor. Remain in the adventure phase until the civil war subsides or until you reach a different settlement.',
+'Pirates. Enterprising pirates attack the port and occupy the outer defenses, holding the port master or another notable hostage. The market and guild hall are both closed until the ransom is paid.',
+'Dock strike. Increase the cost of hiring help by one at the guild hall and thieves&#8217; guild. Also, increase all Circles tests by +1 Ob during this town phase.',
+'Ghost ship. An expedition returns from a far-off land and something isn&#8217;t quite right. Temple acolytes patrol the streets in armed bands, and the temples are closed until the Immortals send a sign. Roll 1d6 for the state of the ghost ship: 1-2 The crew is dead; their bodies can still be seen rotting on the decks. 3-4 Rumors say the crew carries strange cargo. 5-6 The captain has gone mad and is locked up in a tower.',
+'New law decreed. Roll 1d6 to determine which type of law: 1-2 Criminal law (choose one) 3 Sumptuary law (choose one) 4-5 Civil law (choose one) 6 Religious law (choose one)',
+'Fad. The port has been captivated by a harmless new custom or fad. Everyone in the drinking halls and taverns is complaining about it. The folks at the well gossip about it. Children all envy it.',
+'Foreign guests. Roll 1d6 to determine their demeanor: 1-2 They chatter pleasantly in an unfamiliar tongue. 3-4 They are curious about the customs. 5-6 They apologetically jostle you in the street.',
+'Senescence. A prominent figure dies a natural death. Roll 1d6 for the figure: 1-2 Guild master 3-4 Prominent captain 5-6 Beloved noble',
+'Shore leave. A troupe of sailors gathers in the square and puts on a comical show. The crowd roars with laughter. Make a free test to recover from angry or afraid.',
+'Jonah. An impoverished, crippled sailor seeks you out for they have no one else left in the world to ask. They ask for a bottle of wine to ease their pain. Provide a bottle of port and add a new friend. If you befriended the sailor and generate this result a second time, you meet your new friend in town. Wine is optional the second time. If you happen to be attending a wedding, they will always offer to accompany you as your guest.',
+'Polite disagreement. A brawl erupts in the tavern. They fight over why the seas don&#8217;t swallow the earth. One side insists the seas have no bottom, and the other insists they do but they pour off the edge of the world. Pick a side, crack your knuckles and test Fighter vs Fighter 5 to enter the argument. Suggested twist: make a new enemy. If you make an enemy, and roll this event again, you meet your enemy and they wish to take up the argument anew.',
+'Holy day. The streets are packed with pilgrims and sailors. During this town phase: <ul><li>All Orator, Criminal and Scavenger tests are granted +1D.</li><li>Any religious item may be sold for 1D of copper coins.</li><li>Everyone may conduct one item of personal business for free.</li></ul>',
+'High holy day of the Immortal Waters. The priests choose one innocent child and drown them as a sacrifice to the Immortal Waters. Everyone receives one boon from the temple priests in the following order:<ul><li>They feed the poor (remove hungry condition or take one portion of fresh rations).</li><li>They heal the ailing (remove the sick condition).</li><li>Or they bless the lucky fools (you are granted +1D to all actions until you become hungry and thirsty).</li></ul>',
+'Your ship comes in. A sea voyage returns laden with valuable trade goods. Enterprising captains are putting together ships, crew and supplies for another run. You are invited to invest, but you must buy in during this town phase (see the Enterprise chapter). You may invest even if not in a respite. If you decide to invest, reduce the Precedence requirements by one for this once-in-a-lifetime offer and add +1 to the captain experience roll when setting up this sea voyage.',
+'Victory at sea. The fleet returns from battle victorious. They push ashore in boats laden with spoils and slaves. Everyone chooses one of the following:<ul><li>Purchase a new apprentice, cousin or companion with an Ob 4 Resources test (must have the appropriate level benefit).</li><li>Ransom your enemy out of captivity with an Ob 3 Resources test.</li><li>Purchase any one item from the Equipment chapter in this book.</li><li>Purchase a new piece of raiment with an Ob 2 Resources test.</li><li>Roll on the Books & Maps loot subtable. Purchase the item with a Resources obstacle equal to its inventory requirement.</li></ul>'
+];
+townEventsTable[9] = [ // Forgotten Temple Complex
+'Sorrowful end. The Immortals take pity on this forlorn reminder to their faded grandeur. The temple complex sinks into the sea, sand or grass, a faint ruin now and forever. Its inhabitants watch in mournful, sobbing silence. Mark this complex as a ruin on your map and remain in the adventure phase until you reach a different settlement.',
+'Sorrowful end. The Immortals take pity on this forlorn reminder to their faded grandeur. The temple complex sinks into the sea, sand or grass, a faint ruin now and forever. Its inhabitants watch in mournful, sobbing silence. Mark this complex as a ruin on your map and remain in the adventure phase until you reach a different settlement.',
+'Sorrowful end. The Immortals take pity on this forlorn reminder to their faded grandeur. The temple complex sinks into the sea, sand or grass, a faint ruin now and forever. Its inhabitants watch in mournful, sobbing silence. Mark this complex as a ruin on your map and remain in the adventure phase until you reach a different settlement.',
+'Ancient signs. Portents emerge throughout the temple complex, changing the very laws of truth. Remain in the adventure phase until the catastrophe abates or until you hurry off to a safer settlement. Roll 1d6 below for the type of catastrophe: 1 The moon disappears. No one dares utter a word lest they disturb the silence, and it fails to return. 2 The earth shudders and the temples sway. The main temple sighs and crumbles in on itself. Dust and ruin spread throughout the complex. The complex cannot reopen until the remaining structures are shored up. 3 A plague of locusts covers the complex. All shelter in the temples. 4 An army of one thousand venomous snakes slithers through the complex. Many inhabitants are bitten and die. 5 The Chosen One. A child of pure gold is born at the temple. All sit in hushed silence, praying at the child&#8217;s feet. 6 A beast-headed warlord (or vampire lord) claims the complex as a sanctuary. Its minions enslave the monks and pilgrims.',
+'Occupied. The temple complex is temporarily home to a group who does not respect its traditions. Remain in the adventure phase until you force out the encamped band or until you reach another town. Roll 1d6 to determine the occupying force: 1 Giants 2 Frosk 3 Hobgoblins 4 Gnolls 5 Undead 6 Gruxu',
+'Meditation. Trade and travel are forbidden to those who live among the temples. All monks, pilgrims and vendors sit in quiet meditation for 2d6 days. Remain in the adventure phase until the meditation ends or until you move on to a different settlement. Test Survivalist in the adventure phase if you want to wait out the meditation period.',
+'New law decreed. Roll 1d6 to determine which type of law: 1 Criminal law (choose one) 3 Civil law (choose one) 2 Sumptuary law (choose one) 4-6 Religious law (choose one)',
+'Shortages. The denizens of the forgotten temple complex are very poor and ill supplied. Permanently increase all Resources obstacles by +1.',
+'Pilgrims. A large group of pilgrims makes trouble for your crew. The game master chooses from the options below. Make tests to deal with the pilgrims in the current adventure phase. The pilgrims do one of the following:<ul><li>They devour all the food and take all the beds in the complex. Challenge the pilgrims or sleep on the streets.</li><li>They demand you join their tour of the temple. Test Persuader or Manipulator vs Will 4 to politely decline or make an Ob 2 Resources test as they force you to make a donation.</li><li>They take note of your profane behavior and demand you leave this holy place at once. Test Orator vs Orator 4 to sway the crowd to your favor and enter the complex as you please.</li></ul>',
+'Festival to the Ancient Immortals. Fireworks punctuate a ragged parade through the temple precincts.',
+'Funeral. A pious soul, now deceased, has asked the monks of this place to chant prayers to the Immortals in their memory. Choose one:<ul><li>The ceremony is respectfully observed by the relatives of the deceased.</li><li>The ceremony is unattended except for the officiants.</li></ul>',
+'Wedding. A devout couple, poor in money but rich in ancient traditions, asks the monks of this place to wed them.',
+'Serenity. The sky over the complex is cerulean blue, the sun a white disk and the air the sweetest you&#8217;ve ever drawn breath from. It&#8217;s good to be alive, and you know you are in the right place.',
+'Dimly lit portal. You pass an open shrine and see the Immortal within looking down upon you with impassive eyes. Leave a humble offering and ask the Immortal to forgive your transgressions. Appropriate offerings: a personal effect (from character creation), worthless coins, rusty keys, an idol of an unknown religion or a tool of unknown use. Roll 1d6 after leaving the offering to determine the Immortal&#8217;s response: 1-3 You are granted +1D 4-6 Remove angry, afraid or to your next test. exhausted (if no conditions, you are made fresh).',
+'Temple porter. The porter of this temple is very old and poor. They unlock the temple for you without a word and begin to sweep out its halls with an old broom. If you provide them with a bottle of wine, a new broom, holy vestments or 2D of coins, you make a new friend. If you return to the temple complex in the future, you may call upon the porter and stay at the temple for free (accommodations equivalent to a flophouse).',
+'Rehabilitation. A group of wealthy nobles of an ancient line hires artisans and laborers to restore a shrine of their house&#8217;s Immortal patron. Any who come to the shrine to (sincerely) pray before their Immortal patron is presented with a gift of gratitude (roll on the Shrine Table for patron and the Silver & Plate subtable for the gift).',
+'Monks. The devout adherents who live and pray among the forgotten temples form a new sect of poor monks. Feed them, pray with them or otherwise support them and they do one of the following:<ul><li>Gift you with a minor relic</li><li>Mentor you in the Theologian skill (mark a pass or fail, your choice)</li><li>Grant you membership (and vestments) in their new order</li></ul>',
+'High holy day. All accommodations, food and drink at the complex are free for your stay during this town phase.',
+'Ascension. Immured deep in a stupa, one of the complex&#8217;s aged monks ascends to Immortality. All present feel the Shroud Between Worlds ripple around them as the shift transpires. Roll 1d6 to determine the new Immortal&#8217;s sphere and accompanying benefit:<ol><li>Drunkenness: All water turns to wine.</li><li>Wealth: All silver turns to gold.</li><li>Devotion: Your raiment becomes a minor relic. The game master chooses invocations appropriate to the new Immortal.</li><li>Health: Remove all conditions. If no conditions, become fresh.</li><li>Love: Make a new friend here at the complex or the game master may introduce one in the future at another settlement.</li><li>Privation: Gain a new, additional level benefit: Vow to the Lords of Plenty and Want. When hungry and thirsty, this benefit allows you to make a Theologian (Ob 2) test to remove the condition. This test costs a turn on the grind or a check in camp and adds to lifestyle in town.</li></ol>',
+'Hand of the Immortal. Turning in its divine torpor, an ancient Immortal remembers this place. Dreaming, they reach through the Shroud of Worlds and touch the complex. All present may mark one passed or failed test for Theologian (your choice). In addition, any who have a creed related to the Immortal&#8217;s spheres of influence must replace a Nature descriptor with something relevant to the Immortal&#8217;s spheres of influence. If you have not yet replaced a lost Nature descriptor, you must take one of these descriptors, regardless of your creed.'
+];
+townEventsTable[10] = [ // Nomad Caravan
+'Vanished. The caravan isn&#8217;t where it should be...and indeed will never appear again. Its people have vanished, wiped from the earth as if they never existed. Erase this caravan from your map and remain in the adventure phase. If you discover what happened, perhaps they may return someday.',
+'Vanished. The caravan isn&#8217;t where it should be...and indeed will never appear again. Its people have vanished, wiped from the earth as if they never existed. Erase this caravan from your map and remain in the adventure phase. If you discover what happened, perhaps they may return someday.',
+'Vanished. The caravan isn&#8217;t where it should be...and indeed will never appear again. Its people have vanished, wiped from the earth as if they never existed. Erase this caravan from your map and remain in the adventure phase. If you discover what happened, perhaps they may return someday.',
+'Torn up. The caravan is scattered and torn to shreds—the wagon covers blow in the wind, debris careens across the field and horses wander through the wreckage. This is no safe place to rest. The nomads wave you on as they sort through the living and the dead. Remain in the adventure phase until you reach a different settlement.',
+'Mud. The caravan is mired in sucking mud. All hands are bent to hauling their carts and animals up onto dry ground. Remain in the adventure phase until the caravan extracts itself or until you reach a different settlement.',
+'Kidnapping. The nomads are up in arms, vowing vengeance. One of their own has been kidnapped by the locals of a nearby settlement. Remain in the adventure phase until you resolve the situation or until you reach a different settlement.',
+'Harassed. The local lord sends riders out to harass the nomads and force them to move on. Remain in the adventure phase until you and the nomads see off the patrols, until you appeal to the local authorities or until you arrive at a different settlement.',
+'Skillet. Someone stole the cook&#8217;s magical black iron skillet. No cooking or food preparation is allowed in the caravan until it is found and returned. The skillet doubles the effects of all cooking supplies added to it and produces one extra portion of food per Cook test. However, if the skillet is ever scrubbed clean, it loses its magical powers.',
+'Stampede. The caravan&#8217;s animals were spooked and have stampeded. Help the nomads round them up (with Peasant and Rider tests), and they&#8217;ll be glad to open their wagons up to you. Make tests to round up the animals in the current adventure phase before entering town.',
+'Rogue. One of the caravan&#8217;s mares has gone rogue, and you think you saw her up the trail before you arrived. Test Scout vs Nature 4 to track her down and receive the hostler&#8217;s gratitude. Make this test in the current adventure phase before entering town.',
+'Riding in. A small train of pack animals laden with supplies winds its way up to the caravan. The beasts look tired and overburdened. Make an Ob 4 Laborer test to help the drover carry in the supplies and earn their gratitude.',
+'Circle dance. The merry sounds of a fiddle and flute greet you as you arrive to find the nomads dancing in a circle. Upon seeing strangers, they laugh, wave and return to their labors.',
+'Foaling. The caravan&#8217;s folk are out to observe a foaling. Roll 1d6 to determine how it goes. On a 1, the foal is stillborn or dies soon after birth. Otherwise, all is well.',
+'Calving. The caravan&#8217;s folk hold their breath waiting for their cow to give birth to a calf. Roll 1d6 to determine how it goes. On a 1, an eagle springs forth from the womb and flies off, the cow dies in childbirth or a set of healthy twins are born. Otherwise, all is normal.',
+'Horse traders. The caravan is bandying with some horse traders, and you can get in on the action. You may purchase ponies, riding horses, draft horses, donkeys, mules or oxen during this town phase. Haggler tests made with the intent to purchase an animal do not add to lifestyle cost during this town phase.',
+'Wrestler. You see a crowd gathered as you approach the caravan. They part to admit you, and in their center you see a bear of a man, shirtless, his muscles shining with oil. With a barrel-chested laugh, he invites you into the ring. Jump in the ring and accept his challenge or walk away. Test Fighter vs Fighter 6 (Bear Strength trait level 3, Wrestling-wise and 1 fate point). Win and be given free accommodations for yourself and one companion during this town phase. Lose and make a new friend.',
+'Delicacies. The nomads offer you a serving of blood porridge chased with salty butter tea. Accept their offering and make an Ob 2 Health test. If successful, recover from angry and you are granted +1D to recover from afraid and exhausted during this town phase.',
+'Festival for the Lord of Eagles. Offer some meat or game to the caravan&#8217;s eagles to gain the blessing of the Immortals of the Sky: +1D to Arcanist, Ritualist and Lore Master tests until the next town phase.',
+'Funeral. The caravan&#8217;s matriarch has passed into the Sky Vault, and the nomads are sending her off with a tremendous party. Make an Ob 3 Health or Merrymaking test to try to keep up with the locals as they celebrate. If successful, remove all conditions (except fresh and dead). Fail and awake the next day hung over (hungry and thirsty), lying with a new friend and wearing their pendant (2D, worn/neck).',
+'Incarnation. A young child begins to chant in some unknown language. Its feet rise from the dust, and its eyes flash the deepest blue. It is possessed by an Immortal shard. Roll on the Shrine Table to determine what type of Immortal has possessed it. Swear yourself to its cult and you are granted +1D to Pathfinder tests when returning to this caravan, +1 to future town events rolls for this caravan and +1 Precedence in this caravan.'
+];
+townEventsTable[11] = [ // Prosperous Wayhouse
+'Catastrophic fire. Someone left the hearth fire unattended, and the way- house burns to the ground with a rapidity that shocks even you. Mark this wayhouse as a ruin on your map and remain in the adventure phase until you reach a new settlement.',
+'Catastrophic fire. Someone left the hearth fire unattended, and the way- house burns to the ground with a rapidity that shocks even you. Mark this wayhouse as a ruin on your map and remain in the adventure phase until you reach a new settlement.',
+'Catastrophic fire. Someone left the hearth fire unattended, and the way- house burns to the ground with a rapidity that shocks even you. Mark this wayhouse as a ruin on your map and remain in the adventure phase until you reach a new settlement.',
+'Plague. Guests at the wayhouse have brought the plague, and the establishment is quarantined. Remain in the adventure phase until the plague is miraculously cured or until you reach a new settlement.',
+'Raided. The wayhouse was recently raided by a marauding band. All food stores were taken, as well as the wine. All of the young and able staff were taken captive. Remain in the adventure phase until you track down the raiders and rescue the wayhouse&#8217;s goods and captured folk or until you arrive at a new settlement.',
+'Infestation. Vermin infest this wayhouse. Remain in the adventure phase until you drive out the pests or until you arrive at another settlement. Roll 1d6 to determine the type of infestation:<ol><li>Troll rats (4d6)</li><li>A cinder imp</li><li>Rats (10d6)</li><li>Horrid, tiny biting insects</li><li>Kobolds (2d6+6)</li><li>A brunnmigi</li></ol>',
+'Robbery. A thief steals one item from one character staying at the wayhouse. Remove an item from the top-most slot(s) of one backpack, sack or satchel (game master&#8217;s choice). The thief disappears into the night.',
+'Hard luck. Your friend is staying at the wayhouse and is at loose ends. They need you to pay their bills. Roll 1d6 to generate a Resources obstacle for their tab. The game master chooses which friend.',
+'Fire. Something caught fire and destroyed part of the wayhouse. The services of one facility are unavailable until rebuilt. Roll 1d6 for facility:<ol><li>Inn</li><li>Tavern</li><li>Tavern</li><li>Shrine</li><li>Stables</li><li>Wall</li></ol>',
+'Enemy within. Your enemy stays at the inn (game master&#8217;s choice).',
+'Visiting nobility. They smell nice, are polite and make no imposition.',
+'Ravens. A convocation of ravens gossips about you from the branches of a nearby tree.',
+'Small gifts. The innkeeper&#8217;s child emerges and presents you with a gift. Roll 1d6 to determine the present:<ol><li>A flower crown</li><li>An empty cup</li><li>A knife</li><li>A key</li><li>A toy ox or aurochs</li><li>A tooth</li></ol>',
+'Abandoned baggage. You find an abandoned bundle on the roadside leading to the wayhouse. Roll 1d6 to determine what it contains:<ol><li>An infant in swaddling cloth</li><li>A pouch of gold (2D, pack 1)</li><li>Four flasks of oil</li><li>A sack of kittens</li><li>A cloak</li><li>Six preserved rations</li></ol>',
+'Name day. It&#8217;s the innkeeper&#8217;s name day. Dance a jig with them and recover one point of taxed Nature. One character may take part.',
+'Spooked mare. A merchant&#8217;s mare has been spooked in the stables. Make a Rider vs Nature test to calm it and the merchant tosses you a reward: roll on Coins Table 1 for the reward.',
+'Hedge witch. The hedge witch&#8217;s cart has stopped over at the wayhouse, and they are in a selling mood. You may make one purchase from the Alchemical Agents Table with a +1D bonus to the Resources test.',
+'Lost pony. A muddy, scared pony trots onto the road—no saddle, bit or brand. Make a Rider vs Nature 4 test to comfort her and she&#8217;ll become your willing companion.',
+'Wedding celebration. Local wealthy peasants throw their children a raucous wedding at the wayhouse. All travelers are welcome under the laws of hospitality. Everyone may remove the hungry and thirsty and angry conditions. Behave yourself, and they present you with a gift at the close of the ceremony. Roll 1d6 for each character to determine what they receive:<ol><li>A marriage proposal from a fetching cousin</li><li>A bracelet (3D, worn/hands 1)</li><li>A silver knife, fork and spoon (1D each, pack 1 bundle)</li><li>A cask of wine (carried 2 or pack 4 for 4 draughts)</li><li>A fine suit (worn/torso 3 or pack 4)</li><li>A new friend (priceless and weightless)</li></ol>',
+'Caravansary. A caravan has stopped to rest and water its beasts at the wayhouse. Everyone may purchase from them one item from the Equipment chapter of this book. In addition, the caravan master is looking for investors. You are invited to invest, but you must buy in during this town phase (see the Enterprise chapter). You may invest even if not in a respite. Ignore the Precedence requirement. Investing in this opportunity now grants +1 to the captain experience roll for this expedition.'
+];
+townEventsTable[12] = [ // Shire
+'Scoured. The Shire has been scoured by ruffians. They&#8217;ve torn down old buildings, closed all the inns and taverns and built a horrid, polluting mill over the old one. Their leaders are backed by a war band. Remain in the adventure phase until you deal with these ruffians or until you run off to another, safer settlement.',
+'Scoured. The Shire has been scoured by ruffians. They&#8217;ve torn down old buildings, closed all the inns and taverns and built a horrid, polluting mill over the old one. Their leaders are backed by a war band. Remain in the adventure phase until you deal with these ruffians or until you run off to another, safer settlement.',
+'Scoured. The Shire has been scoured by ruffians. They&#8217;ve torn down old buildings, closed all the inns and taverns and built a horrid, polluting mill over the old one. Their leaders are backed by a war band. Remain in the adventure phase until you deal with these ruffians or until you run off to another, safer settlement.',
+'River rising. The water is rising, and the Shire is in danger. The residents scramble to move to higher ground. Remain in the adventure phase until the waters recede or until you reach a different settlement.',
+'Closed. The Shire is closed to visitors. No explanation is given. Remain in the adventure phase until you manage to convince the suspicious halflings to open their shutters to you or until you reach a different settlement.',
+'Feud. The halflings have split into factions and are feuding. It&#8217;s impossible for an outsider to easily understand the nature of the divide, but there appears to be three distinct groups who all want some variation of the same thing. Remain in the adventure phase until you resolve the feud or until you reach a different settlement.',
+'Raiders. The halflings are in the midst of chasing off a group of bold raiders. Companies of halfling archers patrol the Shire, and they don&#8217;t trust you one bit. Remain in the adventure phase until the raiders are driven off or until you arrive at a different settlement.',
+'Shiriff. The Shire reeve makes their rounds, collecting the annual taxes for the Moot. You must pay one of the following: four draughts of wine or ale, one pony, a sack of flour or beans or a tax equivalent to an Ob 3 Resources test.',
+'Visiting relatives. One of the neighboring clans is visiting. All the rooms at the inn are occupied, and the tavern is overcrowded (making it impossible to tell tales).',
+'Gray mantle. A strange, battered gray hat bobs past behind an adjoining hedge. You turn the corner to peek behind the row, but you see nothing except a strange circular door with an odd mark recently placed upon it.',
+'Second breakfast. You smell the intoxicating scent of freshly baked bread.',
+'Hello stranger. You receive a cordial “Good day” from an elder halfling.',
+'Market day. There is a market open during this town phase and the whole Shire has come out. Adventurers may purchase from the Basic Gear List in the Dungeoneer&#8217;s Handbook (except for weapons which are illegal).',
+'Beekeeper&#8217;s plight. You find the beekeeper sitting on a stump nursing a bad sting. Offer a joke to lighten the mood or make an Ob 1 Healer test to tend to the injury, and they return the favor with a pot of honey (pack 1) that can be used as supplies for the Cook skill, as spell materials for the Thread of Friendship spell or as a one-time +1D bonus to recover from angry, afraid, exhausted or sick.',
+'Prancing Pony. The inn is full tonight. Ruddy faces drink to their heart&#8217;s content. Add +1 to all telling tales rolls during this town phase.',
+'Peace and quiet. The atmosphere of the Shire is so peaceful, all are granted +1D to recovery tests during this town phase.',
+'Bumper crop. A good harvest is in (or last season&#8217;s harvest is being turned out). Take as many supplies for the Cook skill as you can carry (pack 1 each).',
+'Shire Moot. The Thain of the Shire oversees the annual Moot and the ensuing celebration. All who attend are fed and watered (with ale, of course). Attendees also receive one boon in the following order:<ol><li>Automatically recover from one condition (in recovery order).</li><li>If you have no conditions, recover one point of taxed Nature.</li><li>If you have no conditions or taxed Nature, you are made fresh.</li></ol>',
+'Ribadyan. The Shire is caught up in a great celebration of the birth of an important child. Their normally reserved air has fallen away, and an infectious mood overtakes the halflings. Everyone gets a gift, even you! Roll on Loot Table 2 for each character. Return the gesture and provide your giver with a gift at a later date to make a new friend.',
+'Prosperity. The Shire&#8217;s labors have borne fruit. The halflings build a new facility. Roll 1d6 to determine which type:<ol><li>Tavern</li><li>Tavern</li><li>Well</li><li>Farm or pasture</li><li>Inn</li><li>Canal</li></ol>',
+];
+townEventsTable[13] = [ // Steading
+'Gone. The inhabitants of the steading are gone, along with their livestock. There is no trace of them. Take up its care and maintenance yourself or mark the steading as a ruin on your map and head to another settlement.',
+'Gone. The inhabitants of the steading are gone, along with their livestock. There is no trace of them. Take up its care and maintenance yourself or mark the steading as a ruin on your map and head to another settlement.',
+'Gone. The inhabitants of the steading are gone, along with their livestock. There is no trace of them. Take up its care and maintenance yourself or mark the steading as a ruin on your map and head to another settlement.',
+'Bad weather. The steading is battered—its thatching tossed aside in heaps, its shutters torn off and its gate knocked down. This is no safe place to rest. Remain in the adventure phase until you&#8217;ve repaired the place or until you move on to a new settlement.',
+'Drought. The well is dry, and the river is nothing but mud. The inhabitants here will die soon without water. Remain in the adventure phase until you find a new source of water or until you reach a different settlement.',
+'Murder. There&#8217;s been a murder in the steading, and the allies of the victim are in hiding. Remain in the adventure phase until you resolve the situation or until you reach another settlement.',
+'Bandits. The steading is beset by bandits. Remain in the adventure phase until you drive off the bandits or until you arrive at a different settlement.',
+'War tax. Riders from the nearby fortress come to the steading and claim one animal or conscript one person to serve them in this time of war. Will you volunteer so the steading&#8217;s family is not torn apart?',
+'Guests. This steading is hosting a group of guests. If you wish to stay here, you&#8217;ll have to bunk with them in the stables.',
+'Clearing. There&#8217;s no shortage of work to be done at the steading. Make an Ob 2 Peasant test to help them clear a field and they&#8217;ll be glad to feed you and have you stay for a bit. Make this test in the adventure phase before entering town.',
+'Firewood. There is a tremendous amount of work to be done before winter, and the families here could use your help. Make an Ob 1 Laborer test to chop firewood and they&#8217;ll be glad to feed you and have you stay for a bit. Make this test in the adventure phase before entering town.',
+'Howdy. The steading&#8217;s residents greet you kindly and ask your business here.',
+'Foaling. The steading&#8217;s folk are out to observe a foaling. Roll 1d6 to determine how it goes. On a 1, the foal is stillborn or dies soon after birth. Otherwise, all is well.',
+'Calving. The steading&#8217;s folk hold their breath waiting for their cow to give birth to a calf. Roll 1d6 to determine how it goes: On a 1, the calf is born with horns, two heads or a serpent for a tail. Otherwise, all is well.',
+'Fever. The families of this steading have contracted a fever. Sick and feeble, they beg for your help. Make an Ob 4 Healer test to help tend to the infirm or leave them to their fate. If the family recovers, they vow their lives to the healer. Make a new friend. Suggested failure: sick condition.',
+'Ill advised trip. Two of the young folk of the steading are missing, either having rowed themselves out to the middle of the fjord or wandered off into the forest. Help rescue the children and the family will feed and accommodate you for free.',
+'Bumper crop. A good harvest comes in (or last season&#8217;s harvest is being turned out). Take as many supplies for Cook as you can carry (pack 1 each).',
+'Festival for the Lord of Sowing and the Lady of Reaping. Offer a prayer to gain the blessing of the Immortals: +1D to Peasant and Laborer tests until the next town phase.',
+'Birth in the family. The steading&#8217;s folk are celebrating the birth of a new addition to their family. In a joyous mood, they invite you to share in the celebrations. They feed you and offer a sour beer to quench your thirst (remove hungry and thirsty). In addition, they offer a small gift: Roll on Loot Table 1 for the party.',
+'Prosperity. The steading&#8217;s struggles have borne fruit. The folks here build a new facility. Roll 1d6 to determine which type:<ol><li>Shrine</li><li>Shrine</li><li>Home</li><li>Home</li><li>>Wall</li><li>Farm or pasture</li></ol>'
+];
+townEventsTable[14] = [ // Walled Town
+'Catastrophic fire. The town burns to the ground with a rapidity that shocks even the cynical. Mark this town as a ruin on your map and remain in the adventure phase until you reach another settlement.',
+'Catastrophic fire. The town burns to the ground with a rapidity that shocks even the cynical. Mark this town as a ruin on your map and remain in the adventure phase until you reach another settlement.',
+'Catastrophic fire. The town burns to the ground with a rapidity that shocks even the cynical. Mark this town as a ruin on your map and remain in the adventure phase until you reach another settlement.',
+'Plague. Bodies of the dead are piled in the streets. The town is closed. Remain in the adventure phase until you miraculously cure the plague or until you reach a new town.',
+'Famine. A curse lays upon the land. There is no food available in the area. Remain in the adventure phase until the famine is miraculously relieved or until you reach a new settlement.',
+'Collapse. A portion of the town&#8217;s ancient defensive wall collapses and reveals something evil. Remain in adventure phase until you deal with the evil or until you arrive at another settlement. Roll 1d6 for evil:<ol><li>A barrow wight&#8217;s barrow</li><li>A haugbui&#8217;s tomb</li><li>A draugr&#8217;s grave</li><li>A vengeful spirit&#8217;s haunt</li><li>A disturbed spirit&#8217;s bones</li><li>The resting place of 1d6 skeletal honor guard</li></ol>',
+'Robbers. En route to the gates, you are set upon by 2d6 robbers. They are happy to take voluntary payment of 1D of coins for each of them (or its equivalent). Failure to pay up provokes an effort to collect involuntary payment. Use the thug stat block for the robbers. Remain in the adventure phase until you resolve this predicament.',
+'Watchers on the wall. The watch demands to know your business in town. If your business is with their rivals or counter to their mood, they will deny entry to the town. Make an Ob 3 Resources test to bribe the watch to enter the town in peace.',
+'Hard luck. Your friend is laid up in the stables, injured, sick and penniless. They need help finding accommodations and treating their conditions.',
+'Fire. One facility has burned down. Roll 2d6 to determine the facility: 2-3 Guild hall 4 Private home 5 Stables 6 Tavern 7 Docks 8 Market 9 Inn 10 Flophouse 11 Shrine 12 Thieves&#8217; guild',
+'Enemy at the gates. One of your enemies is acting as a watch captain on duty. Try to slip past them to avoid trouble. The game master chooses which enemy.',
+'All is well. The guild hall bell tolls the hour.',
+'Lepers. Ragged lepers crawl forth from the ditches and beg for alms. Roll 1d6 to determine what they offer you in return:<ol><li>A tarnished ring (2D)</li><li>A rusted key</li><li>A strange graven image</li><li>An indecipherable note</li><li>An empty bottle</li><li>A prayer to the Immortals</li></ol>',
+'Defend the walls. The town is attacked just as you enter. Test Fighter vs Fighter 4 to defend the walls against an attacker. If successful, you are granted +1D to Circles during this town phase. If failed, or you decline to take part, you suffer -1 to Precedence during this town phase.',
+'Religious procession. The priests anoint you with holy unctions as they pass: +1D to your next recovery test during this town phase.',
+'Thief interrupted. As you pass through the gates, you spot a pickpocket at work on a wealthy merchant. Do you shake the thief down or break up the operation? Shake the thief down and walk away with a pouch of gold coins (2D) and a new enemy. Break up the thievery and get rewarded with a pouch of silver coins (1D) and a new friend. Make tests to resolve this situation in the adventure phase before entering town.',
+'Expedition returns. You have the opportunity to purchase any one item from the Equipment chapter in this book with +1D bonus to the Resources test.',
+'Orphan. A bedraggled orphan begs you for food. They suffer from the hungry and thirsty, angry, afraid, exhausted, injured and sick conditions. Nurse them back to health, and they&#8217;ll become an additional apprentice or companion. Treat them poorly, and they&#8217;ll become a deadly enemy.',
+'Hanging. The trial of a local murderer ends with a clear verdict and a death sentence. The town comes out to celebrate. At the execution, if you agree with the sentence and publicly demonstrate your support, remove hungry and thirsty, angry or afraid for free, and you are granted +1D to recover from exhausted during this town phase.',
+'Survivors. Two hollow-eyed adventurers carry packs laden with loot toward the gates. They both appear to be wounded and jumpy. Will you leave them to their hard-earned spoils or will you rob them of their prizes before they enter town? Rob them and contend with a level 5 warrior and level 5 magician who are both ready for a fight. If you drive them off or slay them, roll thrice on the Treasure & Valuables 3 subtable. If you leave them be, they buy your drinks at the tavern later that night. Any tests made to ambush the pair take place in the adventure phase before entering town.'
+];
+const rumourTable = [ // Tavern Rumours
+'The strange elder. A kindly old woman approaches your table and...(game master&#8217;s choice)<ul><li>Drapes an elven amulet around your neck.</li><li>Drapes a cursed amulet around your neck.</li><li>Gives you a basket of baked goods.</li><li>Implores you to avenge her son&#8217;s death.</li></ul>',
+'Mysterious figure. A cloaked figure sits huddled in the corner, coughing blood. Beckoning you closer, you see something valuable clutched in their moribund hand.',
+'Enemy expedition. Your enemy, well-equipped but secretive, enters the tavern with a motley group.',
+'Rival crew. You meet unlikely and unreliable would-be adventurers looking to add to their crew. They watch and wait until you have a lead and then try to muscle into your work.',
+'Sudden appearance. Your friend, bedraggled and disheveled from the road, bursts into the tavern with an incredible tale to tell.',
+'Beware. As you leave, the hosteler warns you about (roll 1d6)...<ul><li>1 Raiders from a nearby town</li><li>2 Their terrible gas. Har, har.</li><li>3 Orcs or gnolls in the forest</li><li>4 A troll lurking under a bridge</li> <li>5 Ghosts who haunt the road</li><li>6 A giant in the river</li></ul>',
+'The traveler. You meet an injured traveler telling a tale of (roll 1d6):<ul><li>1 Abduction</li><li>2 Robbery</li><li>3 A terrifying detour</li><li>4 A bizarre place</li><li>5 A miraculous happening</li><li>6 A frightening monster</li></ul>',
+'Omen. An omen of things to come...<ul><li>1 An unkindness of ravens mocks you from the trees outside</li><li>2 The moon (or sky) is red</li><li>3 The road is utterly silent as you depart—no sign of bird, insect, or animal</li><li>4 Thunder rolls and lightning crashes in the distance</li><li>5 A stone carved with strange runes sits concealed outside the tavern</li><li>6 The wind seems to howl your name</li></ul>',
+'Watch rumors. An old codger who was on watch last night tells you that ghouls were seen digging in the grave pits. Roll 1d6 to determine who was actually digging in the grave pits:<li>1 Ghouls</li><li>2 Grave robbers</li><li>3 A desperate necromancer</li><li>4 Foolish children</li><li>5 Deranged wastrels</li><li>6 A barrow wight</li></ul>',
+'Job offer. You meet people (farmers, guildsmen, priests, nobility) looking for short-term muscle to (choose one):<ul><li>Bolster a steading</li><li>Drive off some troublesome monsters (kobolds, bridge troll, undead)</li><li>Investigate a mysterious happening</li><li>Recover something from a recently overrun holding (a hostage, valuables, a keepsake, lore, etc.)</li><li>Safeguard travelers. Roll 1d6 for type.<ul><li>1: pilgrims</li><li>2: merchants</li><li>3: nobles</li><li>4: priests</li><li>5: regular folk</li><li>6: a messenger</li></ul></li><li>Settle a score</li><li>Re-establish contact with someplace lost</li></ul>',
+'Dismaying news. You hear a rumor that strangely fits the details of your parents, their livelihood and an entirely credible calamity which has befallen them.',
+'Messenger. As you depart, a messenger chases you down and delivers a sealed message from your mentor.',
+'Bonne chance. Your host says they will foot your next bill if you would perchance help them with delivering a small package (pack 2) to their friend in a nearby town. If successful, receive a free drink (and +1 to tavern rumors rolls) during your next visit.',
+'Challenge. A drunken warrior holds the door and challenges all comers. If you dance with them, test Fighter vs the warrior&#8217;s Fighter 6 (Might 3 and level 3 Duelist trait) or sit down.',
+'Drunk priest. A drunken temple priest babbles about propitiatory rites to the Jotnar to be performed beneath the temple this very night. Roll 1d6 for this person&#8217;s gripping rumor:<ul><li>1 An orphan</li><li>2 A captive</li><li>3 A terrible beast</li><li>4 A book of knowledge</li><li>5 A spell book</li><li>6 A powerful item</li></ul>',
+'Spurned lover. The irate paramour of one of the leaders of this place is in the tavern spinning tales. Roll 1d6. They talk about:<ul><li>1 Their lover&#8217;s tainted nature</li><li>2 An incoming shipment</li><li>3 A strange visitor</li><li>4 Their lover&#8217;s behavior</li><li>5 A terrifying ritual</li><li>6 Their lover&#8217;s spouse&#8217;s secret</li></ul>',
+'Regular. You strike up a friendship with the owner or staff of the tavern. Mark them as a town friend and receive the associated benefits.'
+];
+const guildTable = [ // change so that the second item is pushed into the array for formatting
+['Apothecaries', 'Factor for acquiring medicine'],
+['Bakers', 'Factor for acquring food'],
+['Barbers', 'Factor for hiring a healer'],
+['Temple Acolytes', 'Factor for paying for invocations'],
+['Armorers', 'Armor and shields unavailable'],
+['Blacksmiths', 'Metal goods unavailable'],
+['Bowyers', 'Bows unavailable'],
+['Brewers', 'Beer unavailable'],
+['Butchers', 'Meat unavailable'],
+['Carpenters', 'Wood and building services unavailable'],
+['Chandlers', 'Candles unavailable'],
+['Clothworkers','Cloth unavailable'],
+['Cobblers', 'Shoes and boots unavailable'],
+['Tanners', 'Leather unavailable'],
+['Cutlers', 'Knives and blades unavailable'],
+['Dyers', 'Dye unavailable'],
+['Farriers', 'Horseshoes and metalwork unavailable'],
+['Farriers', 'Horseshoes and metalwork unavailable'],
+['Fishmongers', 'Fish unavailable'],
+['Fletchers', 'Arrows and bolts unavailable'],
+['Goldsmiths', 'Gold and gem exchange unavailable'],
+['Loriners', 'Bits, bridles, spurs unavailable'],
+['Masons', 'Cut stone and building services unavailable'],
+['Masons', 'Cut stone and building services unavailable'],
+['Plumbers', 'Lead, pipes, and pumps unavailable'],
+['Poulters', 'Chickens and feathers unavailable'],
+['Saddlers', 'Saddles unavailable'],
+['Salters', 'Salt, salt-fish unavailable'],
+['Wheelwrights', 'Wagons and wheels unavailable'],
+['Carters', 'Hauling, drayage, and labour unavailable'],
+['Vintners', 'Wine unavailable'],
+['Weavers', 'Cloaks and blankets unavailable'],
+['Scriveners', 'Writing services unavailable'],
+['Woolmen', 'Factor for buying cloaks and clothes'],
+['Shipwrights', 'Ships and boats unavailable'],
+['Magicians and Alchemists', 'Spells, consultations, and alchemical agents are unavailable']
+];
+const homeOwnershipTable = [
+'Impish behavior. A cinder imp has made its home in your hearth. Roll 1d6 to determine the effect (if the home isn&#8217;t destroyed, apply a -1 to future home events rolls until the property is repaired and the cinder imp is tamed or driven out.): 1 A fire that destroyed the home 2 A fire that destroyed a cache 3-4 A fire that destroyed the accommodations 5-6 Hearth ruined',
+'Flood. The area flooded while you were away. Roll 1d6 for the effect: 1-3 Minor flood on first floor (-1 to future home events rolls) 4 Major flood on first floor (-2 to future home events rolls) 5 Second story flooding (-3 to future home events rolls) 6 House washed away',
+'Vermin. Vermin infest the house. If you have cats, roll 1d6. If you roll equal to or less than your number of cats, they chase away the vermin. If they fail to chase them off, the vermin spoil your food stocks (or eat it all).',
+'Mold. Something horrible is growing in the cellar (or rafters). Roll 1d6. On a roll of 1 it is a creeping ooze.',
+'House broken. Roll 1d6 for damage: 1-2 Roof leaks 3-4 Shutters broken  5-6 Door comes off the hinges: -1 to home events until repaired.',
+'Squatters. They ate your food and drank your beer—and they&#8217;re still here, asleep in your beds. Remain in the adventure phase until you&#8217;ve had a serious talk with them.',
+'Thieves. Thieves broke in while you were away and stole 1d6 items from your caches. Game master chooses items.',
+'Safe house',
+'Safe house',
+'Safe house',
+'Guests. Guests arrive unexpectedly. Oh great. They arrive hungry and thirsty, angry and exhausted. Hope there&#8217;s room; otherwise you&#8217;ll be sleeping double to a cot. The game master chooses which specific relationship characters show up. Roll 1d6 for type: 1-2 Friend 5 Mentor 3-4 Parents 6 Enemy',
+'Hearth fire glows. Purchasing this home was the best idea you ever had. All may take one free test to recover from angry, afraid, exhausted or sick.',
+'Safe and sound. Nothing like a nice home to make one feel secure: +1D for all recovery tests during town phase.',
+'Lost and found. An item that was lost at some point in the past mysteriously awaits you upon your return home.',
+'Mysterious package. There&#8217;s a package sitting on your doorstep. Roll 1d6 to determine what it contains:<ol><li>A creepy idol in your image</li><li>Baked goods (two fresh rations)</li><li>A cheese wheel</li><li>A kitten</li><li>A puppy</li><li>A note and a roll on the Books & Maps Table</li></ol>',
+'House goblin. The house goblin emerges and it is hungry. If fed, you are granted +1 to the next home event roll.',
+'Approval. You&#8217;ve done well. A house goblin adopts you. You are granted +1 to all home events rolls for this home. If you generate this result again, an additional house goblin appears, and so on. All house goblins demand to be accommodated—requiring a portion of food and wine during each of your stays in your home. If unfed for one stay, they temporarily withdraw their support. If unfed for multiple respites, each house goblin imposes a -1 penalty to the home events roll.'
+];
+const dockEventsTable = [
+'Press ganged. You&#8217;re cornered by a determined press gang. Test Fighter vs Fighter 3 plus 6D of help. Suggested condition: injured. Suggested twist: you&#8217;re now a galley slave.',
+'Brawl. You manage to insult some salty dogs and start a brawl. Test Fighter vs Fighter 4, but no weapons are allowed. Suggested twist: wake up in an alley with your pack missing (but you should see the other guys).',
+'Brawl. You manage to insult some salty dogs and start a brawl. Test Fighter vs Fighter 4, but no weapons are allowed. Suggested twist: wake up in an alley with your pack missing (but you should see the other guys).',
+'Thieved. Your pouch is stolen.',
+'Thieved. Your pouch is stolen.',
+'Thieved. Your pouch is stolen.',
+'Clothing soiled. You suffer +1 Ob to all Circles tests until your clothing is replaced or thoroughly cleaned.',
+'Clothing soiled. You suffer +1 Ob to all Circles tests until your clothing is replaced or thoroughly cleaned.',
+'Clothing soiled. You suffer +1 Ob to all Circles tests until your clothing is replaced or thoroughly cleaned.',
+'Animal friend. You&#8217;re befriended by a: 1 Monkey (+1D to Criminal tests; +1 lifestyle cost in town) 2-3 Parrot (+1D to Orator tests) 4-5 Trained rat (pack 1; grants +1D to tests to avoid traps) 6 Polydactyl cat (+1D to Sailor tests and otherwise acts like a cat)',
+'Fall in with pirates. You fall in with a band of pirates and get whisked away on a wild adventure. You may not make additional tests during this town phase. On your adventure, abandon one piece of gear or loot (nothing expendable) and then do the following: Mark a Sailor test, pass or fail (your choice); add a new friend from the pirate crew; add Dread Pirate-wise if you have a wise slot available. You&#8217;re back at the end of this town phase before your friends notice you&#8217;re gone, maybe with a new tattoo.'
+];
+constFellowInvestorsTable = [
+[0, 'Desperate adventurers'],
+[0, 'Desperate adventurers'],
+[0, 'Desperate adventurers'],
+[0, 'Desperate adventurers'],
+[0, 'Desperate adventurers'],
+[1, 'Ruined merchants'],
+[1, 'Wealthy adventurers'],
+[2, 'Merchant-venturers'],
+[3, 'Guild masters'],
+[3, 'Merchant prince'],
+[4, 'Royal endeavour']
+];
+const captainPrecedenceTable = [
+[0, 'An ambitious adventurer starting their career'],
+[0, 'An ambitious adventurer starting their career'],
+[1, 'A journeyman captain'],
+[1, 'A journeyman captain'],
+[1, 'A journeyman captain'],
+[2, 'An accomplished merchant-venturer']
+];
+const captainExperienceTable = [
+['Inept captain', '-1 to Pay Off Table roll'],
+['Daring captain', 'If pay off results in Abandoned or Stranded, take one additional pay off roll at -1 during the next respite'],
+['Drunk captain', 'Reduce <i>Returns!</i> results by 50%'],
+['Gullible captain', 'If delayed, -1 to next pay off roll'],
+['Bloody-minded captain', 'Bloody-minded captain. If delayed, +1 to next pay off roll, but change this delay result to Mutiny for all future rolls on the Pay Off Table for this captain'],
+['Efficient captain', '+1 to Pay Off Table roll'],
+['Rare talent', '+2 to Pay Off Table roll']
+];
+const expeditionPayOffTable = [
+'Strange artifact. Something terrible follows the crew home. Roll 1d6: 1: Nykr, 2: Draugr, 3: Disturbed Spirit, 4: Linnorm, 5: Cyclops, 6: Giant (Sjorisar, Thursar or Hrimthursar as appropriate).',
+'Changed. The crew or captain returns, but changed. They seek revenge on the people who sent them on such a mad journey. Their stats are as the Draugr or Barrow Wight.',
+'Cargo Revolts. The cargo rises up, throws off its chains, kills the captain and crew, and claims the transports as their own. (Count as crew and cargo lost for expeditions)',
+'All is lost. All cargo lost, crew killed, transports lost (captain survives).',
+'Mutiny. The crew mutinies and steals remaining cargo; -1 to captain rolls for future expeditions to this locale.',
+'Stranded. Transports lost, crew, captain and cargo stranded in last known location. Crew and captain must be rescued.',
+'Stragglers. The crew and captain return with damaged transports and poor goods. No returns. +1 Ob to next investment.',
+'Abandoned. Crew abandons expedition. The captain is stranded at their last known location; -1 to captain rolls for future expeditions.',
+'Decapitated. Captain lost, roll for new acting captain. Counts as delay.',
+'Delay. Pirates or bandits delay the expedition and harm the crew. Suffer -1 to future pay off rolls for this expedition.',
+'Delay. Transports damaged due to catastrophic weather event. Suffer -1 to future pay off rolls for this expedition.',
+'Delay. Poor planning delays the expedition.',
+'Delay. Political turmoil in trading areas delays the expedition.',
+'Returns! Shares pay off at half share price (.5x round down).',
+'Returns! Shares pay off equivalent to share price (1x). 16 Returns! Shares pay off at 2x share price.',
+'Returns! Rare commodity pays off at 10x share price.',
+'Returns! Shares pay off at 1.5x share price.',
+'Returns! Pay off of 5x share price.',
+'Returns! Pay off of 5x the share price; investors are granted +1 to the next 1d3 Captain Experience rolls.',
+'Returns! Precious substance: Pay off of 10x the share price; investors are granted +1 to Pay Off and Captain Experience rolls for 2d6 future expeditions to this locale.',
+];
+const weatherTypes = [
+'Blustery Winds.<br/><br/>These strong, cold winds can chill to the bone and turn simple tasks into seemingly monumental challenges. However, it&#8217;s excellent sailing weather. In blustery winds:<ul><li>Lighting a fire (including torches and lanterns) without shelter from the wind requires a test, even if you have a tinderbox.</li><li>All social tests suffer a -1s penalty.</li><li>Sailor tests are granted +1D.</li><li>Toll in blustery winds: +1</li></ul>',
+'Clear and Cool<br/><br/>On days when the sun is shining, the winds are quiet, and the wildflowers and fruit orchards are blossoming it is a joy to be on the open road. In clear and cool weather:<ul><li>Travelers are granted +1D to recover from angry or afraid.</li><li>Scavenger tests to forage are granted +1D.</li><li>Toll in clear and cool weather: -1</li></ul>',
+'Cold Snap<br/><br/>',
+'Crisp and Cold<br/><br/>Fall and winter weather isn&#8217;t all dreariness. Some days dawn clear and bitingly cold, granting the land a raw-boned beauty under icy blue skies. In crisp and cold weather:<ul><li>Travelers are +1D to recover from angry or exhausted.</li><li>Hunter tests to catch game are granted +1D.</li><li>Toll in crisp and cold weather: +0</li></ul>',
+'Extreme Cold<br/><br/>Some winter days are so cold that your bones ache and your lungs burn with each breath. Any exposed flesh that hasn&#8217;t been smeared with animal grease is at risk of frostbite. In extreme cold:<ul><li>Any tests that involve fine motor control suffer a +1 Ob or -1s penalty as appropriate.</li><li>The injured condition (frostbite) is an appropriate consequence for any failed test.</li><li>Characters who become wet and cannot immediately get to shelter and warmth must make an Ob 4 Health test. Suggested condition: sick from hypothermia.</li><li>Death is an appropriate consequence for any failed test involving someone who is injured or sick.</li><li>Toll in extreme cold: +1</li></ul>',
+'Fog<br/><br/>At times, dense, soupy fogs settle on the land, drastically limiting visibility and muting sounds. Traveling in unfamiliar lands is treacherous under such conditions. In fog:<ul><li>Travelers suffer a +1 Ob penalty to Pathfinder tests and actions that depend upon seeing great distances, like perceiving ambushers sneaking toward them.</li><li>When adventurers fail tests, the game master may choose to make them lost or separated in addition to the twist or condition imposed.</li><li>All are granted +1D to actions that involve sneaking or stealth.</li><li>Toll in fog: +0</li>',
+'Frost<br/><br/>In fall and winter, clear nights offer their own special danger: blankets of hoarfrost and rime. Beautiful to be sure, but potentially deadly if care is not taken to prevent one&#8217;s clothes and gear from taking the wet. In frost:<ul><li>All Sailor tests suffer a +1 Ob penalty as boats, ships and their rigging become unwieldy from the weight of ice.</li><li>Adventurers sleeping in the open must make an Ob 2 Health test when leaving camp. Suggested condition: exhausted or injured from frostbite. Suggested twist: clothing becomes wet.</li><li>Toll in frost: +0</li>',
+'Gale<br/><br/>At times, blustery winds turn into violent blows that can bring down branches from trees, pluck people from the sides of mountains and break masts laden with too much sail. In a gale:<ul><li>It is impossible to light a fire without shelter.</li><li>Spoken communication is extremely difficult.</li><li>Any outdoor skill or ability test suffers a +1 Ob penalty, particularly Sailor and Dungeoneer tests.</li><li>Adventurers who spend significant time in a gale must make an Ob 3 Health test. Suggested condition: exhausted or injured.</li><li>Exhausted and injured are appropriate conditions for failed tests.</li><li>Toll in a gale: +2</li>',
+'Heatwave<br/><br/>Occasionally, spring will bring warm weather early and suddenly. While the warmer temperatures are often welcome, the rain and rapidly melting snow and ice can lead to floods and other extremely dangerous conditions. Avalanches become likely in mountainous areas, and settlements and fords can be washed out by swollen rivers. In a heatwave:<ul><li>Tests involving fording rivers or streams during spring suffer a +1 Ob penalty.</li><li>Tests involving heavy exertion or running suffer a +1 Ob penalty.</li><li>Toll in a heatwave: +1</li></ul>',
+'Ice Storm<br/><br/>The freezing rains of ice storms can be a deceptive killer. The glaze of ice that covers everything is eerily beautiful, but it hides many dangers. Being caught at sea in an ice storm is especially perilous. In an ice storm:<ul><li>Outdoor skill or ability tests suffer a +1 Ob penalty, including Pathfinder, Sailor or even Fighter.</li><li>It is extremely difficult to spend any length of time outdoors without getting soaked to the skin. Adventurers that become wet in this way must make an Ob 3 Health test. Suggested condition: sick from hypothermia.</li><li>Toll in an ice storm: +2</li></ul>',
+'Rain<br/><br/>Cold, heavy rains can last for days, leaving everyone miserable and soaked to the skin. In rain:<ul><li>Outdoor skill or ability tests suffer a +1 Ob penalty, particularly Pathfinder and Scout tests. Cartography tests are impossible without shelter of some sort.</li><li>At their discretion, the game master may call for adventurers working or fighting outdoors to make an Ob 2 Health test (be sure to add +1D if wearing a cloak, though). Suggested condition: exhausted. The Breath of the Burning Lord invocation can negate the need to make this test.</li><li>Toll in rain: +1</li></ul>',
+'Snow<br/><br/>Heavy, wet snow is common in from mid-fall to early spring. In snow:<ul><li>Outdoor skill or ability tests suffer a +1 Ob penalty, including Pathfinder, Sailor or even Fighter.</li><li>Using Scout to track is granted +1D.</li><li>Exhausted and injured are appropriate conditions for failed tests.</li><li>Toll in snow: +2</li>',
+'Storm<br/><br/>Late in spring, the land is sometimes rocked by violent storms, which include thunder, lightning and hail. In addition to the risk of flash flooding, the winds and lightning make activity outdoors hazardous. In late summer, the lightning brings the risk of wildfires. In storms:<ul><li>Outdoor skill or ability tests suffer a +1 Ob penalty, including Pathfinder, Sailor or even Fighter.</li><li>>Exhausted and injured are appropriate conditions for failed tests.</li><li>Toll in a storm: +2</li>',
+'Thundersnow<br/><br/>Thundersnow is an unusual and dangerous type of storm that combines blizzard conditions with heavy winds, lightning and hail or graupel. In thundersnow:<ul><li>All skill or ability tests suffer a +1 Ob penalty. Cartography tests are impossible without shelter of some sort.</li><li>>All travel requires a Pathfinder test, even with a map. Maps act as gear, but consulting the map requires shelter of some sort.</li><li>Death is on the line. Dead is the suggested condition for anyone who is injured or sick, no matter the test.</li><li>All travelers suffer a +1 Ob penalty to recovery tests in the next camp or town phase.</li><li>The game master should make twists catastrophic.</li><li>Once the weather passes, all who traveled in it must make an Ob 4 Health test. Suggested condition: injured or sick.</li><li>Toll in thundersnow: +3</li></ul>',
+'Unseasonably Warm<br/><br/>The Burning Lord sometimes blesses the land with warmth. This sunshine is joyous to those who have been sequestered in their steadings over the long, cold winter months, but such weather is not without its dangers. Rapidly melting snow and ice can create deep mud, swollen rivers and lead to flash floods, mudslides or avalanches. In unseasonably warm weather:<ul><li>All tests involving fording rivers or streams suffer a +1 Ob penalty.</li><li>Twists might include: mud, flash floods, washed out bridges, washed out fords, mudslides, avalanche.</li><li>All are granted +1D to recover from exhausted and afraid.</li><li>Toll in unseasonably warm weather: +1</li></ul>',
+'Warm and Bright<br/><br/>The bright days of summer are a reminder to all that it is a joy to live in the Sunlit Realms—the days are long, the sun is warm upon the skin and the crops reach toward the sky. In warm and bright weather:<ul><li>Adventurers are granted +2D to recover from angry, afraid or exhausted and +1D to recover from sick and injured.</li><li>Scavenger tests for forage are granted +1D.</li><li>Survivalist tests are granted +1D.</li><li>Toll in warm and bright weather: -1</li></ul>'
+];
+const springWeather = [
+function(){evaluateWeather('winter', 1)},
+weatherTypes[11], // snow
+weatherTypes[11], // snow
+weatherTypes[7], // gale
+weatherTypes[0], // blustery
+weatherTypes[5], // fog
+weatherTypes[10], // rain
+weatherTypes[10], // rain
+weatherTypes[1], // clear and cool
+weatherTypes[1], // clear and cool
+weatherTypes[1], // clear and cool
+weatherTypes[1], // clear and cool
+weatherTypes[1], // clear and cool
+weatherTypes[1], // clear and cool
+weatherTypes[15], // warm and bright
+weatherTypes[12], // storm
+weatherTypes[12], // storm
+weatherTypes[8] // heatwave
+];
+const summerWeather = [
+weatherTypes[0], // blustery
+weatherTypes[0], // blustery
+weatherTypes[1], // clear and cool
+weatherTypes[1], // clear and cool
+weatherTypes[1], // clear and cool
+weatherTypes[15], // warm and bright
+weatherTypes[15], // warm and bright
+weatherTypes[15], // warm and bright
+weatherTypes[15], // warm and bright
+weatherTypes[15], // warm and bright
+weatherTypes[8], // heatwave
+weatherTypes[8], // heatwave
+weatherTypes[10], // rain
+weatherTypes[10], // rain
+weatherTypes[12], // storm
+weatherTypes[12], // storm
+weatherTypes[5], // fog
+weatherTypes[5] // fog
+];
+const fallWeather = [
+weatherTypes[10], // rain
+weatherTypes[10], // rain
+weatherTypes[10], // rain
+weatherTypes[10], // rain
+weatherTypes[1], // clear and cool
+weatherTypes[1], // clear and cool
+weatherTypes[1], // clear and cool
+weatherTypes[3], // crisp and cold
+weatherTypes[0], // blustery
+weatherTypes[0], // blustery
+weatherTypes[7], // gale
+weatherTypes[5], // fog
+weatherTypes[6], // frost
+weatherTypes[9], // ice storm
+weatherTypes[11], // snow
+weatherTypes[11], // snow
+weatherTypes[11], // snow
+weatherTypes[11] // snow
+];
+const winterWeather = [
+weatherTypes[13], // thundersnow
+weatherTypes[13], // thundersnow
+weatherTypes[6], // frost
+weatherTypes[6], // frost
+weatherTypes[9], // ice storm
+weatherTypes[5], // fog
+weatherTypes[5], // fog
+weatherTypes[11], // snow
+weatherTypes[3], // crisp and cold
+weatherTypes[3], // crisp and cold
+weatherTypes[3], // crisp and cold
+weatherTypes[3], // crisp and cold
+weatherTypes[3], // crisp and cold
+weatherTypes[4], // extreme cold
+weatherTypes[7], // gale
+weatherTypes[7], // gale
+weatherTypes[14], // unseasonably warm
+weatherTypes[14] // unseasonably warm
+];
+constLootTable1 = [
+function() {interpretRoll(lootBooksMaps)},
+function() {interpretRoll(lootGear)},
+function() {interpretRoll(lootGear)},
+function() {interpretRoll(lootGear)},
+function() {interpretRoll(lootGear)},
+function() {interpretRoll(lootStuff)},
+function() {interpretRoll(lootStuff)},
+function() {interpretRoll(lootStuff)},
+function() {interpretRoll(lootStuff)},
+function() {interpretRoll(treasureAndValuables1)},
+function() {interpretRoll(lootMagic)}
+];
+constLootTable2 = [
+function() {interpretRoll(lootBooksMaps)},
+function() {interpretRoll(lootBooksMaps)},
+function() {interpretRoll(lootStuff)},
+function() {interpretRoll(lootStuff)},
+function() {interpretRoll(lootGear)},
+function() {interpretRoll(lootGear)},
+function() {interpretRoll(lootGear)},
+function() {interpretRoll(lootGear)},
+function() {interpretRoll(treasureAndValuables1)},
+function() {interpretRoll(treasureAndValuables1)},
+function() {interpretRoll(lootMagic)}
+];
+constLootTable3 = [
+function() {interpretRoll(lootStuff)},
+function() {interpretRoll(lootStuff)},
+function() {interpretRoll(lootBooksMaps)},
+function() {interpretRoll(lootBooksMaps)},
+function() {interpretRoll(lootGear)},
+function() {interpretRoll(lootGear)},
+function() {interpretRoll(lootGear)},
+function() {interpretRoll(treasureAndValuables1)},
+function() {interpretRoll(treasureAndValuables1)},
+function() {interpretRoll(treasureAndValuables2)},
+function() {interpretRoll(lootMagic)}
+];
+constLootTable4 = [
+function() {interpretRoll(lootGear)},
+function() {interpretRoll(lootGear)},
+function() {interpretRoll(treasureAndValuables1)},
+function() {interpretRoll(treasureAndValuables3)},
+function() {interpretRoll(treasureAndValuables3)},
+function() {interpretRoll(treasureAndValuables2)},
+function() {interpretRoll(treasureAndValuables2)},
+function() {interpretRoll(treasureAndValuables2)},
+function() {interpretRoll(lootBooksMaps)},
+function() {interpretRoll(lootMagic)},
+function() {interpretRoll(lootMagic)}
+];
+constLootTable5 = [
+function() {interpretRoll(lootBooksMaps)},
+function() {interpretRoll(lootBooksMaps)},
+function() {interpretRoll(treasureAndValuables2)},
+function() {interpretRoll(treasureAndValuables3)},
+function() {interpretRoll(treasureAndValuables4)},
+function() {interpretRoll(treasureAndValuables4)},
+function() {interpretRoll(treasureAndValuables4)},
+function() {interpretRoll(lootMagic)},
+function() {interpretRoll(lootMagic)},
+function() {interpretRoll(lootMagic)},
+function() {interpretRoll(lootMagic)}
+];
+const lootBooksMaps = [
+'Accurate map of dungeon level or region | X | pack 1',
+'Accurate map of small region or set of rooms | X | pack 1',
+'Accurate map of a single, nearby area or room | X | pack 1',
+'Correspondence between an adversary and their ally (note letter&8217;s language) | X | pack 1',
+'Monograph containing prophesy in an ancient tongue | X | pack 1',
+'Dwarven chronicle of a lost settlement | X | pack 1',
+'Detailed description of a monster&8217;s Nature written by a forgotten philosopher | X | pack 1',
+'Cyclopedia | 3D | pack 2',
+'Book of myths | 2D | pack 1',
+'Bestiary | 3D | pack 2',
+'Romance | 2D | pack 1',
+'Puzzle book that reveals the location of a secret | X | pack 2',
+'Map of location of a tomb containing a magical artifact | X | pack 1',
+'Map of location of a crypt containing lost treasures | X | pack 2',
+'Tome of ancient lore in a forgotten tongue | X | pack 3',
+'Lost spell book(s): containing 2d3 spells of circles 2 through 4 (game master&8217;s choice) | X | pack 2'
+];
+const lootGear = [
+function() {interpretRoll(treasureAndValuables2)},
+['Thieve&8217; Tools','Ladder','Holy Water','Wolfsbane','Musical Instrument','Grappling Hook'],
+'Battle Regalia (helmet or shield, game master chooses)',
+['Large Sack','Small Sack','Purse','Satchel','Backpack','Chest'],
+function() {amountAndType(1,3,fortunateFood,1,6)},
+['iron spikes','hammer','pry bar','chalk','rope','tinderbox'],
+function() {amountAndType(1,3,lightSource,1,6)},
+['skill supplies','skill supplies','skill supplies','skill supplies','spell materials','sacramentals'],
+function() {interpretRoll(lootClothing)},
+['waterskin','clay pot','wooden canteen','bottle','jug','barrel'],
+function() {interpretRoll(lootWeapons)},
+'Tools. Skill gear or tools, game master chooses.',
+function() {interpretRoll(lootArmors)},
+'Animal. Dog, mule, cat, or starved horse. Game master chooses.',
+function() {return `Hidden Dwarven or Elven ${lootWeapons[roll(2,6,-2)]}`},
+function() {return `Hidden Dwarven or Elven ${lootArmors[roll(1,6,-1)]}`}
+];
+const lootMagic = [
+function() {interpretRoll(lootCursedItem)},
+['Drowner&8217;s Friend', 'Drowner&8217;s Friend', 'Jade Ward', 'Jade Ward', 'Amulet of Stars', 'Aegis Bracers'],
+['Wizard&8217;s Staff', 'Wizard&8217;s Staff', 'Wand of Unbinding', 'Wand of Unbinding', 'Dowsing Rod', 'Dowsing Rod'],
+'Spell book: 1d3 circles of spells (game master&8217;s choice)',
+function() {return `Enchanted ${lootClothing[roll(1,6,-1)]}`},
+function() {interpretRoll(lootPotions)},
+function() {return `Scroll, ${lootScroll[roll(1,6,-1)]}`},
+['minor relic', 'minor relic', 'minor relic', 'minor relic', 'named relic', 'great relic'],
+['Horn of Drenge', 'Burglar&8217;s Gloves', 'Elven Rope', 'Girdle of Troll Might', 'Haversack of Holding', 'Elven cloak'],
+['Mind Sword', 'Blood-Seeking Sword', 'Blood-Seeking Sword', 'Celestial Mace', 'Slaughterer&8217;s Friend', function () {return `Dwarven or Elven ${lootWeapons[roll(2,6,-2)]}`}],
+['Enchanted shield', 'Enchanted helmet', ' Enchanted leather armor', 'Enchanted chain armor', 'Enchanted plate armor', 'Forge mask']
+];
+const fortunateFood = ['forage', 'game', 'fresh rations', 'preserved rations', 'garlic', 'salt'];
+const lightSource = ['candles', 'candles', 'candles', 'candles', 'torches', 'flasks of oil'];
+const treasureAndValuables1 = [
+function() {interpretRoll(lootJewelry1)},
+function() {interpretRoll(lootJewelry1)},
+function() {interpretRoll(lootCoins1)},
+function() {interpretRoll(lootCoins1)},
+function() {interpretRoll(lootCoins1)},
+function() {interpretRoll(lootCoins1)},
+function() {interpretRoll(lootCoins1)},
+function() {interpretRoll(lootGems1)},
+function() {interpretRoll(lootGems1)},
+function() {interpretRoll(lootBooksMaps)},
+function() {interpretRoll(lootBooksMaps)}
+];
+const treasureAndValuables2 = [
+function() {interpretRoll(lootJewelry1)},
+function() {interpretRoll(lootJewelry1)},
+function() {interpretRoll(lootJewelry1)},
+function() {interpretRoll(lootCoins1)},
+function() {interpretRoll(lootCoins1)},
+function() {interpretRoll(lootCoins2)},
+function() {interpretRoll(lootCoins2)},
+function() {interpretRoll(lootGems1)},
+function() {interpretRoll(lootGems1)},
+function() {interpretRoll(lootBooksMaps)},
+function() {interpretRoll(lootPotions)}
+];
+const treasureAndValuables3 = [
+'Finery (1d6)',
+function() {interpretRoll(lootJewelry2)},
+function() {interpretRoll(lootBooksMaps)},
+function() {interpretRoll(lootSilverPlate)},
+function() {interpretRoll(lootRugsTapestries)},
+function() {interpretRoll(lootCoins3)},
+function() {interpretRoll(lootCoins4)},
+function() {interpretRoll(lootArt)},
+function() {interpretRoll(lootGems1)},
+function() {interpretRoll(lootTitlesDeeds)},
+function() {interpretRoll(lootMagic)},
+];
+const lootCoins1 = ['Small sack of copper coins | 1D | pack 2','Small sack of copper coins | 1D | pack 2','Small sack of copper coins | 1D | pack 2','Pouch of silver coins | 1D | pack 1','Pouch of silver coins | 1D | pack 1','Pouch of gold coins | 2D | pack 1'];
+const lootCoins2 = ['Small sack of copper coins | 1D | pack 2','Small sack of silver coins | 2D | pack 2','Small sack of gold coins | 4D | pack 2','Large sack of copper coins | 3D | pack 6','Satchel of silver coins | 3D | pack 3','Satchel of gold coins | 6D | pack 1'];
+const lootGems1 = [
+'Cursed gem | 8D | pack 1',
+'Pouch of precious stones (3) | 9D | pack 1',
+'Chipped semiprecious stone | 1D | pocket',
+'Fine semiprecious stone | 2D | pocket',
+'Fine precious stone | 3D | pocket',
+'Fine precious stone | 3D | pocket',
+'Chipped precious stone | 3D | pocket',
+'Pouch of semiprecious stones (3) | 6D | pack 1',
+'Box of semiprecious stones (6) | 12D | pack 2',
+'Box of precious stones (6) | 18D | pack 2',
+['Mind Gem | 3D | pocket','Radiant Gem | 3D | pocket','Blood Gem | 3D | pocket','Soul Gem | 3D | pocket','Beguiling Gem | 3D | pocket','Eldrich Gem | 3D | pocket']
+];
+const lootJewelry1 = [
+'Brooch | 4D | worn/cloak 1 or pocket',
+'Brooch | 4D | worn/cloak 1 or pocket',
+'Ring | 5D | worn/hands 1 or pocket',
+'Bracelet | 3D | worn/hands 1 or pocket',
+'Pendant | 2D | worn/neck or pocket',
+'Amulet | 1D | worn/neck or pocket',
+'Buckle | 2D | belt 1 or pocket',
+'Jeweled pin | 3D | worn/cloak 1 or pocket',
+'Armband | 4D | upper arm 1',
+'Necklace | 5D | worn/neck or pocket',
+'Gold tooth | 2D | mouth 1 or pocket'
+];
+const lootWeapons = ['Crossbow', 'Bow', 'Battle axe', 'Dagger', 'Flail', 'Mace', 'Shield', 'Staff', 'Hand axe', 'Spear', 'Sword', 'Sling', 'Polearm', 'Halberd', 'Great sword', 'Staff'];
+const lootArmors = ['leather armor','leather armor','leather armor','leather armor','chain armor','plate armor'];
+const lootClothing = ['cloak','hat','wool sweater','shoes','belt or bandolier','boots'];
+const lootPotions = [
+'Poison | 1 | pack 1',
+'Dragon&8217;s Breath | 1 | pack 1',
+'Sovereign Remedy | 1d3 | pack 1 each',
+'Theriac | 1d2+1 | pack 1 each',
+'Soothing Draught | 1d3 | pack 1 each',
+'Soldier&8217;s Friend | 1d2+1 | pack 1 each',
+'Faerie Wine | 1d2+1 | pack 1',
+'Liquor of Courage | 1d3 | pack 1 each',
+'Philter of Vigor | 1d3 | pack 1 each',
+'Effervescent Tonic | 2 | pack 1',
+'Giant&8217;s Blood | 1d2 | pack 1 each'
+];
+const lootScroll = ['1st circle', '1st circle', '2nd circle', '2nd circle', '3rd circle', '4th circle'];
+const lootStuff = ['Vile cult symbols', 'Bag of rocks', 'Bones', 'String', 'Dried Leaves', 'Some teeth', 'Lint', 'Worthless coins of unknown provenance', 'Indecipherable notes', 'Rusty keys', 'An idol for an unknown religion', 'A child&8217; dolly or puppet', 'A tool of unknown use', 'Dice', 'A rusty nail', 'A chipped bowl or cup'];
+const lootCursedItem = [
+'Cursed weapon. Reduces wielder&8217;s Might by 1; must be wielded in combat; cannot be discarded until the curse is removed.',
+'Cursed weapon. Reduces wielder&8217;s Might by 1; must be wielded in combat; cannot be discarded until the curse is removed.',
+'Cursed weapon. Reduces wielder&8217;s Might by 1; must be wielded in combat; cannot be discarded until the curse is removed.',
+'Cursed weapon. Reduces wielder&8217;s Might by 1; must be wielded in combat; cannot be discarded until the curse is removed.',
+'Poison. Appears as another potion; acts as poison when used.',
+'Poison. Appears as another potion; acts as poison when used.',
+'Cursed amulet. Worth 1D (worn/neck). It cannot be voluntarily removed except to be given away to anyone who asks for food, shelter or money. It can be stolen or taken by force.',
+'Cursed scroll. Appears as standard first circle spell, but when used it has no effect but to empty the magician&8217;s memory palace, causing the dreaded Temerarious Discharge.',
+'Cursed gem. See entry under the Gems subtable.',
+'Cursed armor. Offers no protection but looks great (and even counts as Finery in courtly situations). Cursed armor must be worn at all times; it may not be discarded until the curse is removed.',
+'Cursed equipment. -1s to an appropriate skill test. Item must be used when testing related skill and cannot be discarded until the curse is removed.'
+];
+
+//script written by Sean Winslow, for the game Torchbearer by Thor Olavsrud and Luke Crane.
+
+function roll(numberOfDice = 1, dieSize = 6, modifier = 0) {
+    let total = 0;
+    for (var roll_count = 0; roll_count < numberOfDice; roll_count++) {
+        let numTemp = Math.floor(Math.random() * (dieSize -1 + 1) + 1);
+        total += numTemp;
+        console.log('Roll: ' + numTemp + ' Total: ' + total)
+    }
+    total += modifier;
+        console.log('modifier: ' + modifier + ' Total: ' + total)
+    return total;
+}
+
+function interpretRoll( treasure ) {
+       console.log("Treasure: " + treasure + " Type: " + typeof treasure + ' . ' + Array.isArray(treasure) + ' length: ' + treasure.length);
+    if( typeof treasure == "string" ) accumulateLoot( treasure );
+    else if( typeof treasure == "function" ) interpretRoll( treasure() );
+    else if( treasure.length == 2 ) accumulateLoot( treasure[0] );
+    else {
+        var numberOfDice = treasure.length / 6;
+        var subTableRoll = roll(numberOfDice, 6, -numberOfDice);
+    // All the arrays are zero-based, so we convert a die roll of (say) 2-12 to an index of 0-10.
+    interpretRoll( treasure[ subTableRoll ] );
+       };
+}
+
+var accumulatedLoot = [];
+
+function accumulateLoot(lootDescription) // count the results and put them into the print array
+{ 
+  if(accumulatedLoot[lootDescription] >= 1)
+	accumulatedLoot[lootDescription]++;
+  else
+	accumulatedLoot[lootDescription] = 1;
+}
+
+function printAccumulatedTreasure(resultsLoc) { // sort the array and print it in numbered lines
+	let resultsVar = "Your Result:<br /><br />";
+	let mySortArray = [];
+  for(let description in accumulatedLoot) {
+    let count = accumulatedLoot[ description ];
+  	//resultsVar +=("Test: " + description + " " + (count > 1 ? "x"+count : "") + "<br/>"); //testing counting
+    mySortArray.push(description);
+   }
+   mySortArray.sort();
+   for (let i = 0; i < mySortArray.length; i++) {
+  	resultsVar +=(mySortArray[i] + " " + (accumulatedLoot[ mySortArray[i] ] > 1 ? "x" + accumulatedLoot[ mySortArray[i] ] : "") + "<br />");
+	}
+  resultsLoc.innerHTML=resultsVar;
+    for(let description in accumulatedLoot) {
+    delete accumulatedLoot[ description ];
+   }
+}
+
+function getRadioValues ( radioName ) {
+    let radioValues = document.getElementsByName(radioName);
+	for (var x = 0; x < radioValues.length; x ++) {
+        if (radioValues[x].checked) {
+          var checkedValue = radioValues[x].value;}
+	}
+	return checkedValue;
+}
+
+function amountAndType (amtDiceNum, amtDiceSize, table, tableDiceNumber, tableDiceSize) {
+       // not yet tested, trying to come up ith a generic function to deal with stuff like 1d3 Item
+       // I think I need to change it so that a .push puts the item multiple times into the array instead
+       let amount = roll(amtDiceNum, amtDiceSize);
+       let tableRoll = table[roll(tableDiceNumber,tableDiceSize)-tableDiceNumber];
+       return amount + '|' + tableRoll;
+}
+
+function makeCamp () {
+       let resultsLoc = document.getElementById("CampResults");
+    // first, what table are we rolling on?
+	let campArea = parseInt(getRadioValues("CampArea"), 10);
+    console.log('campArea: ' + campArea)
+    // how safe is the camp?
+	let campSafety = parseInt(getRadioValues("CampSafety"), 10);
+    // is there a fire?
+    let campFire = 0;
+    if (campSafety != 0 && document.getElementById("noFire").checked) campFire = 1;
+    // did they set watch?
+    let watchStatus = parseInt(getRadioValues("Watch"), 10);
+    // party-member-specific bonuses
+    let partyModifier = 0;
+    if (campArea == 5 && document.getElementById("Ranger").checked)  {partyModifier = 1};
+    if (campArea == 0 && document.getElementById("Outcast").checked && document.getElementById("DwarfRuin").checked) {partyModifier = 1};
+    if (campArea == 1 && document.getElementById("Outcast").checked) {partyModifier = 1};
+    // Survivalist bonuses
+    let survivalistModifier = 0;
+    if (document.getElementById("Shelter").checked) survivalistModifier += 1;
+    if (document.getElementById("Concealment").checked) survivalistModifier += 1;
+    // Miscellaneous Modifiers
+    let miscCampModifiers = parseInt(document.getElementById("MiscCampModifiers").value, 10);
+    // all modifiers
+    console.log('CampSite Table: ' + campArea + ' CampSafety: ' + campSafety + ' campFire: ' + campFire + ' watchStatus: ' + watchStatus + ' partyModifier: ' + partyModifier + ' survivalistModifier: ' + survivalistModifier + ' miscModifiers: ' + miscCampModifiers);
+    let campRollModifier = campSafety + campFire + watchStatus + partyModifier + survivalistModifier + miscCampModifiers;
+    // let's roll!
+    let campRoll = roll(3,6) + campRollModifier;
+    console.log(campRoll);
+    if (campRoll <  0) {campRoll =  0};
+    if (campRoll > 20) {campRoll = 20};
+    console.log(campRoll + ': ' + typeOfCamp[campArea][campRoll]);
+    interpretRoll( typeOfCamp[campArea][campRoll] );
+	printAccumulatedTreasure(resultsLoc);
+	return false;
+};
+
+function enterTown() {
+       let resultsLoc = document.getElementById("TownResults");
+    // first, what table are we rolling on?
+	let townType = parseInt(getRadioValues("TownType"), 10);
+    console.log('townType: ' + townType);
+    // modifiers
+    let townRollModifier = parseInt(document.getElementById("TownRollModifiers").value, 10);
+    // let's roll!
+    let townRoll = roll(3,6) + townRollModifier;
+    if (townRoll < 0) townRoll = 0;
+    if (townRoll > 19) townRoll = 19;
+    console.log(townRoll + ': ' + townEventsTable[townType][townRoll]);    
+    interpretRoll( townEventsTable[townType][townRoll] );
+    // All elves and elf-friends automatically remove the afraid condition upon entering Elfhome (after town events are rolled, provided there is no disaster); no test, check or lifestyle cost required.
+    printAccumulatedTreasure(resultsLoc);
+    return false;
+};
+
+// can I make a generic function to cover all these special cases?
+function generateRumour() {
+       let resultsLoc = document.getElementById("RumourResults");
+       let rumourRoll = roll(3,6,-3);
+       interpretRoll(rumourTable[rumourRoll]);
+	printAccumulatedTreasure(resultsLoc);
+	return false;
+};
+
+function generateGuild() {
+       let resultsLoc = document.getElementById("GuildResults");
+       let guildRoll = parseInt(`${roll(1,6,-1)}${roll(1,6,-1)}`, 6);
+       console.log('guildRoll: ' + guildRoll)
+       interpretRoll(guildTable[guildRoll]);
+	printAccumulatedTreasure(resultsLoc);
+	return false;
+};
+
+function generateHouseEvent() {
+       let resultsLoc = document.getElementById("HouseResults");
+    // modifiers
+    let houseRollModifier = parseInt(document.getElementById("HouseRollModifiers").value, 10);
+    // let's roll!
+       let houseRoll = roll(3,6,-3) + houseRollModifier;
+    if (houseRoll < 0) houseRoll = 0;
+    if (houseRoll > 16) houseRoll = 16;
+       interpretRoll(homeOwnershipTable[houseRoll]);
+	printAccumulatedTreasure(resultsLoc);
+	return false;
+};
+
+function evaluateWeather(season, time) {
+       let weatherRoll = roll(3,6,time-2);
+    if (weatherRoll < 0) weatherRoll = 0;
+    if (weatherRoll > 17) weatherRoll = 17;
+    switch (season) {
+	  case "spring": interpretRoll(springWeather[weatherRoll]);
+	  	break;
+	  case "summer": interpretRoll(summerWeather[weatherRoll]);
+	  	break;
+	  case "fall": interpretRoll(fallWeather[weatherRoll]);
+	  	break;
+	  case "winter": interpretRoll(winterWeather[weatherRoll]);
+	  	break;
+	  default: alert ("Something is wrong with switching");
+	  	break;
+    };
+};
+
+function generateWeather() {
+       let resultsLoc = document.getElementById("WeatherResults");
+    // modifiers
+	let season = getRadioValues("Weather");
+	let seasonTime = parseInt(getRadioValues("SeasonTime"), 10);
+       console.log("Season: " + season + " seasonTime: " + seasonTime)
+       evaluateWeather(season, seasonTime);
+	printAccumulatedTreasure(resultsLoc);
+	return false;
+};
+
+
+</script>
+
+<section>
+
+<header><h1>Torchbearer Tools (2nd. Edition)</h1></header>
+<h3>Note: Test version. Currently, Camp Events, Rumours, Guilds, Town Events, Weather, and Home Events are implemented.</h2>
+<h3>To Do: Loot, Trade (Investors, Captain, <i>Returns!</i>), Haggling, Omens, Street, Telling Tales; Reformat for usability</h3>
+<h4>known bugs: roll of 2 on the Spring weather chart fails, as js interprets string value result as object</h4>
+
+</section>
+
+<div class="content">
+	<div>
+<section>
+<form>
+      <fieldset>
+       <legend>Camp Events (<i>Scholar&#8217;s Guide</i>. 90&ndash;96, 264&ndash;278.)</legend>
+       <p>This roller produces book results, but note the advice on p. 264:
+           <blockquote><i>The game master should incorporate camp events with a critical eye. Bend them, break them and bind them into the ongoing story. Modify them to suit, but never let the adventurers off easy—and never deny them a lucky break.</i></blockquote>
+       </p>
+       <p>
+          <label>Where is the Camp?</label>            
+          <input type = "radio"
+                 name = "CampArea"
+                 id = "AncientRuinCamp"
+                 value = "0"
+                 checked = "1" />
+          <label for = "sizeSmall">Ancient Ruin</label>
+                   
+          <input type = "radio"
+                 name = "CampArea"
+                 id = "DungeonCamp"
+                 value = "1" />
+          <label for = "sizeSmall">Dungeon</label>
+ 
+          <input type = "radio"
+                 name = "CampArea"
+                 id = "NaturalCaveCamp"
+                 value = "2" />
+          <label for = "sizeLarge">Natural Cave</label>
+          
+          <input type = "radio"
+                 name = "CampArea"
+                 id = "NearTownCamp"
+                 value = "3" />
+          <label for = "sizeMed">Outside or Near Town</label>
+          
+          <input type = "radio"
+                 name = "CampArea"
+                 id = "SquattingCamp"
+                 value = "4" />
+          <label for = "sizeMed">Squatting in Town</label>
+          
+          <input type = "radio"
+                 name = "CampArea"
+                 id = "WildernessCamp"
+                 value = "5" />
+          <label for = "sizeMed">Wilderness</label>
+        </p>    
+        <p>
+          <label>How Safe is the Camp?</label>            
+          <input type = "radio"
+                 name = "CampSafety"
+                 id = "TypicalCamp"
+                 value = "0"
+                 checked = "1" />
+          <label for = "sizeSmall">Typical</label>
+          
+          <input type = "radio"
+                 name = "CampSafety"
+                 id = "UnsafeCamp"
+                 value = "-2" />
+          <label for = "sizeMed">Unsafe</label>
+ 
+          <input type = "radio"
+                 name = "CampSafety"
+                 id = "DangerousCamp"
+                 value = "-3" />
+          <label for = "sizeLarge">Dangerous</label>
+        </p>          
+        <p>
+          <label>Did you light a fire?</label>            
+          <input type = "radio"
+                 name = "Fire"
+                 id = "yesFire"
+                 value = "0"
+                 checked = "checked" />
+          <label for = "sizeSmall">Yes</label>
+          
+          <input type = "radio"
+                 name = "Fire"
+                 id = "noFire"
+                 value = "1" />
+          <label for = "sizeMed">No (cannot perform actions that require a fire; all recovery +1 Ob.)</label>
+        </p> 
+                  
+        <p>
+            <label>Did you set a watch?</label>            
+            <input type = "radio"
+                   name = "Watch"
+                   id = "yesWatch"
+                   value = "1" />
+            <label for = "sizeSmall">Yes</label>
+            
+            <input type = "radio"
+                   name = "Watch"
+                   id = "noWatch"
+                   value = "0" 
+                   checked = "checked"/>
+            <label for = "sizeMed">No</label>
+          </p> 
+          <p>
+            <label>Party members:</label>            
+            <input type = "checkbox"
+                   name = "Ranger"
+                   id = "Ranger"
+                   value = "1" />
+            <label for = "sizeSmall">Ranger (for Wilderness Camps)</label>
+            <input type = "checkbox"
+                   name = "Outcast"
+                   id = "Outcast"
+                   value = "1" />
+            <label for = "sizeSmall">Outcast (for Dungeons and Dwarven Ruins)</label>
+            <input type = "checkbox"
+                   name = "DwarfRuin"
+                   id = "DwarfRuin"
+                   value = "1" />
+            <label for = "sizeSmall">Dwarven Ruin (for Ancient Ruins, if Outcast in party)</label>
+          </p>
+          <p>
+            <label>Did you use the Survivalist skill to find or make:</label>            
+            <input type = "checkbox"
+                   name = "Shelter"
+                   id = "Shelter"
+                   value = "1" />
+            <label for = "sizeSmall">Shelter for an Outdoor Camp</label>
+            <input type = "checkbox"
+                   name = "Concealment"
+                   id = "Concealment"
+                   value = "1" />
+            <label for = "sizeSmall">A Site with Concealment</label>
+          </p>
+          <p>
+            <legend>Other Modifiers (p. 93)</legend>
+            <ul>
+                <li>Some camp events add bonuses to future camp events rolls.</li>
+                <li>A previous camp disaster in this area while on this adventure imposes a -1 penalty on further camp events rolls. Each additional disaster imposes a cumulative penalty. A disaster is any event that forces an early end to a camp phase, regardless if the watch averts it or not.</li>
+                <li>The game master can impose a -1 camp events penalty if they feel one is warranted due to natural phenomena (like droughts, storms or earthquakes), if the adventurers have angered some terrible foe who hunts them, or if they are under the ban of some horrid curse.</li>
+            </ul>
+            </blockquote>
+            <label>Other Modifiers:</label>
+                <input type="number" name="MiscCampModifiers" id="MiscCampModifiers" min="-10" max="10" value="0">
+          </p>
+          <p>
+          <label for = "MakeCamp">Camp When Ready:</label>
+          <input type = "button" value="Make Camp!" onClick="makeCamp();">
+        </p>
+      </fieldset>     
+    </form>
+</section>
+<section>
+<p id="CampResults">What awaits you?</p>
+</section>
+<section>
+    <form>
+        <fieldset>
+            <legend>Town Events (<i>Scholar&#8217;s Guide</i>. 97&ndash;125, 279&ndash;302.)</legend>
+                <p>This roller produces book results, but note the advice on p. 279:
+                    <blockquote><i>The individual town events leave a lot of room for interpretation. When something odd comes up, roll with it. It&#8217;s the game master&#8217;s job to call for tests or single out victims of calamity and sort through the chaos.</i></blockquote>
+                    <blockquote><i>Some town events will provide a small benefit or penalty. Be sure to color these results so that they mesh with the current events of the campaign.</i></blockquote>
+                </p>
+         
+            <div class="floatLeft">
+                   <p>
+                          <label>What type of town is it?</label>
+                     </p>
+              </div>          
+            <div class="floatRight">
+                   <p>
+                   <input type = "radio"
+                   name = "TownType"
+                   id = "BustlingMetropolisTown"
+                   value = "0"
+                   checked = "1" />
+              <label for = "sizeSmall">Bustling Metropolis</label>
+              <input type = "radio"
+                     name = "TownType"
+                     id = "BusyCrossroadsTown"
+                     value = "1" />
+              <label for = "sizeSmall">Busy Crossroads</label>
+              <input type = "radio"
+                     name = "TownType"
+                     id = "DwarvenHallsTown"
+                     value = "2" />
+              <label for = "sizeSmall">Dwarven Halls</label>
+              <input type = "radio"
+                     name = "TownType"
+                     id = "ElfHomeTown"
+                     value = "3" />
+              <label for = "sizeSmall">Elfhome</label>
+              <input type = "radio"
+                     name = "TownType"
+                     id = "ReligiousBastionTown"
+                     value = "4" />
+              <label for = "sizeSmall">Religious Bastion</label>
+              <input type = "radio"
+                     name = "TownType"
+                     id = "RemoteVillageTown"
+                     value = "5" />
+              <label for = "sizeSmall">Remote Village</label>
+              <input type = "radio"
+                     name = "TownType"
+                     id = "WizardsTowerTown"
+                     value = "6" />
+              <label for = "sizeSmall">Wizard's Tower</label>
+              </p>
+              <p>
+                     <label>Additional options from the <i>Lore Master&#8217;s Manual</i>. 196&ndash;211.</label>
+              </p>
+              <p>
+                     <input type = "radio"
+                            name = "TownType"
+                            id = "BorderlandFortressTown"
+                            value = "7" />
+                     <label for = "sizeSmall">Borderland Fortress</label>
+                     <input type = "radio"
+                            name = "TownType"
+                            id = "DilapidatedPortTown"
+                            value = "8" />
+                     <label for = "sizeSmall">Dilapidated Port</label>
+                     <input type = "radio"
+                            name = "TownType"
+                            id = "ForgottedTempleTown"
+                            value = "9" />
+                     <label for = "sizeSmall">Forgotten Temple Complex</label>
+                     <input type = "radio"
+                            name = "TownType"
+                            id = "NomadCaravanTown"
+                            value = "10" />
+                     <label for = "sizeSmall">Nomad Caravan</label>
+                     <input type = "radio"
+                            name = "TownType"
+                            id = "ProsperousWayhouseTown"
+                            value = "11" />
+                     <label for = "sizeSmall">Prosperous Wayhouse</label>
+                     <input type = "radio"
+                            name = "TownType"
+                            id = "ShireTown"
+                            value = "12" />
+                     <label for = "sizeSmall">Shire</label>
+                     <input type = "radio"
+                            name = "TownType"
+                            id = "SteadingTown"
+                            value = "13" />
+                     <label for = "sizeSmall">Steading</label>
+                     <input type = "radio"
+                            name = "TownType"
+                            id = "WalledTown"
+                            value = "14" />
+                     <label for = "sizeSmall">Walled Town</label>
+              </p>
+              <p>
+                     <label>Town Roll Modifiers (p. 280.):</label>
+                     <blockquote>
+                            <i>Town Events Roll Bonuses
+                                   Town events rolls are difficult to modify in one&#8217;s favor. There are only a handful of possible bonuses:<ul>
+                                   <li>The Hearthmistress&#8217;s Favor, gained by praying at a shrine, grants +1 to the next town events roll.</li>
+                                   <li>A Steward skill test to maintain the works and projects of a settlement grants +1 to the next town events roll for that particular settlement.</li>
+                                   <li>A skald who establishes a court of the wise in a settlement grants it +1 to town events rolls so long as the court remains.</li>
+                                   <li>Increate theurges add +1 to town events rolls for settlements allied with them.</li>
+                            </ul>
+                            Town Events Roll Penalties<ul>
+                                   <li>Each disaster event rolled causes an ongoing -1 penalty to town events rolls for this settlement. Each additional disaster imposes a cumulative penalty.
+                                   Adventures may endeavor to ameliorate disasters or certain town events may mitigate their effects and remove the penalty. A disaster is any event that forces an early end to a town phase or destroys a facility, location or amenity.</li>
+                                   <li>Increate theurges suffer -1 to town events rolls in settlements opposed to them.</li></i>
+                            </ul>
+                     </blockquote>
+                     <label>Town Events Modifiers: </label>
+                     <input type="number" name="TownRollModifiers" id="TownRollModifiers" min="-10" max="10" value="0">
+               </p>
+       </div>
+
+	<label>Entering Town . . . . . . . . . . . . . . </label>
+<input type=button value="Enter Town!" onClick="enterTown();">
+</fieldset></form>
+</section>
+<section>
+<p id="TownResults">What awaits you?</p>
+</section>
+<section>
+       <form>
+       <fieldset>
+              <legend>Tavern Rumours (<i>Scholar&#8217;s Guide</i>. 298&ndash;299.)</legend>
+<label>Buy a Round! . . . . . . . . . . </label>
+<input type=button value="Generate Rumour" onClick="generateRumour();">
+
+</fieldset>
+  </form>
+<p id="RumourResults">What awaits you?</p>
+</section>
+<section>
+       <form>
+       <fieldset>
+              <legend>Guild Table (<i>Lore Master&#8217;s Manual</i>. 198.)</legend>
+<label>Which guild? . . . . . . . . . . </label>
+<input type=button value="Generate Guild" onClick="generateGuild();">
+
+</fieldset>
+  </form>
+<p id="GuildResults">What awaits you?</p>
+</section>
+<section>
+       
+       <form>
+       <fieldset>
+              <legend>Home Events (<i>Lore Master&#8217;s Manual</i>. 234&ndash;235.)</legend>
+              <p>
+<label>Home Ownership Modifiers: </label>
+<input type="number" name="HouseRollModifiers" id="HouseRollModifiers" min="-10" max="10" value="0">
+</p>
+<p>
+<label>Exciting adventures in home ownership await: </label>
+<input type=button value="Home Ownership is Fun!" onClick="generateHouseEvent();">
+</p></fieldset></form>
+<p id="HouseResults">What awaits you?</p>
+</section>
+<section>
+       
+       <form>
+       <fieldset>
+              <legend>Weather (<i>Lore Master&#8217;s Manual</i>. 153&ndash;159.)</legend>
+              <p>
+<label>Season: </label>
+<input type = "radio"
+       name = "Weather"
+       id = "SpringWeather"
+       value = "spring" 
+       checked = "1"/>
+<label for = "sizeSmall">Spring</label>
+<input type = "radio"
+       name = "Weather"
+       id = "SummerWeather"
+       value = "summer" />
+<label for = "sizeSmall">Summer</label>
+<input type = "radio"
+       name = "Weather"
+       id = "FallWeather"
+       value = "fall" />
+<label for = "sizeSmall">Autumn</label>
+<input type = "radio"
+       name = "Weather"
+       id = "WinterWeather"
+       value = "winter" />
+<label for = "sizeSmall">Winter</label>
+</p>
+<p>
+       <label>Season Time: </label>
+       <input type = "radio"
+              name = "SeasonTime"
+              id = "SeasonTime_Early"
+              value = "-1" />
+       <label for = "sizeSmall">Early</label>
+       <input type = "radio"
+              name = "SeasonTime"
+              id = "SeasonTime_MidSeason"
+              value = "0"
+              checked = "1" />
+       <label for = "sizeSmall">Mid-Season</label>
+       <input type = "radio"
+              name = "SeasonTime"
+              id = "SeasonTime_Late"
+              value = "1" />
+       <label for = "sizeSmall">Late</label>
+</p>
+<p>
+<label>Watch the weather: </label>
+<input type=button value="It looks like..." onClick="generateWeather();">
+</p></fieldset></form>
+<p id="WeatherResults">What awaits you?</p>
+</section>
+<section>
+<form name="formField" onsubmit="return showLoot();">
+ <fieldset>
+	<legend>Generate Loot for Planned Encounters (<i>Scholar&#8217;s Guide</i>. 150&ndash;170. <i>Lore Master&#8217;s Manual</i>. 240&ndash;244.)</legend>
+	<label>Total Might (1-99):</label>
+		<input type="number" name="might" min="1" max="99" value="10">
+		<input type=button value="Loot as Planned" onClick="showLoot();">
+</fieldset>
+</form>
+</section>
+</div>
+<div>
+<section>
+<p id="LootResults">What awaits you?</p>
+</section>
+</div>
+</div>
+<footer>
+<p>The Torchbearer RPG is by Thor Olavsrud and Luke Crane. <a href="http://www.torchbearerrpg.com/">www.torchbearerrpg.com/</a><br />
+Art by kind permission of Michael Prescott&mdash;see the finished version on page 30 of the Torchbearer (1E) book, or <a href="http://www.deviantart.com/art/Limestone-Curtain-385231837">here.</a><br />
+Script by Sean Winslow.</p>
+</footer>
+
+</body>
+</html>
