@@ -1263,14 +1263,14 @@
     else if (typeof treasure === "function") interpretRoll(treasure());
     else if (treasure.length === 2) accumulateLoot(treasure[0]);
     else {
-      var numberOfDice = treasure.length / 6;
-      var subTableRoll = roll(numberOfDice, 6, -numberOfDice);
+      let numberOfDice = treasure.length / 6;
+      let subTableRoll = roll(numberOfDice, 6, -numberOfDice);
       // All the arrays are zero-based, so we convert a die roll of (say) 2-12 to an index of 0-10.
       interpretRoll(treasure[subTableRoll]);
     }
   }
 
-  var accumulatedLoot = new Map();
+  let accumulatedLoot = new Map();
 
   function accumulateLoot(lootDescription) {
     if (accumulatedLoot.has(lootDescription))
@@ -1295,9 +1295,9 @@
 
   function getRadioValues(radioName) {
     let radioValues = document.getElementsByName(radioName);
-    for (var x = 0; x < radioValues.length; x++) {
+    for (let x = 0; x < radioValues.length; x++) {
       if (radioValues[x].checked) {
-        var checkedValue = radioValues[x].value;
+        let checkedValue = radioValues[x].value;
       }
     }
     return checkedValue;
