@@ -1082,7 +1082,37 @@
     },
     function () {
       interpretRoll(lootMagic)
+    }
+  ];
+  const treasureAndValuables4 = [
+    function () {
+      interpretRoll(lootSilverPlate)
     },
+    function () {
+      interpretRoll(lootSilverPlate)
+    },
+    function () {
+      interpretRoll(lootSilverPlate)
+    },
+    function () {
+      interpretRoll(lootSilverPlate)
+    },
+    function () {
+    interpretRoll(lootRugsTapestries)
+    },
+    function () {
+      interpretRoll(lootArt)
+    },
+    function () {
+      interpretRoll(lootMagic)
+    },
+    function () {
+      interpretRoll(lootCoins4)
+    },
+    function () {
+      interpretRoll(lootJewelry2)
+    },
+    'finery (2d6 outfits)'
   ];
   const lootCoins1 = ['Small sack of copper coins | 1D | pack 2', 'Small sack of copper coins | 1D | pack 2', 'Small sack of copper coins | 1D | pack 2', 'Pouch of silver coins | 1D | pack 1', 'Pouch of silver coins | 1D | pack 1', 'Pouch of gold coins | 2D | pack 1'];
   const lootCoins2 = ['Small sack of copper coins | 1D | pack 2', 'Small sack of silver coins | 2D | pack 2', 'Small sack of gold coins | 4D | pack 2', 'Large sack of copper coins | 3D | pack 6', 'Satchel of silver coins | 3D | pack 3', 'Satchel of gold coins | 6D | pack 1'];
@@ -1114,6 +1144,70 @@
     'Necklace | 5D | worn/neck or pocket',
     'Gold tooth | 2D | mouth 1 or pocket'
   ];
+  const lootJewelry2 = [
+    'Kolty | 6D | worn/head or pocket',
+    'Torque | 5D | worn/neck',
+    'Torque | 5D | worn/neck',
+    'Torque | 5D | worn/neck',
+    'Earrings | 3D | worn/ears or pocket',
+    'Earrings | 3D | worn/ears or pocket',
+    'Tiara | 7D | worn/head',
+    'Diadem | 8D | worn/head',
+    'Coronet | 9D | worn/head',
+    'Jeweled headdress | 10D | head and neck, pack 4',
+    'Crown | 12D | worn/head, pack 2'
+  ];
+  const lootArt = [
+    'Clockwork figurine | 7D | pack 2',
+    'Gilded egg | 6D pack 1',
+    'Jade comb | 4D | pack 1',
+    'Decorative urn or vase | 3D | pack 3',
+    'Large statue | 6D | pack 8/10/12 (roll 1d3)',
+    'Small gilded mirror | 2D | pack 1',
+    'Idol (obsidian or jade) | 3D | pack 1',
+    'Small painting | 2D | pack 4',
+    'Large painting | 5D | pack 8',
+    'Large gilded mirror | 7D | pack 10'
+  ];
+  const lootSilverPlate = [
+    'Silver fork | 1D | pocket',
+    'Silver spoon | 1D | pocket or mouth',
+    'Silver knife | 1D | pocket',
+    'Silver cup | 2D | pack 1',
+    'Silver candlesticks | 3D | pack 1',
+    'Silver plate | 3D | pack 1',
+    'Silver tray | 3D | pack 2',
+    'Silver ewer | 4D | pack 2',
+    'Silver candelabra | 5D | pack 4',
+    'Silver samovar | 6D | pack 3',
+    'Golden chalice (of blood) | 4D | pack 1'
+  ];
+  const lootRugsTapestries = [
+    'Small silver-threaded rug | 2D | pack 2',
+    'Small gold-threaded rug | 3D | pack 3',
+    'Small tapestry | 4D | pack 4',
+    'Carpet featuring classic Immortals | 5D | pack 6',
+    'Very large silver-threaded rug | 6D | pack 12',
+    'Large tapestry of state | 7D | pack 11',
+    'Ornate rug | 8D | pack 10',
+    'Unusual tapestry | 9D | pack 9',
+    'Flawless rug | 10D | pack 8',
+    'Ornate carpet | 11D | pack 7',
+    'Perfect tapestry | 12D | pack 6'
+  ];
+  const lootTitlesDeeds = [
+    'Certificate of noble title. Roll 1d6 for house: 1-3: extinct house, 4: outcast house, 5-6: surviving house',
+    'Patent of nobility. Roll 1d6 for house: 1-3: extinct house, 4: outcast house, 5-6: surviving house',
+    'Seal of membership to a guild (journeyman’s license). Roll on the Guild Table in the Newtown chapter for guild.',
+    'Scroll of ordination of a low holy office: Roll 1d6 for religious order: 1-3: extinct order, 4: outcast order, 5: minor order, 6: high order',
+    'Deed to a home that no longer exists in a nearby settlement',
+    'Deed to a home in a lost, fallen, and forgotten settlement',
+    'Deed to a lost steading',
+    'Deed to an occupied home in a nearby settlement: Roll 1d6: 1: remote village, 2: borderland fortress, 3: busy crossroads, 4: bustling metropolis, 5: wizard\'s tower or religious bastion, 6: walled town',
+    'Deed to an unoccupied home in a nearby settlement: Roll 1d6: 1: remote village, 2: borderland fortress, 3: busy crossroads, 4: bustling metropolis, 5: wizard’s tower or religious bastion, 6: walled town',
+    'Seal of office to a lost or fallen court',
+    'Seal of office to a court of the land'
+  ]
   const lootWeapons = ['Crossbow', 'Bow', 'Battle axe', 'Dagger', 'Flail', 'Mace', 'Shield', 'Staff', 'Hand axe', 'Spear', 'Sword', 'Sling', 'Polearm', 'Halberd', 'Great sword', 'Staff'];
   const lootArmors = ['leather armor', 'leather armor', 'leather armor', 'leather armor', 'chain armor', 'plate armor'];
   const lootClothing = ['cloak', 'hat', 'wool sweater', 'shoes', 'belt or bandolier', 'boots'];
@@ -1174,7 +1268,6 @@
       // All the arrays are zero-based, so we convert a die roll of (say) 2-12 to an index of 0-10.
       interpretRoll(treasure[subTableRoll]);
     }
-    ;
   }
 
   var accumulatedLoot = new Map();
@@ -1235,15 +1328,12 @@
     if (campArea === 5 && document.getElementById("Ranger").checked) {
       partyModifier = 1
     }
-    ;
     if (campArea === 0 && document.getElementById("Outcast").checked && document.getElementById("DwarfRuin").checked) {
       partyModifier = 1
     }
-    ;
     if (campArea === 1 && document.getElementById("Outcast").checked) {
       partyModifier = 1
     }
-    ;
     // Survivalist bonuses
     let survivalistModifier = 0;
     if (document.getElementById("Shelter").checked) survivalistModifier += 1;
@@ -1258,7 +1348,7 @@
     console.log(campRoll + ': ' + typeOfCamp[campArea][campRoll]);
     interpretRoll(typeOfCamp[campArea][campRoll]);
     printAccumulatedTreasure(resultsLoc);
-  };
+  }
 
   function enterTown() {
     let resultsLoc = document.getElementById("TownResults");
@@ -1274,7 +1364,7 @@
     // All elves and elf-friends automatically remove the afraid condition upon entering Elfhome (after town events are rolled, provided there is no disaster); no test, check or lifestyle cost required.
     printAccumulatedTreasure(resultsLoc);
 
-  };
+  }
 
   // can I make a generic function to cover all these special cases?
   function generateRumour() {
@@ -1283,7 +1373,7 @@
     interpretRoll(rumourTable[rumourRoll]);
     printAccumulatedTreasure(resultsLoc);
 
-  };
+  }
 
   function generateGuild() {
     let resultsLoc = document.getElementById("GuildResults");
@@ -1292,7 +1382,7 @@
     interpretRoll(guildTable[guildRoll]);
     printAccumulatedTreasure(resultsLoc);
 
-  };
+  }
 
   function generateHouseEvent() {
     let resultsLoc = document.getElementById("HouseResults");
@@ -1305,7 +1395,7 @@
     interpretRoll(homeOwnershipTable[houseRoll]);
     printAccumulatedTreasure(resultsLoc);
 
-  };
+  }
 
   function evaluateWeather(season, time) {
     let weatherRoll = roll(3, 6, time - 2);
@@ -1328,8 +1418,7 @@
         alert("Something is wrong with switching");
         break;
     }
-    ;
-  };
+  }
 
   function generateWeather() {
     let resultsLoc = document.getElementById("WeatherResults");
@@ -1340,7 +1429,7 @@
     evaluateWeather(season, seasonTime);
     printAccumulatedTreasure(resultsLoc);
 
-  };
+  }
 
 
 </script>
@@ -1361,11 +1450,10 @@
       <form>
         <fieldset>
           <legend>Camp Events (<i>Scholar&#8217;s Guide</i>. 90&ndash;96, 264&ndash;278.)</legend>
-          <p>This roller produces book results, but note the advice on p. 264:
+          This roller produces book results, but note the advice on p. 264:
           <blockquote>The game master should incorporate camp events with a critical eye. Bend them, break
             them and bind them into the ongoing story. Modify them to suit, but never let the adventurers
             off easy—and never deny them a lucky break.</blockquote>
-          </p>
           <p>
             <label>Where is the Camp?</label>
             <input type="radio"
@@ -1521,13 +1609,13 @@
       <form>
         <fieldset>
           <legend>Town Events (<i>Scholar&#8217;s Guide</i>. 97&ndash;125, 279&ndash;302.)</legend>
-          <p>This roller produces book results, but note the advice on p. 279:
+          This roller produces book results, but note the advice on p. 279:
           <blockquote>The individual town events leave a lot of room for interpretation. When something odd
             comes up, roll with it. It&#8217;s the game master&#8217;s job to call for tests or single out
             victims of calamity and sort through the chaos.</blockquote>
           <blockquote>Some town events will provide a small benefit or penalty. Be sure to color these
             results so that they mesh with the current events of the campaign.</blockquote>
-          </p>
+
 
           <div class="floatLeft">
             <p>
@@ -1618,7 +1706,6 @@
                      value="14"/>
               <label for="WalledTown">Walled Town</label>
             </p>
-            <p>
               <label>Town Roll Modifiers (p. 280.):</label>
             <blockquote>
               Town Events Roll Bonuses
@@ -1655,7 +1742,6 @@
             <label for="TownRollModifiers">Town Events Modifiers: </label>
             <input type="number" name="TownRollModifiers" id="TownRollModifiers" min="-10" max="10"
                    value="0"/>
-            </p>
           </div>
 
           <label for="EnterTown">Entering Town . . . . . . . . . . . . . . </label>
