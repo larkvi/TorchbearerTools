@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<img src="prescott_torchbearer_sketch.jpg" alt="Sketch of adventurers atop a subterranean waterfall" />
+<img src="prescott_torchbearer_sketch.jpg" alt="Sketch of adventurers atop a subterranean waterfall"/>
 
 <script>
 
@@ -60,7 +60,7 @@
     'Treasure. One of the flagstones is loose. Beneath it you find treasure! Roll on the Treasure & Valuables subtable 1.',
     'Antiquity. You discover the entrance to a lost, sunken temple. During this camp phase, all may remove the sick or injured conditions and reduce Immortal burden by 1. In addition, the lost temple grants a +2D bonus to purification rituals (instead of the standard +1D). Should you return to this camp, the lost temple&#8217;s magics are expended and no longer cure conditions or burden, but the purification bonus remains.',
     'Etchings. Wiping away the dust in this room, you find a series of petroglyphs. Roll on the Tome of Ancient Lore subtable in the Loot chapter.',
-    'Death grip. A skeleton lies in a heap in the corner. It&#8217;s clutching something. Roll on the Magic subtable in the Loot chapter.'
+    `Death grip. A skeleton lies in a heap in the corner. It&#8217;s clutching something: ${function(){return lootMagic[roll(2,6,-2)]}}`
   ];
   typeOfCamp[2] = [ // Natural Cave
     'Cave-in. The area you&#8217;re camping in is obliterated. If you set watch, they may spend a check to make a test to sound the alarm and get the group to safety. Otherwise, remain in the adventure phase as camp ends as you scramble to safety, and all packs and gear are destroyed in the chaos. Run!',
@@ -81,7 +81,7 @@
     'Creature comfort. The site you pick is dry and comfortable: +1D to recover from exhausted during this camp phase.',
     'Dictionary. This site has magnificent speleothems to look at (draperies, curtains, stalactites, stalagmites, cave crystals, etc.): +1D to recover from angry and afraid during this camp phase.',
     'Spring. You find a clear, cold spring bubbling through a crack in the rocks. It can provide four draughts of water during each camp phase.',
-    'Remains. You find the remains of a less fortunate explorer clutching a bit of marked up leather between their finger bones. Roll on the Books & Maps subtable in the Loot chapter.',
+    `Remains. You find the remains of a less fortunate explorer clutching a bit of marked up leather between their finger bones. It&8217;s ${function(){return lootBooksMaps[roll(2,6,-2)]}}`,
     'Gem cluster. You find a cluster of gems glinting among the rock formations. Roll on the Gems Loot subtable.',
     'Basin. You find a naturally occurring basin of water with healing properties: Each draught grants +2D to recover from sick or injured. There is enough water for three draughts. It may be stored in a container and carried away.',
   ];
@@ -546,11 +546,11 @@
     ['Magicians and Alchemists', 'Spells, consultations, and alchemical agents are unavailable']
   ];
   const homeOwnershipTable = [
-    'Impish behavior. A cinder imp has made its home in your hearth. Roll 1d6 to determine the effect (if the home isn&#8217;t destroyed, apply a -1 to future home events rolls until the property is repaired and the cinder imp is tamed or driven out.): 1 A fire that destroyed the home 2 A fire that destroyed a cache 3-4 A fire that destroyed the accommodations 5-6 Hearth ruined',
-    'Flood. The area flooded while you were away. Roll 1d6 for the effect: 1-3 Minor flood on first floor (-1 to future home events rolls) 4 Major flood on first floor (-2 to future home events rolls) 5 Second story flooding (-3 to future home events rolls) 6 House washed away',
+    `Impish behavior. A cinder imp has made its home in your hearth. It has the following effect: $ function () {dieRoll = roll(1,6,-1); return ['A fire that destroyed the home', 'A fire that destroyed a cache', 'A fire that destroyed the accommodations', 'A fire that destroyed the accommodations', 'Hearth ruined', 'Hearth ruined'][dieRoll]  + if (dieRoll !== 0) {'(apply a -1 to future home events rolls until the property is repaired and the cinder imp is tamed or driven out)'}}`,
+    `Flood. The area flooded while you were away: ${function() {return ['Minor flood on first floor (-1 to future home events rolls)', 'Minor flood on first floor (-1 to future home events rolls)', 'Minor flood on first floor (-1 to future home events rolls)', 'Major flood on first floor (-2 to future home events rolls', 'Second story flooding (-3 to future home events rolls)', 'House washed away'][roll(1, 6, -1)]}}`,
     'Vermin. Vermin infest the house. If you have cats, roll 1d6. If you roll equal to or less than your number of cats, they chase away the vermin. If they fail to chase them off, the vermin spoil your food stocks (or eat it all).',
     'Mold. Something horrible is growing in the cellar (or rafters). Roll 1d6. On a roll of 1 it is a creeping ooze.',
-    'House broken. Roll 1d6 for damage: 1-2 Roof leaks 3-4 Shutters broken  5-6 Door comes off the hinges: -1 to home events until repaired.',
+    function(){houseBroken()},
     'Squatters. They ate your food and drank your beer—and they&#8217;re still here, asleep in your beds. Remain in the adventure phase until you&#8217;ve had a serious talk with them.',
     'Thieves. Thieves broke in while you were away and stole 1d6 items from your caches. Game master chooses items.',
     'Safe house',
@@ -560,10 +560,18 @@
     'Hearth fire glows. Purchasing this home was the best idea you ever had. All may take one free test to recover from angry, afraid, exhausted or sick.',
     'Safe and sound. Nothing like a nice home to make one feel secure: +1D for all recovery tests during town phase.',
     'Lost and found. An item that was lost at some point in the past mysteriously awaits you upon your return home.',
-    'Mysterious package. There&#8217;s a package sitting on your doorstep. Roll 1d6 to determine what it contains:<ol><li>A creepy idol in your image</li><li>Baked goods (two fresh rations)</li><li>A cheese wheel</li><li>A kitten</li><li>A puppy</li><li>A note and a roll on the Books & Maps Table</li></ol>',
+    function () {mysteriousPackage()},
     'House goblin. The house goblin emerges and it is hungry. If fed, you are granted +1 to the next home event roll.',
     'Approval. You&#8217;ve done well. A house goblin adopts you. You are granted +1 to all home events rolls for this home. If you generate this result again, an additional house goblin appears, and so on. All house goblins demand to be accommodated—requiring a portion of food and wine during each of your stays in your home. If unfed for one stay, they temporarily withdraw their support. If unfed for multiple respites, each house goblin imposes a -1 penalty to the home events roll.'
   ];
+  function houseBroken (){
+    const houseBreakage = ['Roof leaks','Roof leaks','Shutter broken','Shutter broken','Door comes off the hinges','Door comes off the hinges'];
+    return 'House broken: ' + houseBreakage[roll(1,6,-1)] + ' -1 to home events until repaired.'
+  }
+  function mysteriousPackage() {
+    const mysteryPackage = ['A creepy idol in your image', 'Baked goods (two fresh rations)', 'A cheese wheel', 'A kitten', 'A puppy', `A note and ${function(){return lootBooksMaps[roll(2,6,-2)]}}`];
+    return 'Mysterious package.There&#8217;s a package sitting on your doorstep. It contains:' + mysteryPackage[roll(1,6,-1)];
+  }
   const dockEventsTable = [
     'Press ganged. You&#8217;re cornered by a determined press gang. Test Fighter vs Fighter 3 plus 6D of help. Suggested condition: injured. Suggested twist: you&#8217;re now a galley slave.',
     'Brawl. You manage to insult some salty dogs and start a brawl. Test Fighter vs Fighter 4, but no weapons are allowed. Suggested twist: wake up in an alley with your pack missing (but you should see the other guys).',
@@ -574,7 +582,7 @@
     'Clothing soiled. You suffer +1 Ob to all Circles tests until your clothing is replaced or thoroughly cleaned.',
     'Clothing soiled. You suffer +1 Ob to all Circles tests until your clothing is replaced or thoroughly cleaned.',
     'Clothing soiled. You suffer +1 Ob to all Circles tests until your clothing is replaced or thoroughly cleaned.',
-    'Animal friend. You&#8217;re befriended by a: 1 Monkey (+1D to Criminal tests; +1 lifestyle cost in town) 2-3 Parrot (+1D to Orator tests) 4-5 Trained rat (pack 1; grants +1D to tests to avoid traps) 6 Polydactyl cat (+1D to Sailor tests and otherwise acts like a cat)',
+    `Animal friend. You&#8217;re befriended by a: ${function () {return ['Monkey (+1D to Criminal tests; +1 lifestyle cost in town)', 'Parrot (+1D to Orator tests)', 'Parrot (+1D to Orator tests)', 'Trained rat (pack 1; grants +1D to tests to avoid traps)', 'Polydactyl cat (+1D to Sailor tests and otherwise acts like a cat)'][roll(1,6,-1)]}}`,
     'Fall in with pirates. You fall in with a band of pirates and get whisked away on a wild adventure. You may not make additional tests during this town phase. On your adventure, abandon one piece of gear or loot (nothing expendable) and then do the following: Mark a Sailor test, pass or fail (your choice); add a new friend from the pirate crew; add Dread Pirate-wise if you have a wise slot available. You&#8217;re back at the end of this town phase before your friends notice you&#8217;re gone, maybe with a new tattoo.'
   ];
   constFellowInvestorsTable = [
@@ -729,181 +737,183 @@
     weatherTypes[14], // unseasonably warm
     weatherTypes[14] // unseasonably warm
   ];
-  constLootTable1 = [
-    function () {
-      interpretRoll(lootBooksMaps)
-    },
-    function () {
-      interpretRoll(lootGear)
-    },
-    function () {
-      interpretRoll(lootGear)
-    },
-    function () {
-      interpretRoll(lootGear)
-    },
-    function () {
-      interpretRoll(lootGear)
-    },
-    function () {
-      interpretRoll(lootStuff)
-    },
-    function () {
-      interpretRoll(lootStuff)
-    },
-    function () {
-      interpretRoll(lootStuff)
-    },
-    function () {
-      interpretRoll(lootStuff)
-    },
-    function () {
-      interpretRoll(treasureAndValuables1)
-    },
-    function () {
-      interpretRoll(lootMagic)
-    }
-  ];
-  constLootTable2 = [
-    function () {
-      interpretRoll(lootBooksMaps)
-    },
-    function () {
-      interpretRoll(lootBooksMaps)
-    },
-    function () {
-      interpretRoll(lootStuff)
-    },
-    function () {
-      interpretRoll(lootStuff)
-    },
-    function () {
-      interpretRoll(lootGear)
-    },
-    function () {
-      interpretRoll(lootGear)
-    },
-    function () {
-      interpretRoll(lootGear)
-    },
-    function () {
-      interpretRoll(lootGear)
-    },
-    function () {
-      interpretRoll(treasureAndValuables1)
-    },
-    function () {
-      interpretRoll(treasureAndValuables1)
-    },
-    function () {
-      interpretRoll(lootMagic)
-    }
-  ];
-  constLootTable3 = [
-    function () {
-      interpretRoll(lootStuff)
-    },
-    function () {
-      interpretRoll(lootStuff)
-    },
-    function () {
-      interpretRoll(lootBooksMaps)
-    },
-    function () {
-      interpretRoll(lootBooksMaps)
-    },
-    function () {
-      interpretRoll(lootGear)
-    },
-    function () {
-      interpretRoll(lootGear)
-    },
-    function () {
-      interpretRoll(lootGear)
-    },
-    function () {
-      interpretRoll(treasureAndValuables1)
-    },
-    function () {
-      interpretRoll(treasureAndValuables1)
-    },
-    function () {
-      interpretRoll(treasureAndValuables2)
-    },
-    function () {
-      interpretRoll(lootMagic)
-    }
-  ];
-  constLootTable4 = [
-    function () {
-      interpretRoll(lootGear)
-    },
-    function () {
-      interpretRoll(lootGear)
-    },
-    function () {
-      interpretRoll(treasureAndValuables1)
-    },
-    function () {
-      interpretRoll(treasureAndValuables3)
-    },
-    function () {
-      interpretRoll(treasureAndValuables3)
-    },
-    function () {
-      interpretRoll(treasureAndValuables2)
-    },
-    function () {
-      interpretRoll(treasureAndValuables2)
-    },
-    function () {
-      interpretRoll(treasureAndValuables2)
-    },
-    function () {
-      interpretRoll(lootBooksMaps)
-    },
-    function () {
-      interpretRoll(lootMagic)
-    },
-    function () {
-      interpretRoll(lootMagic)
-    }
-  ];
-  constLootTable5 = [
-    function () {
-      interpretRoll(lootBooksMaps)
-    },
-    function () {
-      interpretRoll(lootBooksMaps)
-    },
-    function () {
-      interpretRoll(treasureAndValuables2)
-    },
-    function () {
-      interpretRoll(treasureAndValuables3)
-    },
-    function () {
-      interpretRoll(treasureAndValuables4)
-    },
-    function () {
-      interpretRoll(treasureAndValuables4)
-    },
-    function () {
-      interpretRoll(treasureAndValuables4)
-    },
-    function () {
-      interpretRoll(lootMagic)
-    },
-    function () {
-      interpretRoll(lootMagic)
-    },
-    function () {
-      interpretRoll(lootMagic)
-    },
-    function () {
-      interpretRoll(lootMagic)
-    }
-  ];
+  const LootTable = [
+    [ // Loot Table 1
+      function () {
+        interpretRoll(lootBooksMaps)
+      },
+      function () {
+        interpretRoll(lootGear)
+      },
+      function () {
+        interpretRoll(lootGear)
+      },
+      function () {
+        interpretRoll(lootGear)
+      },
+      function () {
+        interpretRoll(lootGear)
+      },
+      function () {
+        interpretRoll(lootStuff)
+      },
+      function () {
+        interpretRoll(lootStuff)
+      },
+      function () {
+        interpretRoll(lootStuff)
+      },
+      function () {
+        interpretRoll(lootStuff)
+      },
+      function () {
+        interpretRoll(treasureAndValuables1)
+      },
+      function () {
+        interpretRoll(lootMagic)
+      }
+    ],
+    [ // Loot Table 2
+      function () {
+        interpretRoll(lootBooksMaps)
+      },
+      function () {
+        interpretRoll(lootBooksMaps)
+      },
+      function () {
+        interpretRoll(lootStuff)
+      },
+      function () {
+        interpretRoll(lootStuff)
+      },
+      function () {
+        interpretRoll(lootGear)
+      },
+      function () {
+        interpretRoll(lootGear)
+      },
+      function () {
+        interpretRoll(lootGear)
+      },
+      function () {
+        interpretRoll(lootGear)
+      },
+      function () {
+        interpretRoll(treasureAndValuables1)
+      },
+      function () {
+        interpretRoll(treasureAndValuables1)
+      },
+      function () {
+        interpretRoll(lootMagic)
+      }
+    ],
+    [ // Loot Table 3
+      function () {
+        interpretRoll(lootStuff)
+      },
+      function () {
+        interpretRoll(lootStuff)
+      },
+      function () {
+        interpretRoll(lootBooksMaps)
+      },
+      function () {
+        interpretRoll(lootBooksMaps)
+      },
+      function () {
+        interpretRoll(lootGear)
+      },
+      function () {
+        interpretRoll(lootGear)
+      },
+      function () {
+        interpretRoll(lootGear)
+      },
+      function () {
+        interpretRoll(treasureAndValuables1)
+      },
+      function () {
+        interpretRoll(treasureAndValuables1)
+      },
+      function () {
+        interpretRoll(treasureAndValuables2)
+      },
+      function () {
+        interpretRoll(lootMagic)
+      }
+    ],
+    [ // Loot Table 4
+      function () {
+        interpretRoll(lootGear)
+      },
+      function () {
+        interpretRoll(lootGear)
+      },
+      function () {
+        interpretRoll(treasureAndValuables1)
+      },
+      function () {
+        interpretRoll(treasureAndValuables3)
+      },
+      function () {
+        interpretRoll(treasureAndValuables3)
+      },
+      function () {
+        interpretRoll(treasureAndValuables2)
+      },
+      function () {
+        interpretRoll(treasureAndValuables2)
+      },
+      function () {
+        interpretRoll(treasureAndValuables2)
+      },
+      function () {
+        interpretRoll(lootBooksMaps)
+      },
+      function () {
+        interpretRoll(lootMagic)
+      },
+      function () {
+        interpretRoll(lootMagic)
+      }
+    ],
+    [ // Loot Table 5
+      function () {
+        interpretRoll(lootBooksMaps)
+      },
+      function () {
+        interpretRoll(lootBooksMaps)
+      },
+      function () {
+        interpretRoll(treasureAndValuables2)
+      },
+      function () {
+        interpretRoll(treasureAndValuables3)
+      },
+      function () {
+        interpretRoll(treasureAndValuables4)
+      },
+      function () {
+        interpretRoll(treasureAndValuables4)
+      },
+      function () {
+        interpretRoll(treasureAndValuables4)
+      },
+      function () {
+        interpretRoll(lootMagic)
+      },
+      function () {
+        interpretRoll(lootMagic)
+      },
+      function () {
+        interpretRoll(lootMagic)
+      },
+      function () {
+        interpretRoll(lootMagic)
+      }
+    ]
+  ]
   const lootBooksMaps = [
     'Accurate map of dungeon level or region | X | pack 1',
     'Accurate map of small region or set of rooms | X | pack 1',
@@ -962,7 +972,9 @@
     },
     ['Drowner&8217;s Friend', 'Drowner&8217;s Friend', 'Jade Ward', 'Jade Ward', 'Amulet of Stars', 'Aegis Bracers'],
     ['Wizard&8217;s Staff', 'Wizard&8217;s Staff', 'Wand of Unbinding', 'Wand of Unbinding', 'Dowsing Rod', 'Dowsing Rod'],
-    'Spell book: 1d3 circles of spells (game master&8217;s choice)',
+    function () {
+      `Spell book: ${roll(1, 3)} circles of spells (game master&8217;s choice)`
+    },
     function () {
       return `Enchanted ${lootClothing[roll(1, 6, -1)]}`
     },
@@ -1098,7 +1110,7 @@
       interpretRoll(lootSilverPlate)
     },
     function () {
-    interpretRoll(lootRugsTapestries)
+      interpretRoll(lootRugsTapestries)
     },
     function () {
       interpretRoll(lootArt)
@@ -1112,12 +1124,13 @@
     function () {
       interpretRoll(lootJewelry2)
     },
+    'finery (2d6 outfits)',
     'finery (2d6 outfits)'
   ];
   const lootCoins1 = ['Small sack of copper coins | 1D | pack 2', 'Small sack of copper coins | 1D | pack 2', 'Small sack of copper coins | 1D | pack 2', 'Pouch of silver coins | 1D | pack 1', 'Pouch of silver coins | 1D | pack 1', 'Pouch of gold coins | 2D | pack 1'];
   const lootCoins2 = ['Small sack of copper coins | 1D | pack 2', 'Small sack of silver coins | 2D | pack 2', 'Small sack of gold coins | 4D | pack 2', 'Large sack of copper coins | 3D | pack 6', 'Satchel of silver coins | 3D | pack 3', 'Satchel of gold coins | 6D | pack 1'];
-  const lootCoins3 = ['Small chest of copper coins | 2D | pack5', 'Small chest of silver coins | 4D | pack 5', 'Small chest of gold coins | 8D | pack 5', 'Two small sacks of copper coins | 1D ea. | pack 2 ea.','Two small sacks of silver coins | 2D ea. | pack 2 ea.','Two small sacks of gold coins | 4D ea. | pack 2 ea.'];
-  const lootCoins4 = ['Chest of copper coins | 4D | pack 10', 'Chest of silver coins | 8D | pack 10', 'Chest of silver coins | 8D | pack 10', 'Chest of silver coins | 8D | pack 10', 'Chest of silver coins | 8D | pack 10', 'Chest of gold coins | 16D | pack 10', ];
+  const lootCoins3 = ['Small chest of copper coins | 2D | pack5', 'Small chest of silver coins | 4D | pack 5', 'Small chest of gold coins | 8D | pack 5', 'Two small sacks of copper coins | 1D ea. | pack 2 ea.', 'Two small sacks of silver coins | 2D ea. | pack 2 ea.', 'Two small sacks of gold coins | 4D ea. | pack 2 ea.'];
+  const lootCoins4 = ['Chest of copper coins | 4D | pack 10', 'Chest of silver coins | 8D | pack 10', 'Chest of silver coins | 8D | pack 10', 'Chest of silver coins | 8D | pack 10', 'Chest of silver coins | 8D | pack 10', 'Chest of gold coins | 16D | pack 10',];
   const lootGems1 = [
     'Cursed gem | 8D | pack 1',
     'Pouch of precious stones (3) | 9D | pack 1',
@@ -1164,6 +1177,7 @@
     'Decorative urn or vase | 3D | pack 3',
     'Large statue | 6D | pack 8/10/12 (roll 1d3)',
     'Small gilded mirror | 2D | pack 1',
+    'Small statue | 3D | pack 4',
     'Idol (obsidian or jade) | 3D | pack 1',
     'Small painting | 2D | pack 4',
     'Large painting | 5D | pack 8',
@@ -1258,14 +1272,26 @@
   }
 
   function interpretRoll(treasure) {
-    console.log("Treasure: " + treasure + " Type: " + typeof treasure + ' . ' + Array.isArray(treasure) + ' length: ' + treasure.length);
     if (typeof treasure === "string") accumulateLoot(treasure);
     else if (typeof treasure === "function") interpretRoll(treasure());
     else if (treasure.length === 2) accumulateLoot(treasure[0]);
     else {
-      let numberOfDice = treasure.length / 6;
-      let subTableRoll = roll(numberOfDice, 6, -numberOfDice);
-      // All the arrays are zero-based, so we convert a die roll of (say) 2-12 to an index of 0-10.
+      let subTableRoll = 1000;
+      switch (treasure.length) {
+        case 6:
+          subTableRoll = roll(1, 6, -1);
+          break;
+        case 11:
+          subTableRoll = roll(2, 6, -2);
+          break;
+        case 16:
+          subTableRoll = roll(3, 6, -3);
+          break;
+        default:
+          alert('something is wrong with the subtable roll length');
+          break;
+      }
+      console.log(subTableRoll + ' : ' + treasure[subTableRoll]);
       interpretRoll(treasure[subTableRoll]);
     }
   }
@@ -1273,18 +1299,23 @@
   let accumulatedLoot = new Map();
 
   function accumulateLoot(lootDescription) {
+    console.log('Accumulating: ' + lootDescription);
     if (accumulatedLoot.has(lootDescription))
-      accumulatedLoot.set(accumulatedLoot.get(lootDescription) + 1);
+      accumulatedLoot.set(lootDescription, accumulatedLoot.get(lootDescription) + 1);
     else
       accumulatedLoot.set(lootDescription, 1);
+    console.log('Accumulated: ' + lootDescription + ', ' + accumulatedLoot.get(lootDescription));
+  }
+
+  function formatLootString(loot, quantity) {
+    console.log(loot + ' : ' + quantity);
+    let qtyString = '';
+    if (quantity > 1) qtyString = ' : ' + quantity;
+    return `${loot}${qtyString}`;
   }
 
   function printAccumulatedTreasure(resultsLoc) {
-    function formatLootString(loot, quantity) {
-      const qtyString = quantity > 1 ? ` x${quantity}` : '';
-      return `${loot}${qtyString}`
-    }
-
+    console.log(accumulatedLoot);
     let resultsVar = "Your Result:<br /><br />";
     for (const [k, v] of accumulatedLoot.entries()) {
       resultsVar += formatLootString(k, v);
@@ -1297,10 +1328,9 @@
     let radioValues = document.getElementsByName(radioName);
     for (let x = 0; x < radioValues.length; x++) {
       if (radioValues[x].checked) {
-        let checkedValue = radioValues[x].value;
+        return radioValues[x].value;
       }
     }
-    return checkedValue;
   }
 
   function amountAndType(amtDiceNum, amtDiceSize, table, tableDiceNumber, tableDiceSize) {
@@ -1428,9 +1458,25 @@
     console.log("Season: " + season + " seasonTime: " + seasonTime)
     evaluateWeather(season, seasonTime);
     printAccumulatedTreasure(resultsLoc);
-
   }
 
+  function showLoot() {
+    let resultsLoc = document.getElementById("LootResults");
+    let tables = document.getElementsByName("LootTables");
+    for (let x = 0; x < tables.length; x++) {
+      if (tables[x].value !== "0") {
+        for (let i = 0; i < tables[x].value; i++) {
+          let lootRoll = roll(2, 6, -2);
+          let lootTableID = LootTable[x];
+          console.log(tables[x].id + ' : ' + lootRoll + ' : ' + lootTableID[lootRoll]);
+          interpretRoll(lootTableID[lootRoll]);
+        }
+      }
+      printAccumulatedTreasure(resultsLoc);
+    }
+
+
+  }
 
 </script>
 
@@ -1446,418 +1492,451 @@
 </section>
 
 <div class="content">
-    <section>
-      <form>
-        <fieldset>
-          <legend>Camp Events (<i>Scholar&#8217;s Guide</i>. 90&ndash;96, 264&ndash;278.)</legend>
-          This roller produces book results, but note the advice on p. 264:
-          <blockquote>The game master should incorporate camp events with a critical eye. Bend them, break
-            them and bind them into the ongoing story. Modify them to suit, but never let the adventurers
-            off easy—and never deny them a lucky break.</blockquote>
+  <section>
+    <form>
+      <fieldset>
+        <legend>Camp Events (<i>Scholar&#8217;s Guide</i>. 90&ndash;96, 264&ndash;278.)</legend>
+        This roller produces book results, but note the advice on p. 264:
+        <blockquote>The game master should incorporate camp events with a critical eye. Bend them, break
+          them and bind them into the ongoing story. Modify them to suit, but never let the adventurers
+          off easy—and never deny them a lucky break.
+        </blockquote>
+        <p>
+          <label>Where is the Camp?</label>
+          <input type="radio"
+                 name="CampArea"
+                 id="AncientRuinCamp"
+                 value="0"
+                 checked/>
+          <label for="AncientRuinCamp">Ancient Ruin</label>
+
+          <input type="radio"
+                 name="CampArea"
+                 id="DungeonCamp"
+                 value="1"/>
+          <label for="DungeonCamp">Dungeon</label>
+
+          <input type="radio"
+                 name="CampArea"
+                 id="NaturalCaveCamp"
+                 value="2"/>
+          <label for="NaturalCaveCamp">Natural Cave</label>
+
+          <input type="radio"
+                 name="CampArea"
+                 id="NearTownCamp"
+                 value="3"/>
+          <label for="NearTownCamp">Outside or Near Town</label>
+
+          <input type="radio"
+                 name="CampArea"
+                 id="SquattingCamp"
+                 value="4"/>
+          <label for="SquattingCamp">Squatting in Town</label>
+
+          <input type="radio"
+                 name="CampArea"
+                 id="WildernessCamp"
+                 value="5"/>
+          <label for="WildernessCamp">Wilderness</label>
+        </p>
+        <p>
+          <label>How Safe is the Camp?</label>
+          <input type="radio"
+                 name="CampSafety"
+                 id="TypicalCamp"
+                 value="0"
+                 checked/>
+          <label for="TypicalCamp">Typical</label>
+
+          <input type="radio"
+                 name="CampSafety"
+                 id="UnsafeCamp"
+                 value="-2"/>
+          <label for="UnsafeCamp">Unsafe</label>
+
+          <input type="radio"
+                 name="CampSafety"
+                 id="DangerousCamp"
+                 value="-3"/>
+          <label for="DangerousCamp">Dangerous</label>
+        </p>
+        <p>
+          <label>Did you light a fire?</label>
+          <input type="radio"
+                 name="Fire"
+                 id="yesFire"
+                 value="0"
+                 checked="checked"/>
+          <label for="yesFire">Yes</label>
+
+          <input type="radio"
+                 name="Fire"
+                 id="noFire"
+                 value="1"/>
+          <label for="noFire">No (cannot perform actions that require a fire; all recovery +1
+            Ob.)</label>
+        </p>
+
+        <p>
+          <label>Did you set a watch?</label>
+          <input type="radio"
+                 name="Watch"
+                 id="yesWatch"
+                 value="1"/>
+          <label for="yesWatch">Yes</label>
+
+          <input type="radio"
+                 name="Watch"
+                 id="noWatch"
+                 value="0"
+                 checked="checked"/>
+          <label for="noWatch">No</label>
+        </p>
+        <p>
+          <label>Party members:</label>
+          <input type="checkbox"
+                 name="Ranger"
+                 id="Ranger"
+                 value="1"/>
+          <label for="Ranger">Ranger (for Wilderness Camps)</label>
+          <input type="checkbox"
+                 name="Outcast"
+                 id="Outcast"
+                 value="1"/>
+          <label for="Outcast">Outcast (for Dungeons and Dwarven Ruins)</label>
+          <input type="checkbox"
+                 name="DwarfRuin"
+                 id="DwarfRuin"
+                 value="1"/>
+          <label for="DwarfRuin">Dwarven Ruin (for Ancient Ruins, if Outcast in party)</label>
+        </p>
+        <p>
+          <label>Did you use the Survivalist skill to find or make:</label>
+          <input type="checkbox"
+                 name="Shelter"
+                 id="Shelter"
+                 value="1"/>
+          <label for="Shelter">Shelter for an Outdoor Camp</label>
+          <input type="checkbox"
+                 name="Concealment"
+                 id="Concealment"
+                 value="1"/>
+          <label for="Concealment">A Site with Concealment</label>
+        </p>
+        <legend>Other Modifiers (p. 93)</legend>
+        <blockquote>
+          <ul>
+            <li>Some camp events add bonuses to future camp events rolls.</li>
+            <li>A previous camp disaster in this area while on this adventure imposes a -1 penalty on
+              further camp events rolls. Each additional disaster imposes a cumulative penalty. A
+              disaster is any event that forces an early end to a camp phase, regardless if the watch
+              averts it or not.
+            </li>
+            <li>The game master can impose a -1 camp events penalty if they feel one is warranted due to
+              natural phenomena (like droughts, storms or earthquakes), if the adventurers have
+              angered some terrible foe who hunts them, or if they are under the ban of some horrid
+              curse.
+            </li>
+          </ul>
+        </blockquote>
+        <label for="MiscCampModifiers">Other Modifiers:</label>
+        <input type="number" name="MiscCampModifiers" id="MiscCampModifiers" min="-10" max="10" value="0"/>
+        <p>
+          <label for="MakeCamp">Camp When Ready:</label>
+          <input type="button" id="MakeCamp" value="Make Camp!" onClick="makeCamp();">
+        </p>
+      </fieldset>
+    </form>
+  </section>
+  <section>
+    <p id="CampResults">What awaits you?</p>
+  </section>
+  <section>
+    <form>
+      <fieldset>
+        <legend>Town Events (<i>Scholar&#8217;s Guide</i>. 97&ndash;125, 279&ndash;302.)</legend>
+        This roller produces book results, but note the advice on p. 279:
+        <blockquote>The individual town events leave a lot of room for interpretation. When something odd
+          comes up, roll with it. It&#8217;s the game master&#8217;s job to call for tests or single out
+          victims of calamity and sort through the chaos.
+        </blockquote>
+        <blockquote>Some town events will provide a small benefit or penalty. Be sure to color these
+          results so that they mesh with the current events of the campaign.
+        </blockquote>
+
+
+        <div class="floatLeft">
           <p>
-            <label>Where is the Camp?</label>
+            <label>What type of town is it?</label>
+          </p>
+        </div>
+        <div class="floatRight">
+          <p>
             <input type="radio"
-                   name="CampArea"
-                   id="AncientRuinCamp"
+                   name="TownType"
+                   id="BustlingMetropolisTown"
                    value="0"
-                   checked />
-            <label for="AncientRuinCamp">Ancient Ruin</label>
-
+                   checked/>
+            <label for="BustlingMetropolisTown">Bustling Metropolis</label>
             <input type="radio"
-                   name="CampArea"
-                   id="DungeonCamp"
+                   name="TownType"
+                   id="BusyCrossroadsTown"
                    value="1"/>
-            <label for="DungeonCamp">Dungeon</label>
-
+            <label for="BusyCrossroadsTown">Busy Crossroads</label>
             <input type="radio"
-                   name="CampArea"
-                   id="NaturalCaveCamp"
+                   name="TownType"
+                   id="DwarvenHallsTown"
                    value="2"/>
-            <label for="NaturalCaveCamp">Natural Cave</label>
-
+            <label for="DwarvenHallsTown">Dwarven Halls</label>
             <input type="radio"
-                   name="CampArea"
-                   id="NearTownCamp"
+                   name="TownType"
+                   id="ElfHomeTown"
                    value="3"/>
-            <label for="NearTownCamp">Outside or Near Town</label>
-
+            <label for="ElfHomeTown">Elfhome</label>
             <input type="radio"
-                   name="CampArea"
-                   id="SquattingCamp"
+                   name="TownType"
+                   id="ReligiousBastionTown"
                    value="4"/>
-            <label for="SquattingCamp">Squatting in Town</label>
-
+            <label for="ReligiousBastionTown">Religious Bastion</label>
             <input type="radio"
-                   name="CampArea"
-                   id="WildernessCamp"
+                   name="TownType"
+                   id="RemoteVillageTown"
                    value="5"/>
-            <label for="WildernessCamp">Wilderness</label>
+            <label for="RemoteVillageTown">Remote Village</label>
+            <input type="radio"
+                   name="TownType"
+                   id="WizardsTowerTown"
+                   value="6"/>
+            <label for="WizardsTowerTown">Wizard's Tower</label>
           </p>
           <p>
-            <label>How Safe is the Camp?</label>
-            <input type="radio"
-                   name="CampSafety"
-                   id="TypicalCamp"
-                   value="0"
-                   checked />
-            <label for="TypicalCamp">Typical</label>
-
-            <input type="radio"
-                   name="CampSafety"
-                   id="UnsafeCamp"
-                   value="-2"/>
-            <label for="UnsafeCamp">Unsafe</label>
-
-            <input type="radio"
-                   name="CampSafety"
-                   id="DangerousCamp"
-                   value="-3"/>
-            <label for="DangerousCamp">Dangerous</label>
+            <label>Additional options from the <i>Lore Master&#8217;s Manual</i>. 196&ndash;211.</label>
           </p>
           <p>
-            <label>Did you light a fire?</label>
             <input type="radio"
-                   name="Fire"
-                   id="yesFire"
-                   value="0"
-                   checked="checked"/>
-            <label for="yesFire">Yes</label>
-
+                   name="TownType"
+                   id="BorderlandFortressTown"
+                   value="7"/>
+            <label for="BorderlandFortressTown">Borderland Fortress</label>
             <input type="radio"
-                   name="Fire"
-                   id="noFire"
-                   value="1"/>
-            <label for="noFire">No (cannot perform actions that require a fire; all recovery +1
-              Ob.)</label>
-          </p>
-
-          <p>
-            <label>Did you set a watch?</label>
+                   name="TownType"
+                   id="DilapidatedPortTown"
+                   value="8"/>
+            <label for="DilapidatedPortTown">Dilapidated Port</label>
             <input type="radio"
-                   name="Watch"
-                   id="yesWatch"
-                   value="1"/>
-            <label for="yesWatch">Yes</label>
-
+                   name="TownType"
+                   id="ForgottenTempleTown"
+                   value="9"/>
+            <label for="ForgottenTempleTown">Forgotten Temple Complex</label>
             <input type="radio"
-                   name="Watch"
-                   id="noWatch"
-                   value="0"
-                   checked="checked"/>
-            <label for="noWatch">No</label>
+                   name="TownType"
+                   id="NomadCaravanTown"
+                   value="10"/>
+            <label for="NomadCaravanTown">Nomad Caravan</label>
+            <input type="radio"
+                   name="TownType"
+                   id="ProsperousWayhouseTown"
+                   value="11"/>
+            <label for="ProsperousWayhouseTown">Prosperous Wayhouse</label>
+            <input type="radio"
+                   name="TownType"
+                   id="ShireTown"
+                   value="12"/>
+            <label for="ShireTown">Shire</label>
+            <input type="radio"
+                   name="TownType"
+                   id="SteadingTown"
+                   value="13"/>
+            <label for="SteadingTown">Steading</label>
+            <input type="radio"
+                   name="TownType"
+                   id="WalledTown"
+                   value="14"/>
+            <label for="WalledTown">Walled Town</label>
           </p>
-          <p>
-            <label>Party members:</label>
-            <input type="checkbox"
-                   name="Ranger"
-                   id="Ranger"
-                   value="1"/>
-            <label for="Ranger">Ranger (for Wilderness Camps)</label>
-            <input type="checkbox"
-                   name="Outcast"
-                   id="Outcast"
-                   value="1"/>
-            <label for="Outcast">Outcast (for Dungeons and Dwarven Ruins)</label>
-            <input type="checkbox"
-                   name="DwarfRuin"
-                   id="DwarfRuin"
-                   value="1"/>
-            <label for="DwarfRuin">Dwarven Ruin (for Ancient Ruins, if Outcast in party)</label>
-          </p>
-          <p>
-            <label>Did you use the Survivalist skill to find or make:</label>
-            <input type="checkbox"
-                   name="Shelter"
-                   id="Shelter"
-                   value="1"/>
-            <label for="Shelter">Shelter for an Outdoor Camp</label>
-            <input type="checkbox"
-                   name="Concealment"
-                   id="Concealment"
-                   value="1"/>
-            <label for="Concealment">A Site with Concealment</label>
-          </p>
-            <legend>Other Modifiers (p. 93)</legend>
+          <label>Town Roll Modifiers (p. 280.):</label>
           <blockquote>
+            Town Events Roll Bonuses
+            Town events rolls are difficult to modify in one&#8217;s favor. There are only a handful
+            of possible bonuses:
             <ul>
-              <li>Some camp events add bonuses to future camp events rolls.</li>
-              <li>A previous camp disaster in this area while on this adventure imposes a -1 penalty on
-                further camp events rolls. Each additional disaster imposes a cumulative penalty. A
-                disaster is any event that forces an early end to a camp phase, regardless if the watch
-                averts it or not.
+              <li>The Hearthmistress&#8217;s Favor, gained by praying at a shrine, grants +1 to
+                the next town events roll.
               </li>
-              <li>The game master can impose a -1 camp events penalty if they feel one is warranted due to
-                natural phenomena (like droughts, storms or earthquakes), if the adventurers have
-                angered some terrible foe who hunts them, or if they are under the ban of some horrid
-                curse.
+              <li>A Steward skill test to maintain the works and projects of a settlement grants
+                +1 to the next town events roll for that particular settlement.
+              </li>
+              <li>A skald who establishes a court of the wise in a settlement grants it +1 to town
+                events rolls so long as the court remains.
+              </li>
+              <li>Increate theurges add +1 to town events rolls for settlements allied with
+                them.
               </li>
             </ul>
+            Town Events Roll Penalties
+            <ul>
+              <li>Each disaster event rolled causes an ongoing -1 penalty to town events rolls for
+                this settlement. Each additional disaster imposes a cumulative penalty.
+                Adventures may endeavor to ameliorate disasters or certain town events may
+                mitigate their effects and remove the penalty. A disaster is any event that
+                forces an early end to a town phase or destroys a facility, location or amenity.
+              </li>
+              <li>Increate theurges suffer -1 to town events rolls in settlements opposed to
+                them.
+              </li>
+            </ul>
+
           </blockquote>
-          <label for="MiscCampModifiers">Other Modifiers:</label>
-          <input type="number" name="MiscCampModifiers" id="MiscCampModifiers" min="-10" max="10" value="0"/>
-          <p>
-            <label for="MakeCamp">Camp When Ready:</label>
-            <input type="button" id="MakeCamp" value="Make Camp!" onClick="makeCamp();">
-          </p>
-        </fieldset>
-      </form>
-    </section>
-    <section>
-      <p id="CampResults">What awaits you?</p>
-    </section>
-    <section>
-      <form>
-        <fieldset>
-          <legend>Town Events (<i>Scholar&#8217;s Guide</i>. 97&ndash;125, 279&ndash;302.)</legend>
-          This roller produces book results, but note the advice on p. 279:
-          <blockquote>The individual town events leave a lot of room for interpretation. When something odd
-            comes up, roll with it. It&#8217;s the game master&#8217;s job to call for tests or single out
-            victims of calamity and sort through the chaos.</blockquote>
-          <blockquote>Some town events will provide a small benefit or penalty. Be sure to color these
-            results so that they mesh with the current events of the campaign.</blockquote>
+          <label for="TownRollModifiers">Town Events Modifiers: </label>
+          <input type="number" name="TownRollModifiers" id="TownRollModifiers" min="-10" max="10"
+                 value="0"/>
+        </div>
 
+        <label for="EnterTown">Entering Town . . . . . . . . . . . . . . </label>
+        <input type=button id="EnterTown" value="Enter Town!" onClick="enterTown();">
+      </fieldset>
+    </form>
+  </section>
+  <section>
+    <p id="TownResults">What awaits you?</p>
+  </section>
+  <section>
+    <form>
+      <fieldset>
+        <legend>Tavern Rumours (<i>Scholar&#8217;s Guide</i>. 298&ndash;299.)</legend>
+        <label for="GenerateRumour">Buy a Round! . . . . . . . . . . </label>
+        <input type=button id="GenerateRumour" value="Generate Rumour" onClick="generateRumour();">
 
-          <div class="floatLeft">
-            <p>
-              <label>What type of town is it?</label>
-            </p>
-          </div>
-          <div class="floatRight">
-            <p>
-              <input type="radio"
-                     name="TownType"
-                     id="BustlingMetropolisTown"
-                     value="0"
-                     checked />
-              <label for="BustlingMetropolisTown">Bustling Metropolis</label>
-              <input type="radio"
-                     name="TownType"
-                     id="BusyCrossroadsTown"
-                     value="1"/>
-              <label for="BusyCrossroadsTown">Busy Crossroads</label>
-              <input type="radio"
-                     name="TownType"
-                     id="DwarvenHallsTown"
-                     value="2"/>
-              <label for="DwarvenHallsTown">Dwarven Halls</label>
-              <input type="radio"
-                     name="TownType"
-                     id="ElfHomeTown"
-                     value="3"/>
-              <label for="ElfHomeTown">Elfhome</label>
-              <input type="radio"
-                     name="TownType"
-                     id="ReligiousBastionTown"
-                     value="4"/>
-              <label for="ReligiousBastionTown">Religious Bastion</label>
-              <input type="radio"
-                     name="TownType"
-                     id="RemoteVillageTown"
-                     value="5"/>
-              <label for="RemoteVillageTown">Remote Village</label>
-              <input type="radio"
-                     name="TownType"
-                     id="WizardsTowerTown"
-                     value="6"/>
-              <label for="WizardsTowerTown">Wizard's Tower</label>
-            </p>
-            <p>
-              <label>Additional options from the <i>Lore Master&#8217;s Manual</i>. 196&ndash;211.</label>
-            </p>
-            <p>
-              <input type="radio"
-                     name="TownType"
-                     id="BorderlandFortressTown"
-                     value="7"/>
-              <label for="BorderlandFortressTown">Borderland Fortress</label>
-              <input type="radio"
-                     name="TownType"
-                     id="DilapidatedPortTown"
-                     value="8"/>
-              <label for="DilapidatedPortTown">Dilapidated Port</label>
-              <input type="radio"
-                     name="TownType"
-                     id="ForgottenTempleTown"
-                     value="9"/>
-              <label for="ForgottenTempleTown">Forgotten Temple Complex</label>
-              <input type="radio"
-                     name="TownType"
-                     id="NomadCaravanTown"
-                     value="10"/>
-              <label for="NomadCaravanTown">Nomad Caravan</label>
-              <input type="radio"
-                     name="TownType"
-                     id="ProsperousWayhouseTown"
-                     value="11"/>
-              <label for="ProsperousWayhouseTown">Prosperous Wayhouse</label>
-              <input type="radio"
-                     name="TownType"
-                     id="ShireTown"
-                     value="12"/>
-              <label for="ShireTown">Shire</label>
-              <input type="radio"
-                     name="TownType"
-                     id="SteadingTown"
-                     value="13"/>
-              <label for="SteadingTown">Steading</label>
-              <input type="radio"
-                     name="TownType"
-                     id="WalledTown"
-                     value="14"/>
-              <label for="WalledTown">Walled Town</label>
-            </p>
-              <label>Town Roll Modifiers (p. 280.):</label>
-            <blockquote>
-              Town Events Roll Bonuses
-                Town events rolls are difficult to modify in one&#8217;s favor. There are only a handful
-                of possible bonuses:
-                <ul>
-                  <li>The Hearthmistress&#8217;s Favor, gained by praying at a shrine, grants +1 to
-                    the next town events roll.
-                  </li>
-                  <li>A Steward skill test to maintain the works and projects of a settlement grants
-                    +1 to the next town events roll for that particular settlement.
-                  </li>
-                  <li>A skald who establishes a court of the wise in a settlement grants it +1 to town
-                    events rolls so long as the court remains.
-                  </li>
-                  <li>Increate theurges add +1 to town events rolls for settlements allied with
-                    them.
-                  </li>
-                </ul>
-                Town Events Roll Penalties
-                <ul>
-                  <li>Each disaster event rolled causes an ongoing -1 penalty to town events rolls for
-                    this settlement. Each additional disaster imposes a cumulative penalty.
-                    Adventures may endeavor to ameliorate disasters or certain town events may
-                    mitigate their effects and remove the penalty. A disaster is any event that
-                    forces an early end to a town phase or destroys a facility, location or amenity.
-                  </li>
-                  <li>Increate theurges suffer -1 to town events rolls in settlements opposed to
-                    them.
-                  </li>
-                </ul>
+      </fieldset>
+    </form>
+    <p id="RumourResults">What awaits you?</p>
+  </section>
+  <section>
+    <form>
+      <fieldset>
+        <legend>Guild Table (<i>Lore Master&#8217;s Manual</i>. 198.)</legend>
+        <label for="GenerateGuild">Which guild? . . . . . . . . . . </label>
+        <input type=button id="GenerateGuild" value="Generate Guild" onClick="generateGuild();">
+      </fieldset>
+    </form>
+    <p id="GuildResults">What awaits you?</p>
+  </section>
+  <section>
 
-            </blockquote>
-            <label for="TownRollModifiers">Town Events Modifiers: </label>
-            <input type="number" name="TownRollModifiers" id="TownRollModifiers" min="-10" max="10"
-                   value="0"/>
-          </div>
+    <form>
+      <fieldset>
+        <legend>Home Events (<i>Lore Master&#8217;s Manual</i>. 234&ndash;235.)</legend>
+        <p>
+          <label for="HouseRollModifiers">Home Ownership Modifiers: </label>
+          <input type="number" name="HouseRollModifiers" id="HouseRollModifiers" min="-10" max="10"
+                 value="0">
+        </p>
+        <p>
+          <label for="HouseEvents">Exciting adventures in homeownership await: </label>
+          <input type=button id="HouseEvents" value="Home Ownership is Fun!" onClick="generateHouseEvent();">
+        </p>
+      </fieldset>
+    </form>
+    <p id="HouseResults">What awaits you?</p>
+  </section>
+  <section>
 
-          <label for="EnterTown">Entering Town . . . . . . . . . . . . . . </label>
-          <input type=button id="EnterTown" value="Enter Town!" onClick="enterTown();">
-        </fieldset>
-      </form>
-    </section>
-    <section>
-      <p id="TownResults">What awaits you?</p>
-    </section>
-    <section>
-      <form>
-        <fieldset>
-          <legend>Tavern Rumours (<i>Scholar&#8217;s Guide</i>. 298&ndash;299.)</legend>
-          <label for="GenerateRumour">Buy a Round! . . . . . . . . . . </label>
-          <input type=button id="GenerateRumour" value="Generate Rumour" onClick="generateRumour();">
+    <form>
+      <fieldset>
+        <legend>Weather (<i>Lore Master&#8217;s Manual</i>. 153&ndash;159.)</legend>
+        <p>
+          <label>Season: </label>
+          <input type="radio"
+                 name="Weather"
+                 id="SpringWeather"
+                 value="spring"
+                 checked/>
+          <label for="SpringWeather">Spring</label>
+          <input type="radio"
+                 name="Weather"
+                 id="SummerWeather"
+                 value="summer"/>
+          <label for="SummerWeather">Summer</label>
+          <input type="radio"
+                 name="Weather"
+                 id="FallWeather"
+                 value="fall"/>
+          <label for="FallWeather">Autumn</label>
+          <input type="radio"
+                 name="Weather"
+                 id="WinterWeather"
+                 value="winter"/>
+          <label for="WinterWeather">Winter</label>
+        </p>
+        <p>
+          <label>Season Time: </label>
+          <input type="radio"
+                 name="SeasonTime"
+                 id="SeasonTime_Early"
+                 value="-1"/>
+          <label for="SeasonTime_Early">Early</label>
+          <input type="radio"
+                 name="SeasonTime"
+                 id="SeasonTime_MidSeason"
+                 value="0"
+                 checked/>
+          <label for="SeasonTime_MidSeason">Mid-Season</label>
+          <input type="radio"
+                 name="SeasonTime"
+                 id="SeasonTime_Late"
+                 value="1"/>
+          <label for="SeasonTime_Late">Late</label>
+        </p>
+        <p>
+          <label>Watch the weather: </label>
+          <input type=button value="It looks like..." onClick="generateWeather();">
+        </p></fieldset>
+    </form>
+    <p id="WeatherResults">What awaits you?</p>
+  </section>
+  <section>
+    <form>
+      <fieldset>
+        <legend>Generate Loot (<i>Scholar&#8217;s Guide</i>. 150&ndash;170. <i>Lore
+          Master&#8217;s Manual</i>. 240&ndash;244.)
+        </legend>
 
-        </fieldset>
-      </form>
-      <p id="RumourResults">What awaits you?</p>
-    </section>
-    <section>
-      <form>
-        <fieldset>
-          <legend>Guild Table (<i>Lore Master&#8217;s Manual</i>. 198.)</legend>
-          <label for="GenerateGuild">Which guild? . . . . . . . . . . </label>
-          <input type=button id="GenerateGuild" value="Generate Guild" onClick="generateGuild();">
-        </fieldset>
-      </form>
-      <p id="GuildResults">What awaits you?</p>
-    </section>
-    <section>
-
-      <form>
-        <fieldset>
-          <legend>Home Events (<i>Lore Master&#8217;s Manual</i>. 234&ndash;235.)</legend>
-          <p>
-            <label for="HouseRollModifiers">Home Ownership Modifiers: </label>
-            <input type="number" name="HouseRollModifiers" id="HouseRollModifiers" min="-10" max="10"
-                   value="0">
-          </p>
-          <p>
-            <label for="HouseEvents">Exciting adventures in homeownership await: </label>
-            <input type=button id="HouseEvents" value="Home Ownership is Fun!" onClick="generateHouseEvent();">
-          </p>
-        </fieldset>
-      </form>
-      <p id="HouseResults">What awaits you?</p>
-    </section>
-    <section>
-
-      <form>
-        <fieldset>
-          <legend>Weather (<i>Lore Master&#8217;s Manual</i>. 153&ndash;159.)</legend>
-          <p>
-            <label>Season: </label>
-            <input type="radio"
-                   name="Weather"
-                   id="SpringWeather"
-                   value="spring"
-                   checked />
-            <label for="SpringWeather">Spring</label>
-            <input type="radio"
-                   name="Weather"
-                   id="SummerWeather"
-                   value="summer"/>
-            <label for="SummerWeather">Summer</label>
-            <input type="radio"
-                   name="Weather"
-                   id="FallWeather"
-                   value="fall"/>
-            <label for="FallWeather">Autumn</label>
-            <input type="radio"
-                   name="Weather"
-                   id="WinterWeather"
-                   value="winter"/>
-            <label for="WinterWeather">Winter</label>
-          </p>
-          <p>
-            <label>Season Time: </label>
-            <input type="radio"
-                   name="SeasonTime"
-                   id="SeasonTime_Early"
-                   value="-1"/>
-            <label for="SeasonTime_Early">Early</label>
-            <input type="radio"
-                   name="SeasonTime"
-                   id="SeasonTime_MidSeason"
-                   value="0"
-                   checked />
-            <label for="SeasonTime_MidSeason">Mid-Season</label>
-            <input type="radio"
-                   name="SeasonTime"
-                   id="SeasonTime_Late"
-                   value="1"/>
-            <label for="SeasonTime_Late">Late</label>
-          </p>
-          <p>
-            <label>Watch the weather: </label>
-            <input type=button value="It looks like..." onClick="generateWeather();">
-          </p></fieldset>
-      </form>
-      <p id="WeatherResults">What awaits you?</p>
-    </section>
-    <section>
-      <form name="formField" onsubmit="return showLoot();">
-        <fieldset>
-          <legend>Generate Loot for Planned Encounters (<i>Scholar&#8217;s Guide</i>. 150&ndash;170. <i>Lore
-            Master&#8217;s Manual</i>. 240&ndash;244.)
-          </legend>
-          <label for="TotalMight">Total Might (1-99):</label>
-          <input type="number" id="TotalMight" name="might" min="1" max="99" value="10">
-          <input type=button id="ShowLoot" value="Loot as Planned" onClick="showLoot();">
-        </fieldset>
-      </form>
-    </section>
+        <blockquote>
+          <ul>
+            <li>Might 1: Roll once on Loot Table 2 for every three creatures.</li>
+            <li>Might 2: Roll once on Loot Table 2 for every two creatures.</li>
+            <li>Might 3: Roll once on Loot Table 3 for each creature.</li>
+            <li>Might 4: Roll once on Loot Table 3 for each creature. At the game master’s discretion, they may make an
+              additional roll on the Treasure & Valuables 2 subtable for M4 creatures.
+            </li>
+            <li>Might 5: Roll once on Loot Table 4 for each creature.</li>
+            <li>Might 6: Roll twice on Loot Table 4 for each creature.</li>
+            <li>Might 7: Roll twice on Loot Table 5 for each creature.</li>
+            <li>Might 8: Roll thrice on Loot Table 5 for each creature.</li>
+          </ul>
+          <ul>
+            <li>Loot Table 1: Twist encounters with M1-2 creatures, when generating items found while using the
+              Scavenger skill and for any other shrug-of-the-shoulders-I-dunno-there-might-be-loot needs.
+            </li>
+            <li>Loot Table 2: Twist encounters with M3-4 creatures</li>
+            <li>Loot Table 3: Twist encounters with M5 creatures</li>
+          </ul>
+        </blockquote>
+        <label for="LootTable1">Loot Table 1: </label>
+        <input type="number" id="LootTable1" name="LootTables" min="0" max="99" value="0">
+        <label for="LootTable2">Loot Table 2: </label>
+        <input type="number" id="LootTable2" name="LootTables" min="0" max="99" value="0">
+        <label for="LootTable3">Loot Table 3: </label>
+        <input type="number" id="LootTable3" name="LootTables" min="0" max="99" value="0">
+        <label for="LootTable4">Loot Table 4: </label>
+        <input type="number" id="LootTable4" name="LootTables" min="0" max="99" value="0">
+        <label for="LootTable5">Loot Table 5: </label>
+        <input type="number" id="LootTable5" name="LootTables" min="0" max="99" value="0">
+        <input type=button id="ShowTheLoot" value="Roll that Loot!" onClick="showLoot();">
+      </fieldset>
+    </form>
+  </section>
   <div>
     <section>
       <p id="LootResults">What awaits you?</p>
