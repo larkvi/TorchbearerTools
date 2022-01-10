@@ -827,9 +827,9 @@
     ['Thieves\' Tools', 'Ladder', 'Holy Water', 'Wolfsbane', 'Musical Instrument', 'Grappling Hook'],
     'Battle Regalia (helmet or shield, game master chooses)',
     ['Large Sack', 'Small Sack', 'Purse', 'Satchel', 'Backpack', 'Chest'],
-    () => amountAndType(1, 3, fortunateFood, 1, 6),
+    () => interpretRoll(amountAndType(1, 3, fortunateFood, 1, 6)),
     ['iron spikes', 'hammer', 'pry bar', 'chalk', 'rope', 'tinderbox'],
-    () => amountAndType(1, 3, lightSource, 1, 6),
+    () => interpretRoll(amountAndType(1, 3, lightSource, 1, 6)),
     ['skill supplies', 'skill supplies', 'skill supplies', 'skill supplies', 'spell materials', 'sacramentals'],
     () => interpretRoll(lootClothing),
     ['waterskin', 'clay pot', 'wooden canteen', 'bottle', 'jug', 'barrel'],
@@ -1054,13 +1054,16 @@
   function interpretRoll(treasure) {
     console.log('interpreting', treasure);
     if (typeof treasure === "string") {
-       accumulateLoot(treasure);
-       return treasure;
-    } else if (typeof treasure === "function") {
-      return interpretRoll(treasure());
+      // raw treasure value, therefore accumulate
+      accumulateLoot(treasure);
+      return treasure;
     } else if (treasure.length === 2) {
+      // raw treasure value, therefore accumulate
       accumulateLoot(treasure[0]);
       return treasure[0];
+    } else if (typeof treasure === "function") {
+      // this has interpretRoll baked in, which accumulates raw treasure values
+      return treasure();
     } else {
       let subTableRoll = 1000;
       switch (treasure.length) {
@@ -1077,6 +1080,7 @@
           alert('something is wrong with the subtable roll length');
           break;
       }
+      // this has interpretRoll baked in, which accumulates raw treasure values
       return interpretRoll(treasure[subTableRoll]);
     }
   }
