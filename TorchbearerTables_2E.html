@@ -546,8 +546,8 @@
     ['Magicians and Alchemists', 'Spells, consultations, and alchemical agents are unavailable']
   ];
   const homeOwnershipTable = [
-    `Impish behavior. A cinder imp has made its home in your hearth. It has the following effect: $ function () {dieRoll = roll(1,6,-1); return ['A fire that destroyed the home', 'A fire that destroyed a cache', 'A fire that destroyed the accommodations', 'A fire that destroyed the accommodations', 'Hearth ruined', 'Hearth ruined'][dieRoll]  + if (dieRoll !== 0) {'(apply a -1 to future home events rolls until the property is repaired and the cinder imp is tamed or driven out)'}}`,
-    `Flood. The area flooded while you were away: ${function() {return ['Minor flood on first floor (-1 to future home events rolls)', 'Minor flood on first floor (-1 to future home events rolls)', 'Minor flood on first floor (-1 to future home events rolls)', 'Major flood on first floor (-2 to future home events rolls', 'Second story flooding (-3 to future home events rolls)', 'House washed away'][roll(1, 6, -1)]}}`,
+    function(){impishBehaviour()},
+    function(){houseFlood()},
     'Vermin. Vermin infest the house. If you have cats, roll 1d6. If you roll equal to or less than your number of cats, they chase away the vermin. If they fail to chase them off, the vermin spoil your food stocks (or eat it all).',
     'Mold. Something horrible is growing in the cellar (or rafters). Roll 1d6. On a roll of 1 it is a creeping ooze.',
     function(){houseBroken()},
@@ -564,9 +564,22 @@
     'House goblin. The house goblin emerges and it is hungry. If fed, you are granted +1 to the next home event roll.',
     'Approval. You&#8217;ve done well. A house goblin adopts you. You are granted +1 to all home events rolls for this home. If you generate this result again, an additional house goblin appears, and so on. All house goblins demand to be accommodated—requiring a portion of food and wine during each of your stays in your home. If unfed for one stay, they temporarily withdraw their support. If unfed for multiple respites, each house goblin imposes a -1 penalty to the home events roll.'
   ];
+  function impishBehaviour(){
+   let dieRoll = roll(1,6,-1);
+   const impDamage = ['A fire that destroyed the home', 'A fire that destroyed a cache', 'A fire that destroyed the accommodations', 'A fire that destroyed the accommodations', 'Hearth ruined', 'Hearth ruined'];
+   let impMalus = '';
+   if (dieRoll !== 0) impMalus = ' (apply a -1 to future home events rolls until the property is repaired and the cinder imp is tamed or driven out)';
+  return 'Impish behavior. A cinder imp has made its home in your hearth. It has the following effect: ' + impDamage[dieRoll] + impMalus;
+  }
+  function houseFlood(){
+    const floodDamage = ['Minor flood on first floor (-1 to future home events rolls)', 'Minor flood on first floor (-1 to future home events rolls)', 'Minor flood on first floor (-1 to future home events rolls)', 'Major flood on first floor (-2 to future home events rolls', 'Second story flooding (-3 to future home events rolls)', 'House washed away'];
+    let damage = floodDamage[roll(1, 6, -1)];
+    return 'Flood. The area flooded while you were away: ' + damage;
+  }
   function houseBroken (){
     const houseBreakage = ['Roof leaks','Roof leaks','Shutter broken','Shutter broken','Door comes off the hinges','Door comes off the hinges'];
-    return 'House broken: ' + houseBreakage[roll(1,6,-1)] + ' -1 to home events until repaired.'
+    let houseBreakageType = houseBreakage[roll(1,6,-1)];
+    return 'House broken: ' + houseBreakageType + ' -1 to home events until repaired.';
   }
   function mysteriousPackage() {
     const mysteryPackage = ['A creepy idol in your image', 'Baked goods (two fresh rations)', 'A cheese wheel', 'A kitten', 'A puppy', `A note and ${function(){return lootBooksMaps[roll(2,6,-2)]}}`];
@@ -1272,6 +1285,7 @@
   }
 
   function interpretRoll(treasure) {
+    console.log('Type: ' + typeof treasure + ' length: ' + treasure.length);
     if (typeof treasure === "string") accumulateLoot(treasure);
     else if (typeof treasure === "function") interpretRoll(treasure());
     else if (treasure.length === 2) accumulateLoot(treasure[0]);
@@ -1315,7 +1329,7 @@
   }
 
   function printAccumulatedTreasure(resultsLoc) {
-    console.log(accumulatedLoot);
+    console.log(accumulatedLoot.entries());
     let resultsVar = "Your Result:<br /><br />";
     for (const [k, v] of accumulatedLoot.entries()) {
       resultsVar += formatLootString(k, v);
@@ -1424,7 +1438,6 @@
     if (houseRoll > 16) houseRoll = 16;
     interpretRoll(homeOwnershipTable[houseRoll]);
     printAccumulatedTreasure(resultsLoc);
-
   }
 
   function evaluateWeather(season, time) {
