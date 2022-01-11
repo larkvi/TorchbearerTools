@@ -14,6 +14,7 @@
 <script>
 
   //data from the Torchbearer 2E books, by Thor Olavsrud and Luke Crane.
+  const shrineTable = ['Lords of Light and Darkness (light, darkness, heat, cold, fire, craft, time) | Offering Ob 4','Lords of Life and Death (life, death, healing, harming, animals, disease, seasons) | Offering Ob 4','Lords of Chaos and Law (order, chaos, rule, manipulation) | Offering Ob 4', 'Lords of Plenty and Want (food, hunger, desire, work, craft) | Offering Ob 3','Lored of Valour and Terror (war, protection, fear, courage) | Offering Ob 3','Lords of Fate (destiny, chance, doom) | Offering Ob 3'];
   const typeOfCamp = []
   typeOfCamp[0] = [ // Ancient
 // change to resolve all die rolls and other random bits
@@ -354,14 +355,18 @@
     'Your ship comes in. A sea voyage returns laden with valuable trade goods. Enterprising captains are putting together ships, crew and supplies for another run. You are invited to invest, but you must buy in during this town phase (see the Enterprise chapter). You may invest even if not in a respite. If you decide to invest, reduce the Precedence requirements by one for this once-in-a-lifetime offer and add +1 to the captain experience roll when setting up this sea voyage.',
     'Victory at sea. The fleet returns from battle victorious. They push ashore in boats laden with spoils and slaves. Everyone chooses one of the following:<ul><li>Purchase a new apprentice, cousin or companion with an Ob 4 Resources test (must have the appropriate level benefit).</li><li>Ransom your enemy out of captivity with an Ob 3 Resources test.</li><li>Purchase any one item from the Equipment chapter in this book.</li><li>Purchase a new piece of raiment with an Ob 2 Resources test.</li><li>Roll on the Books & Maps loot subtable. Purchase the item with a Resources obstacle equal to its inventory requirement.</li></ul>'
   ];
+  const ancientSigns = ['The moon disappears. No one dares utter a word lest they disturb the silence, and it fails to return.','The earth shudders and the temples sway. The main temple sighs and crumbles in on itself. Dust and ruin spread throughout the complex. The complex cannot reopen until the remaining structures are shored up.','A plague of locusts covers the complex. All shelter in the temples.','An army of one thousand venomous snakes slithers through the complex. Many inhabitants are bitten and die.','The Chosen One. A child of pure gold is born at the temple. All sit in hushed silence, praying at the child’s feet.','A beast-headed warlord (or vampire lord) claims the complex as a sanctuary. Its minions enslave the monks and pilgrims.'];
+  const templeOccupiers = ['giants','frosk','hobgoblins','gnolls','undead','gruxu'];
+  const lawType = ['criminal law','civil law','sumptuary law','religious law','religious law','religious law'];
+  const newImmortalSphere = ['Drunkenness: All water turns to wine.', 'Wealth: All silver turns to gold.', 'Devotion: Your raiment becomes a minor relic. The game master chooses invocations appropriate to the new Immortal.', 'Health: Remove all conditions. If no conditions, become fresh.', 'Love: Make a new friend here at the complex or the game master may introduce one in the future at another settlement.', 'Privation: Gain a new, additional level benefit: Vow to the Lords of Plenty and Want. When hungry and thirsty, this benefit allows you to make a Theologian (Ob 2) test to remove the condition. This test costs a turn on the grind or a check in camp and adds to lifestyle in town.'];
   townEventsTable[9] = [ // Forgotten Temple Complex
     'Sorrowful end. The Immortals take pity on this forlorn reminder to their faded grandeur. The temple complex sinks into the sea, sand or grass, a faint ruin now and forever. Its inhabitants watch in mournful, sobbing silence. Mark this complex as a ruin on your map and remain in the adventure phase until you reach a different settlement.',
     'Sorrowful end. The Immortals take pity on this forlorn reminder to their faded grandeur. The temple complex sinks into the sea, sand or grass, a faint ruin now and forever. Its inhabitants watch in mournful, sobbing silence. Mark this complex as a ruin on your map and remain in the adventure phase until you reach a different settlement.',
     'Sorrowful end. The Immortals take pity on this forlorn reminder to their faded grandeur. The temple complex sinks into the sea, sand or grass, a faint ruin now and forever. Its inhabitants watch in mournful, sobbing silence. Mark this complex as a ruin on your map and remain in the adventure phase until you reach a different settlement.',
-    'Ancient signs. Portents emerge throughout the temple complex, changing the very laws of truth. Remain in the adventure phase until the catastrophe abates or until you hurry off to a safer settlement. Roll 1d6 below for the type of catastrophe: 1 The moon disappears. No one dares utter a word lest they disturb the silence, and it fails to return. 2 The earth shudders and the temples sway. The main temple sighs and crumbles in on itself. Dust and ruin spread throughout the complex. The complex cannot reopen until the remaining structures are shored up. 3 A plague of locusts covers the complex. All shelter in the temples. 4 An army of one thousand venomous snakes slithers through the complex. Many inhabitants are bitten and die. 5 The Chosen One. A child of pure gold is born at the temple. All sit in hushed silence, praying at the child’s feet. 6 A beast-headed warlord (or vampire lord) claims the complex as a sanctuary. Its minions enslave the monks and pilgrims.',
-    'Occupied. The temple complex is temporarily home to a group who does not respect its traditions. Remain in the adventure phase until you force out the encamped band or until you reach another town. Roll 1d6 to determine the occupying force: 1 Giants 2 Frosk 3 Hobgoblins 4 Gnolls 5 Undead 6 Gruxu',
-    'Meditation. Trade and travel are forbidden to those who live among the temples. All monks, pilgrims and vendors sit in quiet meditation for 2d6 days. Remain in the adventure phase until the meditation ends or until you move on to a different settlement. Test Survivalist in the adventure phase if you want to wait out the meditation period.',
-    'New law decreed. Roll 1d6 to determine which type of law: 1 Criminal law (choose one) 3 Civil law (choose one) 2 Sumptuary law (choose one) 4-6 Religious law (choose one)',
+    () => interpretRoll(`Ancient signs. Portents emerge throughout the temple complex, changing the very laws of truth. ${ancientSigns[roll(1,6,-1)]} Remain in the adventure phase until the catastrophe abates or until you hurry off to a safer settlement.`),
+    () => interpretRoll(`Occupied. The temple complex is temporarily home to a group of ${templeOccupiers[roll(1,6,-1)]} who do not respect its traditions. Remain in the adventure phase until you force out the encamped band or until you reach another town.`),
+    () => interpretRoll(`Meditation. Trade and travel are forbidden to those who live among the temples. All monks, pilgrims and vendors sit in quiet meditation for ${roll(2,6)} days. Remain in the adventure phase until the meditation ends or until you move on to a different settlement. Test Survivalist in the adventure phase if you want to wait out the meditation period.`),
+    () => interpretRoll(`New ${lawType[roll(1,6,-1)]} (choose one) decreed.`),
     'Shortages. The denizens of the forgotten temple complex are very poor and ill supplied. Permanently increase all Resources obstacles by +1.',
     'Pilgrims. A large group of pilgrims makes trouble for your crew. The game master chooses from the options below. Make tests to deal with the pilgrims in the current adventure phase. The pilgrims do one of the following:<ul><li>They devour all the food and take all the beds in the complex. Challenge the pilgrims or sleep on the streets.</li><li>They demand you join their tour of the temple. Test Persuader or Manipulator vs Will 4 to politely decline or make an Ob 2 Resources test as they force you to make a donation.</li><li>They take note of your profane behavior and demand you leave this holy place at once. Test Orator vs Orator 4 to sway the crowd to your favor and enter the complex as you please.</li></ul>',
     'Festival to the Ancient Immortals. Fireworks punctuate a ragged parade through the temple precincts.',
@@ -370,12 +375,10 @@
     'Serenity. The sky over the complex is cerulean blue, the sun a white disk and the air the sweetest you’ve ever drawn breath from. It’s good to be alive, and you know you are in the right place.',
     'Dimly lit portal. You pass an open shrine and see the Immortal within looking down upon you with impassive eyes. Leave a humble offering and ask the Immortal to forgive your transgressions. Appropriate offerings: a personal effect (from character creation), worthless coins, rusty keys, an idol of an unknown religion or a tool of unknown use. Roll 1d6 after leaving the offering to determine the Immortal’s response: 1-3 You are granted +1D 4-6 Remove angry, afraid or to your next test. exhausted (if no conditions, you are made fresh).',
     'Temple porter. The porter of this temple is very old and poor. They unlock the temple for you without a word and begin to sweep out its halls with an old broom. If you provide them with a bottle of wine, a new broom, holy vestments or 2D of coins, you make a new friend. If you return to the temple complex in the future, you may call upon the porter and stay at the temple for free (accommodations equivalent to a flophouse).',
-    'Rehabilitation. A group of wealthy nobles of an ancient line hires artisans and laborers to restore a shrine of their house’s Immortal patron. Any who come to the shrine to (sincerely) pray before their Immortal patron is presented with a gift of gratitude (roll on the Shrine Table for patron and the Silver & Plate subtable for the gift).',
+    () => interpretRoll(`Rehabilitation. A group of wealthy nobles of an ancient line hires artisans and laborers to restore a shrine of their house’s Immortal patron. Any who come to the shrine to (sincerely) pray before their Immortal patron of the ${shrineTable[roll(1,6,-1)]} is presented with a gift of gratitude: ${lootSilverPlate[roll(2,6,-2)]}`),
     'Monks. The devout adherents who live and pray among the forgotten temples form a new sect of poor monks. Feed them, pray with them or otherwise support them and they do one of the following:<ul><li>Gift you with a minor relic</li><li>Mentor you in the Theologian skill (mark a pass or fail, your choice)</li><li>Grant you membership (and vestments) in their new order</li></ul>',
     'High holy day. All accommodations, food and drink at the complex are free for your stay during this town phase.',
-    function () {
-      return 'Ascension. Immured deep in a stupa, one of the complex’s aged monks ascends to Immortality. All present feel the Shroud Between Worlds ripple around them as the shift transpires. The new Immortal’s sphere and accompanying benefit: ' + ['Drunkenness: All water turns to wine.', 'Wealth: All silver turns to gold.', 'Devotion: Your raiment becomes a minor relic. The game master chooses invocations appropriate to the new Immortal.', 'Health: Remove all conditions. If no conditions, become fresh.', 'Love: Make a new friend here at the complex or the game master may introduce one in the future at another settlement.', 'Privation: Gain a new, additional level benefit: Vow to the Lords of Plenty and Want. When hungry and thirsty, this benefit allows you to make a Theologian (Ob 2) test to remove the condition. This test costs a turn on the grind or a check in camp and adds to lifestyle in town.'][roll(1, 6, -1)]
-    },
+    () => interpretRoll(`Ascension. Immured deep in a stupa, one of the complex’s aged monks ascends to Immortality. All present feel the Shroud Between Worlds ripple around them as the shift transpires. The new Immortal’s sphere and accompanying benefit: ${newImmortalSphere[roll(1, 6, -1)]}`),
     'Hand of the Immortal. Turning in its divine torpor, an ancient Immortal remembers this place. Dreaming, they reach through the Shroud of Worlds and touch the complex. All present may mark one passed or failed test for Theologian (your choice). In addition, any who have a creed related to the Immortal’s spheres of influence must replace a Nature descriptor with something relevant to the Immortal’s spheres of influence. If you have not yet replaced a lost Nature descriptor, you must take one of these descriptors, regardless of your creed.'
   ];
   townEventsTable[10] = [ // Nomad Caravan
@@ -391,37 +394,41 @@
     'Rogue. One of the caravan’s mares has gone rogue, and you think you saw her up the trail before you arrived. Test Scout vs Nature 4 to track her down and receive the hostler’s gratitude. Make this test in the current adventure phase before entering town.',
     'Riding in. A small train of pack animals laden with supplies winds its way up to the caravan. The beasts look tired and overburdened. Make an Ob 4 Laborer test to help the drover carry in the supplies and earn their gratitude.',
     'Circle dance. The merry sounds of a fiddle and flute greet you as you arrive to find the nomads dancing in a circle. Upon seeing strangers, they laugh, wave and return to their labors.',
-    'Foaling. The caravan’s folk are out to observe a foaling. Roll 1d6 to determine how it goes. On a 1, the foal is stillborn or dies soon after birth. Otherwise, all is well.',
-    'Calving. The caravan’s folk hold their breath waiting for their cow to give birth to a calf. Roll 1d6 to determine how it goes. On a 1, an eagle springs forth from the womb and flies off, the cow dies in childbirth or a set of healthy twins are born. Otherwise, all is normal.',
+    () => interpretRoll(`Foaling. The caravan’s folk are out to observe a foaling. Roll 1d6 to determine how it goes. ${(roll(1,6) === 1) ? 'The foal is stillborn or dies soon after birth.' : 'All is well.'}`),
+    () => interpretRoll(`Calving. The caravan’s folk hold their breath waiting for their cow to give birth to a calf. ${(roll(1,6) === 1) ? 'An eagle springs forth from the womb and flies off, the cow dies in childbirth or a set of healthy twins are born.' : 'All is normal.'}`),
     'Horse traders. The caravan is bandying with some horse traders, and you can get in on the action. You may purchase ponies, riding horses, draft horses, donkeys, mules or oxen during this town phase. Haggler tests made with the intent to purchase an animal do not add to lifestyle cost during this town phase.',
     'Wrestler. You see a crowd gathered as you approach the caravan. They part to admit you, and in their center you see a bear of a man, shirtless, his muscles shining with oil. With a barrel-chested laugh, he invites you into the ring. Jump in the ring and accept his challenge or walk away. Test Fighter vs Fighter 6 (Bear Strength trait level 3, Wrestling-wise and 1 fate point). Win and be given free accommodations for yourself and one companion during this town phase. Lose and make a new friend.',
     'Delicacies. The nomads offer you a serving of blood porridge chased with salty butter tea. Accept their offering and make an Ob 2 Health test. If successful, recover from angry and you are granted +1D to recover from afraid and exhausted during this town phase.',
     'Festival for the Lord of Eagles. Offer some meat or game to the caravan’s eagles to gain the blessing of the Immortals of the Sky: +1D to Arcanist, Ritualist and Lore Master tests until the next town phase.',
     'Funeral. The caravan’s matriarch has passed into the Sky Vault, and the nomads are sending her off with a tremendous party. Make an Ob 3 Health or Merrymaking test to try to keep up with the locals as they celebrate. If successful, remove all conditions (except fresh and dead). Fail and awake the next day hung over (hungry and thirsty), lying with a new friend and wearing their pendant (2D, worn/neck).',
-    'Incarnation. A young child begins to chant in some unknown language. Its feet rise from the dust, and its eyes flash the deepest blue. It is possessed by an Immortal shard. Roll on the Shrine Table to determine what type of Immortal has possessed it. Swear yourself to its cult and you are granted +1D to Pathfinder tests when returning to this caravan, +1 to future town events rolls for this caravan and +1 Precedence in this caravan.'
+    () => interpretRoll(`Incarnation. A young child begins to chant in some unknown language. Its feet rise from the dust, and its eyes flash the deepest blue. It is possessed by an Immortal shard of the ${shrineTable[roll(1,6-1)]}. Swear yourself to its cult and you are granted +1D to Pathfinder tests when returning to this caravan, +1 to future town events rolls for this caravan and +1 Precedence in this caravan.`)
   ];
+  const abandonedBaggage = ['an infant in swaddling cloth','a pouch of gold (2D, pack 1)','four flasks of oil','a sack of kittens','a cloak','six preserved rations']
+  const wayhouseInfestation = [`${roll(4,6)} troll rats`,'a cinder imp', `${roll(10,6)} rats`,'horrid, tiny biting insects',`${roll(2,6)+6} kobolds`,'a brunnmigi'];
+  const wayhouseFire = ['inn','tavern','tavern','shrine','stables','wall'];
   townEventsTable[11] = [ // Prosperous Wayhouse
     'Catastrophic fire. Someone left the hearth fire unattended, and the way- house burns to the ground with a rapidity that shocks even you. Mark this wayhouse as a ruin on your map and remain in the adventure phase until you reach a new settlement.',
     'Catastrophic fire. Someone left the hearth fire unattended, and the way- house burns to the ground with a rapidity that shocks even you. Mark this wayhouse as a ruin on your map and remain in the adventure phase until you reach a new settlement.',
     'Catastrophic fire. Someone left the hearth fire unattended, and the way- house burns to the ground with a rapidity that shocks even you. Mark this wayhouse as a ruin on your map and remain in the adventure phase until you reach a new settlement.',
     'Plague. Guests at the wayhouse have brought the plague, and the establishment is quarantined. Remain in the adventure phase until the plague is miraculously cured or until you reach a new settlement.',
     'Raided. The wayhouse was recently raided by a marauding band. All food stores were taken, as well as the wine. All of the young and able staff were taken captive. Remain in the adventure phase until you track down the raiders and rescue the wayhouse’s goods and captured folk or until you arrive at a new settlement.',
-    'Infestation. Vermin infest this wayhouse. Remain in the adventure phase until you drive out the pests or until you arrive at another settlement. Roll 1d6 to determine the type of infestation:<ol><li>Troll rats (4d6)</li><li>A cinder imp</li><li>Rats (10d6)</li><li>Horrid, tiny biting insects</li><li>Kobolds (2d6+6)</li><li>A brunnmigi</li></ol>',
+    () => interpretRoll(`Infestation. Vermin infest this wayhouse. Remain in the adventure phase until you drive out ${wayhouseInfestation[roll(1,6,-1)]} or until you arrive at another settlement.`),
     'Robbery. A thief steals one item from one character staying at the wayhouse. Remove an item from the top-most slot(s) of one backpack, sack or satchel (game master’s choice). The thief disappears into the night.',
     'Hard luck. Your friend is staying at the wayhouse and is at loose ends. They need you to pay their bills. Roll 1d6 to generate a Resources obstacle for their tab. The game master chooses which friend.',
-    'Fire. Something caught fire and destroyed part of the wayhouse. The services of one facility are unavailable until rebuilt. Roll 1d6 for facility:<ol><li>Inn</li><li>Tavern</li><li>Tavern</li><li>Shrine</li><li>Stables</li><li>Wall</li></ol>',
+    () => interpretRoll(`Fire. Something caught fire and destroyed part of the wayhouse. The ${wayhouseFire[roll(1,6,-1)]} is unavailable until rebuilt.`),
     'Enemy within. Your enemy stays at the inn (game master’s choice).',
     'Visiting nobility. They smell nice, are polite and make no imposition.',
     'Ravens. A convocation of ravens gossips about you from the branches of a nearby tree.',
     'Small gifts. The innkeeper’s child emerges and presents you with a gift. Roll 1d6 to determine the present:<ol><li>A flower crown</li><li>An empty cup</li><li>A knife</li><li>A key</li><li>A toy ox or aurochs</li><li>A tooth</li></ol>',
-    'Abandoned baggage. You find an abandoned bundle on the roadside leading to the wayhouse. Roll 1d6 to determine what it contains:<ol><li>An infant in swaddling cloth</li><li>A pouch of gold (2D, pack 1)</li><li>Four flasks of oil</li><li>A sack of kittens</li><li>A cloak</li><li>Six preserved rations</li></ol>',
+    () => interpretRoll(`Abandoned baggage. You find an abandoned bundle on the roadside leading to the wayhouse. It contains ${abandonedBaggage[roll(1,6,-1)]}.`),
     'Name day. It’s the innkeeper’s name day. Dance a jig with them and recover one point of taxed Nature. One character may take part.',
-    'Spooked mare. A merchant’s mare has been spooked in the stables. Make a Rider vs Nature test to calm it and the merchant tosses you a reward: roll on Coins Table 1 for the reward.',
+    () => interpretRoll(`Spooked mare. A merchant’s mare has been spooked in the stables. Make a Rider vs Nature test to calm it and the merchant tosses you a reward: ${lootCoins1[roll(2,6,-2)]}`),
     'Hedge witch. The hedge witch’s cart has stopped over at the wayhouse, and they are in a selling mood. You may make one purchase from the Alchemical Agents Table with a +1D bonus to the Resources test.',
     'Lost pony. A muddy, scared pony trots onto the road—no saddle, bit or brand. Make a Rider vs Nature 4 test to comfort her and she’ll become your willing companion.',
     'Wedding celebration. Local wealthy peasants throw their children a raucous wedding at the wayhouse. All travelers are welcome under the laws of hospitality. Everyone may remove the hungry and thirsty and angry conditions. Behave yourself, and they present you with a gift at the close of the ceremony. Roll 1d6 for each character to determine what they receive:<ol><li>A marriage proposal from a fetching cousin</li><li>A bracelet (3D, worn/hands 1)</li><li>A silver knife, fork and spoon (1D each, pack 1 bundle)</li><li>A cask of wine (carried 2 or pack 4 for 4 draughts)</li><li>A fine suit (worn/torso 3 or pack 4)</li><li>A new friend (priceless and weightless)</li></ol>',
     'Caravansary. A caravan has stopped to rest and water its beasts at the wayhouse. Everyone may purchase from them one item from the Equipment chapter of this book. In addition, the caravan master is looking for investors. You are invited to invest, but you must buy in during this town phase (see the Enterprise chapter). You may invest even if not in a respite. Ignore the Precedence requirement. Investing in this opportunity now grants +1 to the captain experience roll for this expedition.'
   ];
+  const shireFacility = ['tavern','tavern','well','farm or pasture','inn','canal'];
   townEventsTable[12] = [ // Shire
     'Scoured. The Shire has been scoured by ruffians. They’ve torn down old buildings, closed all the inns and taverns and built a horrid, polluting mill over the old one. Their leaders are backed by a war band. Remain in the adventure phase until you deal with these ruffians or until you run off to another, safer settlement.',
     'Scoured. The Shire has been scoured by ruffians. They’ve torn down old buildings, closed all the inns and taverns and built a horrid, polluting mill over the old one. Their leaders are backed by a war band. Remain in the adventure phase until you deal with these ruffians or until you run off to another, safer settlement.',
@@ -442,8 +449,9 @@
     'Bumper crop. A good harvest is in (or last season’s harvest is being turned out). Take as many supplies for the Cook skill as you can carry (pack 1 each).',
     'Shire Moot. The Thain of the Shire oversees the annual Moot and the ensuing celebration. All who attend are fed and watered (with ale, of course). Attendees also receive one boon in the following order:<ol><li>Automatically recover from one condition (in recovery order).</li><li>If you have no conditions, recover one point of taxed Nature.</li><li>If you have no conditions or taxed Nature, you are made fresh.</li></ol>',
     'Ribadyan. The Shire is caught up in a great celebration of the birth of an important child. Their normally reserved air has fallen away, and an infectious mood overtakes the halflings. Everyone gets a gift, even you! Roll on Loot Table 2 for each character. Return the gesture and provide your giver with a gift at a later date to make a new friend.',
-    'Prosperity. The Shire’s labors have borne fruit. The halflings build a new facility. Roll 1d6 to determine which type:<ol><li>Tavern</li><li>Tavern</li><li>Well</li><li>Farm or pasture</li><li>Inn</li><li>Canal</li></ol>',
+    () => interpretRoll(`Prosperity. The Shire’s labors have borne fruit. The halflings build a new ${shireFacility[roll(1,6,-1)]}.`),
   ];
+  const newSteadingFacility = ['shrine','shrine','home','home','wall','farm or pasture'];
   townEventsTable[13] = [ // Steading
     'Gone. The inhabitants of the steading are gone, along with their livestock. There is no trace of them. Take up its care and maintenance yourself or mark the steading as a ruin on your map and head to another settlement.',
     'Gone. The inhabitants of the steading are gone, along with their livestock. There is no trace of them. Take up its care and maintenance yourself or mark the steading as a ruin on your map and head to another settlement.',
@@ -457,36 +465,39 @@
     'Clearing. There’s no shortage of work to be done at the steading. Make an Ob 2 Peasant test to help them clear a field and they’ll be glad to feed you and have you stay for a bit. Make this test in the adventure phase before entering town.',
     'Firewood. There is a tremendous amount of work to be done before winter, and the families here could use your help. Make an Ob 1 Laborer test to chop firewood and they’ll be glad to feed you and have you stay for a bit. Make this test in the adventure phase before entering town.',
     'Howdy. The steading’s residents greet you kindly and ask your business here.',
-    'Foaling. The steading’s folk are out to observe a foaling. Roll 1d6 to determine how it goes. On a 1, the foal is stillborn or dies soon after birth. Otherwise, all is well.',
-    'Calving. The steading’s folk hold their breath waiting for their cow to give birth to a calf. Roll 1d6 to determine how it goes: On a 1, the calf is born with horns, two heads or a serpent for a tail. Otherwise, all is well.',
+    () => interpretRoll(`Foaling. The steading’s folk are out to observe a foaling. ${(roll(1,6) === 1) ? 'The foal is stillborn or dies soon after birth.': 'All is well.'}`),
+    () => interpretRoll(`Calving. The steading’s folk hold their breath waiting for their cow to give birth to a calf. ${(roll(1,6) === 1) ? 'The calf is born with horns, two heads or a serpent for a tail.' : 'All is well.'}}`),
     'Fever. The families of this steading have contracted a fever. Sick and feeble, they beg for your help. Make an Ob 4 Healer test to help tend to the infirm or leave them to their fate. If the family recovers, they vow their lives to the healer. Make a new friend. Suggested failure: sick condition.',
     'Ill advised trip. Two of the young folk of the steading are missing, either having rowed themselves out to the middle of the fjord or wandered off into the forest. Help rescue the children and the family will feed and accommodate you for free.',
     'Bumper crop. A good harvest comes in (or last season’s harvest is being turned out). Take as many supplies for Cook as you can carry (pack 1 each).',
     'Festival for the Lord of Sowing and the Lady of Reaping. Offer a prayer to gain the blessing of the Immortals: +1D to Peasant and Laborer tests until the next town phase.',
-    'Birth in the family. The steading’s folk are celebrating the birth of a new addition to their family. In a joyous mood, they invite you to share in the celebrations. They feed you and offer a sour beer to quench your thirst (remove hungry and thirsty). In addition, they offer a small gift: Roll on Loot Table 1 for the party.',
-    'Prosperity. The steading’s struggles have borne fruit. The folks here build a new facility. Roll 1d6 to determine which type:<ol><li>Shrine</li><li>Shrine</li><li>Home</li><li>Home</li><li>>Wall</li><li>Farm or pasture</li></ol>'
+    () => interpretRoll(`Birth in the family. The steading’s folk are celebrating the birth of a new addition to their family. In a joyous mood, they invite you to share in the celebrations. They feed you and offer a sour beer to quench your thirst (remove hungry and thirsty). In addition, they offer a small gift: ${LootTable[1][roll(2,6,-2)]}`),
+    () => interpretRoll(`Prosperity. The steading’s struggles have borne fruit. The folks here build a new facility, a ${newSteadingFacility[roll(1,6,-1)]}.`)
   ];
+  const leperAlmsRecompense = ['a tarnished ring (2D).', 'a rusted key.', 'a strange graven image.', 'an indecipherable note.', 'an empty bottle.', 'a prayer to the Immortals.'];
+  const wallCollapseEvil = ['a barrow wight’s barrow', 'a haugbui’s tomb', 'a draugr’s grave', 'a vengeful spirit’s haunt', 'a disturbed spirit’s bones', `the resting place of roll(1,6) skeletal honor guard`];
+  const facilityFire = ['The guild hall','The guild hall', 'A private home', 'The stables', 'The tavern', 'The docks', 'The market', 'The inn', 'The flophouse', 'The shrine', 'The thieves’ guild'];
   townEventsTable[14] = [ // Walled Town
     'Catastrophic fire. The town burns to the ground with a rapidity that shocks even the cynical. Mark this town as a ruin on your map and remain in the adventure phase until you reach another settlement.',
     'Catastrophic fire. The town burns to the ground with a rapidity that shocks even the cynical. Mark this town as a ruin on your map and remain in the adventure phase until you reach another settlement.',
     'Catastrophic fire. The town burns to the ground with a rapidity that shocks even the cynical. Mark this town as a ruin on your map and remain in the adventure phase until you reach another settlement.',
     'Plague. Bodies of the dead are piled in the streets. The town is closed. Remain in the adventure phase until you miraculously cure the plague or until you reach a new town.',
     'Famine. A curse lays upon the land. There is no food available in the area. Remain in the adventure phase until the famine is miraculously relieved or until you reach a new settlement.',
-    'Collapse. A portion of the town’s ancient defensive wall collapses and reveals something evil. Remain in adventure phase until you deal with the evil or until you arrive at another settlement. Roll 1d6 for evil:<ol><li>A barrow wight’s barrow</li><li>A haugbui’s tomb</li><li>A draugr’s grave</li><li>A vengeful spirit’s haunt</li><li>A disturbed spirit’s bones</li><li>The resting place of 1d6 skeletal honor guard</li></ol>',
-    'Robbers. En route to the gates, you are set upon by 2d6 robbers. They are happy to take voluntary payment of 1D of coins for each of them (or its equivalent). Failure to pay up provokes an effort to collect involuntary payment. Use the thug stat block for the robbers. Remain in the adventure phase until you resolve this predicament.',
+    () => interpretRoll(`Collapse. A portion of the town’s ancient defensive wall collapses and reveals ${wallCollapseEvil[roll(1,6,-1)]}. Remain in adventure phase until you deal with the evil or until you arrive at another settlement.`),
+    () => interpretRoll(`Robbers. En route to the gates, you are set upon by ${roll(2,6)} robbers. They are happy to take voluntary payment of 1D of coins for each of them (or its equivalent). Failure to pay up provokes an effort to collect involuntary payment. Use the thug stat block for the robbers. Remain in the adventure phase until you resolve this predicament.`),
     'Watchers on the wall. The watch demands to know your business in town. If your business is with their rivals or counter to their mood, they will deny entry to the town. Make an Ob 3 Resources test to bribe the watch to enter the town in peace.',
     'Hard luck. Your friend is laid up in the stables, injured, sick and penniless. They need help finding accommodations and treating their conditions.',
-    'Fire. One facility has burned down. Roll 2d6 to determine the facility: 2-3 Guild hall 4 Private home 5 Stables 6 Tavern 7 Docks 8 Market 9 Inn 10 Flophouse 11 Shrine 12 Thieves’ guild',
+    () => interpretRoll(`Fire. ${facilityFire[roll(2,6,-2)]} has burned down.`),
     'Enemy at the gates. One of your enemies is acting as a watch captain on duty. Try to slip past them to avoid trouble. The game master chooses which enemy.',
     'All is well. The guild hall bell tolls the hour.',
-    'Lepers. Ragged lepers crawl forth from the ditches and beg for alms. Roll 1d6 to determine what they offer you in return:<ol><li>A tarnished ring (2D)</li><li>A rusted key</li><li>A strange graven image</li><li>An indecipherable note</li><li>An empty bottle</li><li>A prayer to the Immortals</li></ol>',
+    () => interpretRoll(`Lepers. Ragged lepers crawl forth from the ditches and beg for alms. In return, they offer you ${leperAlmsRecompense[roll(1,6,-1)]}`),
     'Defend the walls. The town is attacked just as you enter. Test Fighter vs Fighter 4 to defend the walls against an attacker. If successful, you are granted +1D to Circles during this town phase. If failed, or you decline to take part, you suffer -1 to Precedence during this town phase.',
     'Religious procession. The priests anoint you with holy unctions as they pass: +1D to your next recovery test during this town phase.',
-    'Thief interrupted. As you pass through the gates, you spot a pickpocket at work on a wealthy merchant. Do you shake the thief down or break up the operation? Shake the thief down and walk away with a pouch of gold coins (2D) and a new enemy. Break up the thievery and get rewarded with a pouch of silver coins (1D) and a new friend. Make tests to resolve this situation in the adventure phase before entering town.',
+    'Thief interrupted. As you pass through the gates, you spot a pickpocket at work on a wealthy merchant. Do you shake the thief down or break up the operation?<ul><li>Shake the thief down and walk away with a pouch of gold coins (2D) and a new enemy.</li><li>Break up the thievery and get rewarded with a pouch of silver coins (1D) and a new friend.</li></ul>Make tests to resolve this situation in the adventure phase before entering town.',
     'Expedition returns. You have the opportunity to purchase any one item from the Equipment chapter in this book with +1D bonus to the Resources test.',
     'Orphan. A bedraggled orphan begs you for food. They suffer from the hungry and thirsty, angry, afraid, exhausted, injured and sick conditions. Nurse them back to health, and they’ll become an additional apprentice or companion. Treat them poorly, and they’ll become a deadly enemy.',
     'Hanging. The trial of a local murderer ends with a clear verdict and a death sentence. The town comes out to celebrate. At the execution, if you agree with the sentence and publicly demonstrate your support, remove hungry and thirsty, angry or afraid for free, and you are granted +1D to recover from exhausted during this town phase.',
-    'Survivors. Two hollow-eyed adventurers carry packs laden with loot toward the gates. They both appear to be wounded and jumpy. Will you leave them to their hard-earned spoils or will you rob them of their prizes before they enter town? Rob them and contend with a level 5 warrior and level 5 magician who are both ready for a fight. If you drive them off or slay them, roll thrice on the Treasure & Valuables 3 subtable. If you leave them be, they buy your drinks at the tavern later that night. Any tests made to ambush the pair take place in the adventure phase before entering town.'
+    'Survivors. Two hollow-eyed adventurers carry packs laden with loot toward the gates. They both appear to be wounded and jumpy. Will you leave them to their hard-earned spoils or will you rob them of their prizes before they enter town?<ul><li>Rob them and contend with a level 5 warrior and level 5 magician who are both ready for a fight. If you drive them off or slay them, roll thrice on the Treasure & Valuables 3 subtable.</li><li>If you leave them be, they buy your drinks at the tavern later that night.</li></ul>Any tests made to ambush the pair take place in the adventure phase before entering town.'
   ];
   const strangeElder = ['drapes an elven amulet around your neck.', 'drapes a cursed amulet around your neck.', 'gives you a basket of baked goods.', 'implores you to avenge her son’s death.'];
   const hostelerWarning = ['raiders from a nearby town', 'their terrible gas. Har, har.', 'orcs or gnolls in the forest.', 'a troll lurking under a bridge.', 'ghosts who haunt the road.', 'a giant in the river.'];
@@ -498,22 +509,22 @@
   const drunkPriestSacrifice = ['An orphan', 'A captive', 'A terrible beast', 'A book of knowledge', 'A spell book', 'A powerful item'];
   const spurnedLoverRumour = ['their lover’s tainted nature','an incoming shipment','a strange visitor','their lover’s behavior','a terrifying ritual','their lover’s spouse’s secret'];
   const rumourTable = [ // Tavern Rumours
-    `The strange elder. A kindly old woman approaches your table and ${strangeElder[roll(1,4,-1)]}`,
+    () => interpretRoll(`The strange elder. A kindly old woman approaches your table and ${strangeElder[roll(1,4,-1)]}`),
     'Mysterious figure. A cloaked figure sits huddled in the corner, coughing blood. Beckoning you closer, you see something valuable clutched in their moribund hand.',
     'Enemy expedition. Your enemy, well-equipped but secretive, enters the tavern with a motley group.',
     'Rival crew. You meet unlikely and unreliable would-be adventurers looking to add to their crew. They watch and wait until you have a lead and then try to muscle into your work.',
     'Sudden appearance. Your friend, bedraggled and disheveled from the road, bursts into the tavern with an incredible tale to tell.',
-    `Beware. As you leave, the hosteler warns you about ${hostelerWarning[roll(1,6,-1)]}`,
-    `The traveler. You meet an injured traveler telling a tale of ${travellerTale[roll(1,6,-1)]}`,
-    `Omen. ${tavernOmen[roll(1,6,-1)]} An omen of things to come...`,
-    `Watch rumors. An old codger who was on watch last night tells you that ghouls were seen digging in the grave pits. ${watchRumours[roll(1,6,-1)]} actually digging in the grave pits`,
-    `Job offer. You meet people (farmers, guildsmen, priests, nobility) looking for short-term muscle to ${tavernJobOffer[roll(1,5,-1)]}`,
+    () => interpretRoll(`Beware. As you leave, the hosteler warns you about ${hostelerWarning[roll(1,6,-1)]}`),
+    () => interpretRoll(`The traveler. You meet an injured traveler telling a tale of ${travellerTale[roll(1,6,-1)]}`),
+    () => interpretRoll(`Omen. ${tavernOmen[roll(1,6,-1)]} An omen of things to come...`),
+    () => interpretRoll(`Watch rumors. An old codger who was on watch last night tells you that ghouls were seen digging in the grave pits. ${watchRumours[roll(1,6,-1)]} actually digging in the grave pits.`),
+    () => interpretRoll(`Job offer. You meet people (farmers, guildsmen, priests, nobility) looking for short-term muscle to ${tavernJobOffer[roll(1,5,-1)]}`),
     'Dismaying news. You hear a rumor that strangely fits the details of your parents, their livelihood and an entirely credible calamity which has befallen them.',
     'Messenger. As you depart, a messenger chases you down and delivers a sealed message from your mentor.',
     'Bonne chance. Your host says they will foot your next bill if you would perchance help them with delivering a small package (pack 2) to their friend in a nearby town. If successful, receive a free drink (and +1 to tavern rumors rolls) during your next visit.',
     'Challenge. A drunken warrior holds the door and challenges all comers. If you dance with them, test Fighter vs the warrior’s Fighter 6 (Might 3 and level 3 Duelist trait) or sit down.',
-    `Drunk priest. A drunken temple priest babbles about propitiatory rites to the Jotnar to be performed beneath the temple this very night. ${drunkPriestSacrifice[roll(1,6,-1)]} is due to be sacrificed`,
-    `Spurned lover. The irate paramour of one of the leaders of this place is in the tavern spinning tales. Roll 1d6. They talk about ${spurnedLoverRumour[roll(1,6,-1)]}`,
+    () => interpretRoll(`Drunk priest. A drunken temple priest babbles about propitiatory rites to the Jotnar to be performed beneath the temple this very night. ${drunkPriestSacrifice[roll(1,6,-1)]} is due to be sacrificed`),
+    () => interpretRoll(`Spurned lover. The irate paramour of one of the leaders of this place is in the tavern spinning tales. They talk about ${spurnedLoverRumour[roll(1,6,-1)]}`),
     'Regular. You strike up a friendship with the owner or staff of the tavern. Mark them as a town friend and receive the associated benefits.'
   ];
   const guildTable = [ // change so that the second item is pushed into the array for formatting
@@ -555,12 +566,21 @@
     ['Magicians and Alchemists', 'Spells, consultations, and alchemical agents are unavailable']
   ];
   const houseBreakage = ['Roof leaks','Roof leaks','Shutter broken','Shutter broken','Door comes off the hinges','Door comes off the hinges'];
+  const impDamage = ['A fire that destroyed the home', 'A fire that destroyed a cache', 'A fire that destroyed the accommodations', 'A fire that destroyed the accommodations', 'Hearth ruined', 'Hearth ruined'];
+  function impishBehaviour(){
+    let dieRoll = roll(1,6,-1);
+    let impMalus = '';
+    if (dieRoll !== 0) impMalus = ' (apply a -1 to future home events rolls until the property is repaired and the cinder imp is tamed or driven out)';
+    return 'Impish behavior. A cinder imp has made its home in your hearth. It has the following effect: ' + impDamage[dieRoll] + impMalus;
+  }
+  const mysteryPackage = ['A creepy idol in your image', 'Baked goods (two fresh rations)', 'A cheese wheel', 'A kitten', 'A puppy', `A note and ${function(){return lootBooksMaps[roll(2,6,-2)]}}`];
+  const floodDamage = ['Minor flood on first floor (-1 to future home events rolls)', 'Minor flood on first floor (-1 to future home events rolls)', 'Minor flood on first floor (-1 to future home events rolls)', 'Major flood on first floor (-2 to future home events rolls', 'Second story flooding (-3 to future home events rolls)', 'House washed away'];
   const homeOwnershipTable = [
     () => interpretRoll(impishBehaviour()),
-    () => interpretRoll(houseFlood()),
+    () => interpretRoll(`Flood. The area flooded while you were away: ${floodDamage[roll(1, 6, -1)]}`),
     'Vermin. Vermin infest the house. If you have cats, roll 1d6. If you roll equal to or less than your number of cats, they chase away the vermin. If they fail to chase them off, the vermin spoil your food stocks (or eat it all).',
     'Mold. Something horrible is growing in the cellar (or rafters). Roll 1d6. On a roll of 1 it is a creeping ooze.',
-    `House broken: ${houseBreakage[roll(1,6,-1)]}. -1 to home events until repaired.`,
+    () => interpretRoll(`House broken: ${houseBreakage[roll(1,6,-1)]}. -1 to home events until repaired.`),
     'Squatters. They ate your food and drank your beer—and they’re still here, asleep in your beds. Remain in the adventure phase until you’ve had a serious talk with them.',
     'Thieves. Thieves broke in while you were away and stole 1d6 items from your caches. Game master chooses items.',
     'Safe house',
@@ -570,27 +590,10 @@
     'Hearth fire glows. Purchasing this home was the best idea you ever had. All may take one free test to recover from angry, afraid, exhausted or sick.',
     'Safe and sound. Nothing like a nice home to make one feel secure: +1D for all recovery tests during town phase.',
     'Lost and found. An item that was lost at some point in the past mysteriously awaits you upon your return home.',
-    () => interpretRoll(mysteriousPackage()),
+    () => interpretRoll(`Mysterious package.There’s a package sitting on your doorstep. It contains: ${mysteryPackage[roll(1,6,-1)]}`),
     'House goblin. The house goblin emerges and it is hungry. If fed, you are granted +1 to the next home event roll.',
     'Approval. You’ve done well. A house goblin adopts you. You are granted +1 to all home events rolls for this home. If you generate this result again, an additional house goblin appears, and so on. All house goblins demand to be accommodated—requiring a portion of food and wine during each of your stays in your home. If unfed for one stay, they temporarily withdraw their support. If unfed for multiple respites, each house goblin imposes a -1 penalty to the home events roll.'
   ];
-  function impishBehaviour(){
-   let dieRoll = roll(1,6,-1);
-   const impDamage = ['A fire that destroyed the home', 'A fire that destroyed a cache', 'A fire that destroyed the accommodations', 'A fire that destroyed the accommodations', 'Hearth ruined', 'Hearth ruined'];
-   let impMalus = '';
-   if (dieRoll !== 0) impMalus = ' (apply a -1 to future home events rolls until the property is repaired and the cinder imp is tamed or driven out)';
-  return 'Impish behavior. A cinder imp has made its home in your hearth. It has the following effect: ' + impDamage[dieRoll] + impMalus;
-  }
-  function houseFlood(){
-    const floodDamage = ['Minor flood on first floor (-1 to future home events rolls)', 'Minor flood on first floor (-1 to future home events rolls)', 'Minor flood on first floor (-1 to future home events rolls)', 'Major flood on first floor (-2 to future home events rolls', 'Second story flooding (-3 to future home events rolls)', 'House washed away'];
-    let damage = floodDamage[roll(1, 6, -1)];
-    console.log(damage);
-    return 'Flood. The area flooded while you were away: ' + damage;
-  }
-  function mysteriousPackage() {
-    const mysteryPackage = ['A creepy idol in your image', 'Baked goods (two fresh rations)', 'A cheese wheel', 'A kitten', 'A puppy', `A note and ${function(){return lootBooksMaps[roll(2,6,-2)]}}`];
-    return 'Mysterious package.There’s a package sitting on your doorstep. It contains:' + mysteryPackage[roll(1,6,-1)];
-  }
   const dockEventsTable = [
     'Press ganged. You’re cornered by a determined press gang. Test Fighter vs Fighter 3 plus 6D of help. Suggested condition: injured. Suggested twist: you’re now a galley slave.',
     'Brawl. You manage to insult some salty dogs and start a brawl. Test Fighter vs Fighter 4, but no weapons are allowed. Suggested twist: wake up in an alley with your pack missing (but you should see the other guys).',
@@ -604,7 +607,7 @@
     `Animal friend. You’re befriended by a: ${function () {return ['Monkey (+1D to Criminal tests; +1 lifestyle cost in town)', 'Parrot (+1D to Orator tests)', 'Parrot (+1D to Orator tests)', 'Trained rat (pack 1; grants +1D to tests to avoid traps)', 'Polydactyl cat (+1D to Sailor tests and otherwise acts like a cat)'][roll(1,6,-1)]}}`,
     'Fall in with pirates. You fall in with a band of pirates and get whisked away on a wild adventure. You may not make additional tests during this town phase. On your adventure, abandon one piece of gear or loot (nothing expendable) and then do the following: Mark a Sailor test, pass or fail (your choice); add a new friend from the pirate crew; add Dread Pirate-wise if you have a wise slot available. You’re back at the end of this town phase before your friends notice you’re gone, maybe with a new tattoo.'
   ];
-  constFellowInvestorsTable = [
+  const FellowInvestorsTable = [
     [0, 'Desperate adventurers'],
     [0, 'Desperate adventurers'],
     [0, 'Desperate adventurers'],
