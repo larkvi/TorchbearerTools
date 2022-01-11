@@ -373,12 +373,12 @@
     'Funeral. A pious soul, now deceased, has asked the monks of this place to chant prayers to the Immortals in their memory. Choose one:<ul><li>The ceremony is respectfully observed by the relatives of the deceased.</li><li>The ceremony is unattended except for the officiants.</li></ul>',
     'Wedding. A devout couple, poor in money but rich in ancient traditions, asks the monks of this place to wed them.',
     'Serenity. The sky over the complex is cerulean blue, the sun a white disk and the air the sweetest you’ve ever drawn breath from. It’s good to be alive, and you know you are in the right place.',
-    'Dimly lit portal. You pass an open shrine and see the Immortal within looking down upon you with impassive eyes. Leave a humble offering and ask the Immortal to forgive your transgressions. Appropriate offerings: a personal effect (from character creation), worthless coins, rusty keys, an idol of an unknown religion or a tool of unknown use. Roll 1d6 after leaving the offering to determine the Immortal’s response: 1-3 You are granted +1D 4-6 Remove angry, afraid or to your next test. exhausted (if no conditions, you are made fresh).',
+    'Dimly lit portal. You pass an open shrine and see the Immortal within looking down upon you with impassive eyes. Leave a humble offering and ask the Immortal to forgive your transgressions. Appropriate offerings:<ul><li>a personal effect (from character creation)</li><li>worthless coins</li><li>rusty keys</li><li>an idol of an unknown religion</li><li>a tool of unknown use</li></ul>Roll 1d6 after leaving the offering to determine the Immortal’s response:<ul><li value="">1&ndash;3 You are granted +1D to your next test.</li><li value="">4&ndash;6 Remove angry, afraid, or exhausted (if no conditions, you are made fresh).</li></ul>',
     'Temple porter. The porter of this temple is very old and poor. They unlock the temple for you without a word and begin to sweep out its halls with an old broom. If you provide them with a bottle of wine, a new broom, holy vestments or 2D of coins, you make a new friend. If you return to the temple complex in the future, you may call upon the porter and stay at the temple for free (accommodations equivalent to a flophouse).',
     () => interpretRoll(`Rehabilitation. A group of wealthy nobles of an ancient line hires artisans and laborers to restore a shrine of their house’s Immortal patron. Any who come to the shrine to (sincerely) pray before their Immortal patron of the ${shrineTable[roll(1,6,-1)]} is presented with a gift of gratitude: ${lootSilverPlate[roll(2,6,-2)]}`),
     'Monks. The devout adherents who live and pray among the forgotten temples form a new sect of poor monks. Feed them, pray with them or otherwise support them and they do one of the following:<ul><li>Gift you with a minor relic</li><li>Mentor you in the Theologian skill (mark a pass or fail, your choice)</li><li>Grant you membership (and vestments) in their new order</li></ul>',
     'High holy day. All accommodations, food and drink at the complex are free for your stay during this town phase.',
-    () => interpretRoll(`Ascension. Immured deep in a stupa, one of the complex’s aged monks ascends to Immortality. All present feel the Shroud Between Worlds ripple around them as the shift transpires. The new Immortal’s sphere and accompanying benefit: ${newImmortalSphere[roll(1, 6, -1)]}`),
+    () => interpretRoll(`Ascension. Immured deep in a stupa, one of the complex’s aged monks ascends to Immortality. All present feel the Shroud Between Worlds ripple around them as the shift transpires. The new Immortal’s sphere and accompanying benefit: <ul><li>${newImmortalSphere[roll(1, 6, -1)]}</li></ul>`),
     'Hand of the Immortal. Turning in its divine torpor, an ancient Immortal remembers this place. Dreaming, they reach through the Shroud of Worlds and touch the complex. All present may mark one passed or failed test for Theologian (your choice). In addition, any who have a creed related to the Immortal’s spheres of influence must replace a Nature descriptor with something relevant to the Immortal’s spheres of influence. If you have not yet replaced a lost Nature descriptor, you must take one of these descriptors, regardless of your creed.'
   ];
   townEventsTable[10] = [ // Nomad Caravan
@@ -1185,7 +1185,7 @@
     console.log('CampSite Table: ' + campArea + ' CampSafety: ' + campSafety + ' campFire: ' + campFire + ' watchStatus: ' + watchStatus + ' partyModifier: ' + partyModifier + ' survivalistModifier: ' + survivalistModifier + ' miscModifiers: ' + miscCampModifiers);
     let campRollModifier = campSafety + campFire + watchStatus + partyModifier + survivalistModifier + miscCampModifiers;
     // let's roll!
-    let campRoll = Math.max(0, Math.min((roll(3, 6) + campRollModifier), typeOfCamp[campArea].length));
+    let campRoll = Math.max(0, Math.min((roll(3, 6) + campRollModifier), typeOfCamp[campArea].length-1));
     console.log(campRoll + ': ' + typeOfCamp[campArea][campRoll]);
     interpretRoll(typeOfCamp[campArea][campRoll]);
     printAccumulatedTreasure(resultsLoc);
@@ -1199,7 +1199,7 @@
     // modifiers
     let townRollModifier = parseInt(document.getElementById("TownRollModifiers").value, 10);
     // let's roll!
-    let townRoll = roll(3, 6, townRollModifier);
+    let townRoll = Math.max(0, Math.min((roll(3, 6) + townRollModifier), townEventsTable[townType].length-1));
     console.log(townRoll + ': ' + townEventsTable[townType][townRoll]);
     interpretRoll(townEventsTable[townType][townRoll]);
     // All elves and elf-friends automatically remove the afraid condition upon entering Elfhome (after town events are rolled, provided there is no disaster); no test, check or lifestyle cost required.
