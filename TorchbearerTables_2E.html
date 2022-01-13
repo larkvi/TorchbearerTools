@@ -995,7 +995,7 @@
     'Returns! Precious substance: Pay off of 10x the share price; investors are granted +1 to Pay Off and Captain Experience rolls for 2d6 future expeditions to this locale.'
   ];
   const shrineOmens = [];
-  shrineOmens[0] = [
+  shrineOmens[0] = [ // Immortal Omens
     'Dreams of elves. You are visited with a vision of events to come. You see a flash of a place or person you will soon encounter. Remove either the angry or afraid condition (player&#8217;s choice).',
     'The Huntress&#8217; wisdom. Add +1 to your next outdoors camp events roll.',
     'Hearthmistress&#8217;s favor. Add +1 to your next town events roll.',
@@ -1003,7 +1003,7 @@
     'Gift of the Shining One. Remove one condition of your choice (except dead). If you have no conditions, you are made fresh.',
     'Immortal boon. Add +1D to all tests for your class skills for one phase.'
   ];
-  shrineOmens[1] = [
+  shrineOmens[1] = [ // Propitiate Omens
     'Immortal darkness. You have angered the council of evil Immortals, and they curse your prayers to the abyss. You may not pray to any Immortals at a shrine or elsewhere (including theurges!) until this curse is lifted.',
     'Hrym&#8217;s notice. The shade of someone or something you killed but failed to put to rest stalks you. It acts as a barrow wight, haugbui or draugr and grows closer with each town phase, waiting for you in the darkness.',
     'Slaughterer&#8217;s boast. The Lord of Slaughter sings of your deeds. The game master adds one additional opponent to each kill conflict until the next town phase.',
@@ -1030,7 +1030,7 @@
     'Rousted. The watch boots you and the other vagrants from town (unless you&#8217;re wanted for a crime, in which case you&#8217;re arrested). You may not conduct further business in this town. Roll once on the Tavern Rumor table.'
   ];
   const tellingTales = [];
-  tellingTales[0] = [
+  tellingTales[0] = [ // Success
     'OK, well have you heard this one? Some talkative wag shares a free rumor. Roll twice on the Tavern Rumors table. They player may choose their preferred result.',
     'OK, well have you heard this one? Some talkative wag shares a free rumor. Roll twice on the Tavern Rumors table. They player may choose their preferred result.',
     'Let me tell you a story. You are granted +1D to recover from angry or afraid; you may also make a recovery test for exhausted at the tavern during this town phase.',
@@ -1043,7 +1043,7 @@
     'Winning friends and influencing people. Gain a new friend and/or admirer in this town.',
     'Local hero. The people adopt you as one of their own. You may now treat this town as a hometown: This status grants +1D to Resources tests in this town and +1D to Circles tests in this town once you achieve 3rd level.'
   ];
-  tellingTales[1] = [
+  tellingTales[1] = [ // Failure
     'Run out of town. No one has patience for your fish tales anymore. You&#8217;re run out of town and are no longer welcome here. You will be stopped at the gates by the watch.',
     'Enough. The tavern keeper has had enough of your antics. You are banned from telling tales at this establishment for all time.',
     'Your face pisses me off. Gain a new enemy in this town.',
@@ -1055,6 +1055,22 @@
     'That weird drunk. No one pays you one whit of attention. You talk to yourself for hours.',
     'That weird drunk. No one pays you one whit of attention. You talk to yourself for hours.',
     'That weird drunk. No one pays you one whit of attention. You talk to yourself for hours.'
+  ];
+  const haggling = [];
+  haggling[0] = [ // pass
+    'Too much, too much. You point out how overpriced the market is. Gain +1D to all Resources tests in the market during this town phase.',
+    'Interesting item. Take +1D extra cash for one piece of loot other than coins.',
+    'Hard bargain. When buying gear from the market, take an extra item worth the same price or less.',
+    'Honest face. Take +1D extra cash for one piece of kit or salvage traded in (even if rated Ob 1-3).',
+    'Rare specimen. Double the value of one piece of loot traded in (aside from coins).'
+  ];
+  haggling[1] = [ // fail
+    'You again. The goldsmiths are closed to you on this trip to town. Your party may not cash in gems, jewelry, works of art and similar items.',
+    'You again. The goldsmiths are closed to you on this trip to town. Your party may not cash in gems, jewelry, works of art and similar items.',
+    'None of your nonsense. The market is closed to you and all your friends during this town phase.',
+    'We know you. Increase all prices for gear by +1 Ob.',
+    'Fury. The shopkeepers toy with you. Take the angry condition.',
+    'Fleeced. You pay a bit too much for everything. Increase lifestyle cost by +1.'
   ];
   const weatherTypes = [
     'Blustery Winds.<br/><br/>These strong, cold winds can chill to the bone and turn simple tasks into seemingly monumental challenges. However, it&#8217;s excellent sailing weather. In blustery winds:<ul><li>Lighting a fire (including torches and lanterns) without shelter from the wind requires a test, even if you have a tinderbox.</li><li>All social tests suffer a -1s penalty.</li><li>Sailor tests are granted +1D.</li><li>Toll in blustery winds: +1</li></ul>',
@@ -1365,6 +1381,14 @@
     printAccumulatedTreasure(resultsLoc);
   }
 
+  function haggle() {
+    let resultsLoc = document.getElementById("HagglingResults");
+    let haggleSuccess = parseInt(getRadioValues("Haggling"));
+    let haggleRoll = roll(1, 6, -1);
+    interpretRoll(haggling[haggleSuccess][haggleRoll]);
+    printAccumulatedTreasure(resultsLoc);
+  }
+
   function generateGuild() {
     let resultsLoc = document.getElementById("GuildResults");
     let guildRoll = parseInt(`${roll(1, 6, -1)}${roll(1, 6, -1)}`, 6);
@@ -1440,10 +1464,11 @@
 <section>
 
   <header><h1>Torchbearer Tools (2nd. Edition)</h1></header>
-  <h2>Note: Test version. Currently, Camp Events, Rumours, Guilds, Town Events, Weather, and Home Events are
+  <h2>Note: Test version. Currently, Camp Events, Rumours, Guilds, Town Events, Weather, Home Events,  Haggling, Omens, Street, and
+    Telling Tales are
     implemented.</h2>
   <h3>Loot is first-pass and may not work in every situation</h3>
-  <h3>To Do: Trade (Investors, Captain, <i>Returns!</i>), Haggling, Omens, Street, Telling Tales, Dock; Reformat for
+  <h3>To Do: Trade (Investors, Captain, <i>Returns!</i>), Dock; Reformat for
     usability</h3>
   <h3>For bug reports and feedback, raise issues on <a href="https://github.com/larkvi/TorchbearerTools">github</a>.
   </h3>
@@ -1776,17 +1801,17 @@
       <fieldset>
         <legend>Telling Tales (<i>Scholar&#8217;s Guide</i>. 111&ndash;112.)</legend>
         <p>
-        <input type="radio"
-               name="TellingTales"
-               id="TellTalesPass"
-               value="0"
-                checked/>
-        <label for="TellTalesPass"><i>Success!</i></label>
-        <input type="radio"
-               name="TellingTales"
-               id="TellTalesFail"
-               value="1"/>
-        <label for="TellTalesFail"><i>Failure!</i></label>
+          <input type="radio"
+                 name="TellingTales"
+                 id="TellTalesPass"
+                 value="0"
+                 checked/>
+          <label for="TellTalesPass"><i>Success!</i></label>
+          <input type="radio"
+                 name="TellingTales"
+                 id="TellTalesFail"
+                 value="1"/>
+          <label for="TellTalesFail"><i>Failure!</i></label>
         </p>
         <label for="TellTales">Tell your story! . . . . . . . . </label>
         <input type=button id="TellTales" value="Tell Tales" onClick="tellTales();">
@@ -1828,6 +1853,30 @@
       </fieldset>
     </form>
     <p id="ShrineOmenResults">What awaits you?</p>
+  </section>
+  <section>
+    <form>
+      <fieldset>
+        <legend>Haggling (<i>Scholar&#8217;s Guide</i>. 106.)</legend>
+        <p>
+          <input type="radio"
+                 name="Haggling"
+                 id="HaggleSuccess"
+                 value="0"
+                 checked/>
+          <label for="HaggleSuccess"><i>Success.</i></label>
+          <input type="radio"
+                 name="Haggling"
+                 id="HaggleFail"
+                 value="1"/>
+          <label for="HaggleFail"><i>Failure.</i></label>
+        </p>
+        <label for="HaggleButton">Can you find a bargain> . . . . . . . . </label>
+        <input type=button id="HaggleButton" value="Haggle" onClick="haggle();">
+
+      </fieldset>
+    </form>
+    <p id="HagglingResults">What awaits you?</p>
   </section>
   <section>
     <form>
