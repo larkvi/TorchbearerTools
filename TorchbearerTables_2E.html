@@ -1349,6 +1349,13 @@
     printAccumulatedTreasure(resultsLoc);
   }
 
+  function streetEvent() {
+    let resultsLoc = document.getElementById("StreetResults");
+    let streetRoll = roll(2, 6, -2);
+    interpretRoll(streetEvents[streetRoll]);
+    printAccumulatedTreasure(resultsLoc);
+  }
+
   function generateGuild() {
     let resultsLoc = document.getElementById("GuildResults");
     let guildRoll = parseInt(`${roll(1, 6, -1)}${roll(1, 6, -1)}`, 6);
@@ -1778,6 +1785,16 @@
       </fieldset>
     </form>
     <p id="TellingTalesResults">What awaits you?</p>
+  </section>
+  <section>
+    <form>
+      <fieldset>
+        <legend>Street Events (<i>Scholar&#8217;s Guide</i>. 109.)</legend>
+        <label for="StreetEvent">Hit the streets! . . . . . . . . . . </label>
+        <input type=button id="StreetEvent" value="Sleep Rough" onClick="streetEvent();">
+      </fieldset>
+    </form>
+    <p id="StreetResults">What awaits you?</p>
   </section>
   <section>
     <form>
