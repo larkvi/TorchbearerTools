@@ -994,6 +994,67 @@
     'Returns! Pay off of 5x the share price; investors are granted +1 to the next 1d3 Captain Experience rolls.',
     'Returns! Precious substance: Pay off of 10x the share price; investors are granted +1 to Pay Off and Captain Experience rolls for 2d6 future expeditions to this locale.'
   ];
+  const immortalOmens = [
+    'Dreams of elves. You are visited with a vision of events to come. You see a flash of a place or person you will soon encounter. Remove either the angry or afraid condition (player&#8217;s choice).',
+    'The Huntress&#8217; wisdom. Add +1 to your next outdoors camp events roll.',
+    'Hearthmistress&#8217;s favor. Add +1 to your next town events roll.',
+    'Favor of the Lords. You are granted +1D to skills related to the Lords of this shrine during the next adventure phase.',
+    'Gift of the Shining One. Remove one condition of your choice (except dead). If you have no conditions, you are made fresh.',
+    'Immortal boon. Add +1D to all tests for your class skills for one phase.'
+  ];
+  const propitiateOmens = [
+    'Immortal darkness. You have angered the council of evil Immortals, and they curse your prayers to the abyss. You may not pray to any Immortals at a shrine or elsewhere (including theurges!) until this curse is lifted.',
+    'Hrym&#8217;s notice. The shade of someone or something you killed but failed to put to rest stalks you. It acts as a barrow wight, haugbui or draugr and grows closer with each town phase, waiting for you in the darkness.',
+    'Slaughterer&#8217;s boast. The Lord of Slaughter sings of your deeds. The game master adds one additional opponent to each kill conflict until the next town phase.',
+    'Whispers. The Lord of Whispers stains your reputation: -1 Precedence and +1 Ob to all Circles tests until the next town phase.',
+    'The Stalking Beast laughs. There is no game or fowl to be hunted while you are in the wilderness until the next town phase, not even a mouse.',
+    'Curse of slow blood. The Lady of Enervation mocks you. You suffer from the exhausted condition.',
+    'Death omen. You see an item, symbol or spell you will soon encounter. The omen imposes the angry or afraid condition (game master&#8217;s choice).',
+    'Baying of the Wild Hunt. Dogs bark and fight outside the temple, drowning out the prayers of the priests within.',
+    'Wind&#8217;s laughter. The weather suddenly changes.',
+    'Swan of blood. A raven lands on your offering, pecks away a piece and flies off.',
+    'The blind eye. You escape the notice of the malign powers who stalk the shadows of the world.'
+  ];
+  const streetEvents = [
+    'Unspeakable plot. You become involved in some unspeakable plot. You may not conduct any business or use any facilities during this town phase. Never speak of what you did again, but take Unspeakable Plot-wise.',
+    'Unspeakable plot. You become involved in some unspeakable plot. You may not conduct any business or use any facilities during this town phase. Never speak of what you did again, but take Unspeakable Plot-wise.',
+    'Thieved. Thieves steal your pouch, satchel or purse.',
+    'Thieved. Thieves steal your pouch, satchel or purse.',
+    'Thieved. Thieves steal your pouch, satchel or purse.',
+    'Clothing soiled. Your shabby appearance increases Circles obstacles by one until you replace your clothing.',
+    'Clothing soiled. Your shabby appearance increases Circles obstacles by one until you replace your clothing.',
+    'Alms. A kind, old blind priest feeds you. Remove hungry and thirsty.',
+    'Misplaced. You lose one piece of gear (game master&#8217;s choice).',
+    'Rousted. The watch boots you and the other vagrants from town (unless you&#8217;re wanted for a crime, in which case you&#8217;re arrested). You may not conduct further business in this town. Roll once on the Tavern Rumor table.',
+    'Rousted. The watch boots you and the other vagrants from town (unless you&#8217;re wanted for a crime, in which case you&#8217;re arrested). You may not conduct further business in this town. Roll once on the Tavern Rumor table.'
+  ];
+  const tellingTales = [];
+  tellingTales[0] = [
+    'OK, well have you heard this one? Some talkative wag shares a free rumor. Roll twice on the Tavern Rumors table. They player may choose their preferred result.',
+    'OK, well have you heard this one? Some talkative wag shares a free rumor. Roll twice on the Tavern Rumors table. They player may choose their preferred result.',
+    'Let me tell you a story. You are granted +1D to recover from angry or afraid; you may also make a recovery test for exhausted at the tavern during this town phase.',
+    'Let me tell you a story. You are granted +1D to recover from angry or afraid; you may also make a recovery test for exhausted at the tavern during this town phase.',
+    'Your money&#8217;s no good here. Your fans insist on buying you drinks. Either there&#8217;s no cost for this telling tales test, or you can have a second drink at the tavern for free.',
+    'You&#8217;re so brave! The adulation brings a smile to your face. Remove the angry condition at any point during this town phase.',
+    'Charming. You are granted +1D to all social tests involving romance during this town phase.',
+    'Toast of the town. Your reputation gets a boost. You are granted +1D to all Circles tests during this town phase.',
+    'Coins for the bard. Take 1D of copper coins from your fans and admirers.',
+    'Winning friends and influencing people. Gain a new friend and/or admirer in this town.',
+    'Local hero. The people adopt you as one of their own. You may now treat this town as a hometown: This status grants +1D to Resources tests in this town and +1D to Circles tests in this town once you achieve 3rd level.'
+  ];
+  tellingTales[1] = [
+    'Run out of town. No one has patience for your fish tales anymore. You&#8217;re run out of town and are no longer welcome here. You will be stopped at the gates by the watch.',
+    'Enough. The tavern keeper has had enough of your antics. You are banned from telling tales at this establishment for all time.',
+    'Your face pisses me off. Gain a new enemy in this town.',
+    'Them&#8217;s fighting words! You manage to start a tavern brawl. Take the injured condition and mark a test for Fighter (pass or fail, your choice).',
+    'Liar. No one buys your stories anymore. +1 Ob to all Haggler, Orator, Persuader and Manipulator tests during this town phase.',
+    'You pulled how much out of that tomb? Some enterprising thieves (Criminal 4) mark you for a visit...',
+    'Laugh out loud. They&#8217;re laughing at you, not with you. Take the angry condition.',
+    'That weird drunk. No one pays you one whit of attention. You talk to yourself for hours.',
+    'That weird drunk. No one pays you one whit of attention. You talk to yourself for hours.',
+    'That weird drunk. No one pays you one whit of attention. You talk to yourself for hours.',
+    'That weird drunk. No one pays you one whit of attention. You talk to yourself for hours.'
+  ];
   const weatherTypes = [
     'Blustery Winds.<br/><br/>These strong, cold winds can chill to the bone and turn simple tasks into seemingly monumental challenges. However, it&#8217;s excellent sailing weather. In blustery winds:<ul><li>Lighting a fire (including torches and lanterns) without shelter from the wind requires a test, even if you have a tinderbox.</li><li>All social tests suffer a -1s penalty.</li><li>Sailor tests are granted +1D.</li><li>Toll in blustery winds: +1</li></ul>',
     'Clear and Cool<br/><br/>On days when the sun is shining, the winds are quiet, and the wildflowers and fruit orchards are blossoming it is a joy to be on the open road. In clear and cool weather:<ul><li>Travelers are granted +1D to recover from angry or afraid.</li><li>Scavenger tests to forage are granted +1D.</li><li>Toll in clear and cool weather: -1</li></ul>',
@@ -1271,13 +1332,21 @@
 
   }
 
-  // can I make a generic function to cover all these special cases?
+
   function generateRumour() {
     let resultsLoc = document.getElementById("RumourResults");
     let rumourRoll = roll(3, 6, -3);
     interpretRoll(rumourTable[rumourRoll]);
     printAccumulatedTreasure(resultsLoc);
+  }
 
+
+  function tellTales() {
+    let resultsLoc = document.getElementById("TellingTalesResults");
+    let talesSuccess = parseInt(getRadioValues("TellingTales"));
+    let talesRoll = roll(2, 6, -2);
+    interpretRoll(tellingTales[talesSuccess][talesRoll]);
+    printAccumulatedTreasure(resultsLoc);
   }
 
   function generateGuild() {
@@ -1689,6 +1758,30 @@
   <section>
     <form>
       <fieldset>
+        <legend>Telling Tales (<i>Scholar&#8217;s Guide</i>. 111&ndash;112.)</legend>
+        <p>
+        <input type="radio"
+               name="TellingTales"
+               id="TellTalesPass"
+               value="0"
+                checked/>
+        <label for="TellTalesPass"><i>Success!</i></label>
+        <input type="radio"
+               name="TellingTales"
+               id="TellTalesFail"
+               value="1"/>
+        <label for="TellTalesFail"><i>Failure!</i></label>
+        </p>
+        <label for="TellTales">Tell your story! . . . . . . . . </label>
+        <input type=button id="TellTales" value="Tell Tales" onClick="tellTales();">
+
+      </fieldset>
+    </form>
+    <p id="TellingTalesResults">What awaits you?</p>
+  </section>
+  <section>
+    <form>
+      <fieldset>
         <legend>Guild Table (<i>Lore Master&#8217;s Manual</i>. 198.)</legend>
         <label for="GenerateGuild">Which guild? . . . . . . . . . . </label>
         <input type=button id="GenerateGuild" value="Generate Guild" onClick="generateGuild();">
@@ -1775,13 +1868,17 @@
         <legend>Generate Loot (<i>Scholar&#8217;s Guide</i>. 150&ndash;170. <i>Lore
           Master&#8217;s Manual</i>. 240&ndash;244.)
         </legend>
-        <p><i>Editor&#8217;s note</i>: The amount of loot generated by the tables in the books seems to be much lower than the amount of loot that Thor and Luke actually include in their adventures, based upon published adventures and play reports. Using these numbers without additional placed valuables will result in much poorer characters who will have a much more difficult time in town.</p>
+        <p><i>Editor&#8217;s note</i>: The amount of loot generated by the tables in the books seems to be much lower
+          than the amount of loot that Thor and Luke actually include in their adventures, based upon published
+          adventures and play reports. Using these numbers without additional placed valuables will result in much
+          poorer characters who will have a much more difficult time in town.</p>
         <blockquote>
           <ul>
             <li>Might 1: Roll once on Loot Table 2 for every three creatures.</li>
             <li>Might 2: Roll once on Loot Table 2 for every two creatures.</li>
             <li>Might 3: Roll once on Loot Table 3 for each creature.</li>
-            <li>Might 4: Roll once on Loot Table 3 for each creature. At the game master&#8217;s discretion, they may make an
+            <li>Might 4: Roll once on Loot Table 3 for each creature. At the game master&#8217;s discretion, they may
+              make an
               additional roll on the Treasure & Valuables 2 subtable for M4 creatures.
             </li>
             <li>Might 5: Roll once on Loot Table 4 for each creature.</li>
