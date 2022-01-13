@@ -994,7 +994,8 @@
     'Returns! Pay off of 5x the share price; investors are granted +1 to the next 1d3 Captain Experience rolls.',
     'Returns! Precious substance: Pay off of 10x the share price; investors are granted +1 to Pay Off and Captain Experience rolls for 2d6 future expeditions to this locale.'
   ];
-  const immortalOmens = [
+  const shrineOmens = [];
+  shrineOmens[0] = [
     'Dreams of elves. You are visited with a vision of events to come. You see a flash of a place or person you will soon encounter. Remove either the angry or afraid condition (player&#8217;s choice).',
     'The Huntress&#8217; wisdom. Add +1 to your next outdoors camp events roll.',
     'Hearthmistress&#8217;s favor. Add +1 to your next town events roll.',
@@ -1002,7 +1003,7 @@
     'Gift of the Shining One. Remove one condition of your choice (except dead). If you have no conditions, you are made fresh.',
     'Immortal boon. Add +1D to all tests for your class skills for one phase.'
   ];
-  const propitiateOmens = [
+  shrineOmens[1] = [
     'Immortal darkness. You have angered the council of evil Immortals, and they curse your prayers to the abyss. You may not pray to any Immortals at a shrine or elsewhere (including theurges!) until this curse is lifted.',
     'Hrym&#8217;s notice. The shade of someone or something you killed but failed to put to rest stalks you. It acts as a barrow wight, haugbui or draugr and grows closer with each town phase, waiting for you in the darkness.',
     'Slaughterer&#8217;s boast. The Lord of Slaughter sings of your deeds. The game master adds one additional opponent to each kill conflict until the next town phase.',
@@ -1353,6 +1354,14 @@
     let resultsLoc = document.getElementById("StreetResults");
     let streetRoll = roll(2, 6, -2);
     interpretRoll(streetEvents[streetRoll]);
+    printAccumulatedTreasure(resultsLoc);
+  }
+
+  function shrineOmen() {
+    let resultsLoc = document.getElementById("ShrineOmenResults");
+    let omenSuccess = parseInt(getRadioValues("ShrineOmens"));
+    let omenRoll = roll(2, 6, -2);
+    interpretRoll(shrineOmens[omenSuccess][omenRoll]);
     printAccumulatedTreasure(resultsLoc);
   }
 
@@ -1795,6 +1804,30 @@
       </fieldset>
     </form>
     <p id="StreetResults">What awaits you?</p>
+  </section>
+  <section>
+    <form>
+      <fieldset>
+        <legend>Shrine Omens (<i>Scholar&#8217;s Guide</i>. 107&ndash;108.)</legend>
+        <p>
+          <input type="radio"
+                 name="ShrineOmens"
+                 id="ImmortalOmens"
+                 value="0"
+                 checked/>
+          <label for="ImmortalOmens"><i>Immortal Omens</i></label>
+          <input type="radio"
+                 name="ShrineOmens"
+                 id="PropitiateOmens"
+                 value="1"/>
+          <label for="PropitiateOmens"><i>Propitiate Omens</i></label>
+        </p>
+        <label for="ReadOmen">What do the Immortals have in store? . . . . . . . . </label>
+        <input type=button id="ReadOmen" value="Read Omen" onClick="shrineOmen();">
+
+      </fieldset>
+    </form>
+    <p id="ShrineOmenResults">What awaits you?</p>
   </section>
   <section>
     <form>
