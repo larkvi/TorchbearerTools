@@ -1,0 +1,47 @@
+    /* Makeshift CSS Reset */  
+    {  
+        margin: 0;  
+        padding: 0;  
+    }  
+      
+    /* Tell the browser to render HTML 5 elements as block */  
+    header, footer, aside, nav, article {  
+        display: block;  
+    }  
+      
+    body {  
+        margin: 0 auto;  
+        width: 976px;  
+        font: 16px/20px Times New Roman, Palatino, serif;  
+        background: white;  
+    }  
+      
+    h1 {  
+        font-size: 24px;  
+        line-height: 30px;   
+    }  
+      
+    p {  
+        padding-top: 4px;  
+        padding-bottom: 8px;  
+    }  
+    
+    .content {  
+    width: inherit;
+    display: table;  
+	}  
+  
+    .LeftContent {  
+        display: table-cell;  
+        width: 475px;  
+        padding-right: 26px;  
+    }  
+  
+    .RightContent{  
+        display: table-cell;  
+        width: 475px;  
+    }
+
+    blockquote {
+        font-style: italic;
+    }
