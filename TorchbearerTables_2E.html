@@ -1739,15 +1739,15 @@
   <div class="tabs">
     <div role="tablist" aria-label="Categories">
       <button type="button" role="tab" aria-selected="true" aria-controls="camp-tab" id="camp_events">Camp</button>
-      <button type="button" role="tab" aria-selected="true" aria-controls="town-tab" id="town_events">Town</button>
-      <button type="button" role="tab" aria-selected="true" aria-controls="tavern-tab" id="tavern_events">Tavern</button>
-      <button type="button" role="tab" aria-selected="true" aria-controls="locations-tab" id="locations_events">Town Locations</button>
-      <button type="button" role="tab" aria-selected="true" aria-controls="loot-tab" id="loot_monsters">Loot</button>
-      <button type="button" role="tab" aria-selected="true" aria-controls="treasure-tab" id="loot_individual">Treasure Tables</button>
-      <button type="button" role="tab" aria-selected="true" aria-controls="weather-tab" id="weather_events">Weather</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="town-tab" id="town_events" tabindex="-1">Town</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="tavern-tab" id="tavern_events" tabindex="-1">Tavern</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="locations-tab" id="locations_events" tabindex="-1">Town Locations</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="loot-tab" id="loot_monsters" tabindex="-1">Loot</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="treasure-tab" id="loot_individual" tabindex="-1">Treasure Tables</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="weather-tab" id="weather_events" tabindex="-1">Weather</button>
     </div>
 
-    <div tabindex="1" role="tabpanel" id="town-tab" aria-labelledby="town_events">
+    <div tabindex="0" role="tabpanel" id="town-tab" aria-labelledby="town_events" class="is-hidden">
       <section>
         <form>
           <fieldset>
@@ -1898,7 +1898,7 @@
         <p id="TownResults">What awaits you?</p>
       </section>
       </div>
-    <div tabindex="2" role="tabpanel" id="tavern-tab" aria-labelledby="tavern_events">
+    <div tabindex="0" role="tabpanel" id="tavern-tab" aria-labelledby="tavern_events" class="is-hidden">
       <section>
         <form>
           <fieldset>
@@ -1935,7 +1935,7 @@
         <p id="TellingTalesResults">What awaits you?</p>
       </section>
       </div>
-    <div tabindex="3" role="tabpanel" id="locations-tab" aria-labelledby="locations_events">
+    <div tabindex="0" role="tabpanel" id="locations-tab" aria-labelledby="locations_events" class="is-hidden"
       <section>
         <form>
           <fieldset>
@@ -2023,7 +2023,7 @@
         <p id="HouseResults">What awaits you?</p>
       </section>
     </div>
-    <div tabindex="6" role="tabpanel" id="weather-tab" aria-labelledby="weather_events">
+    <div tabindex="0" role="tabpanel" id="weather-tab" aria-labelledby="weather_events" class="is-hidden"
       <section>
         <form>
           <fieldset>
@@ -2079,7 +2079,7 @@
         <p id="WeatherResults">What awaits you?</p>
       </section>
     </div>
-    <div tabindex="4" role="tabpanel" id="loot-tab" aria-labelledby="loot_monsters">
+    <div tabindex="0" role="tabpanel" id="loot-tab" aria-labelledby="loot_monsters" class="is-hidden"
     <section>
       <form>
         <fieldset>
@@ -2133,7 +2133,7 @@
     </div>
   </div>
 
-    <div tabindex="5" role="tabpanel" id="treasure-tab" aria-labelledby="loot_individual">
+    <div tabindex="0" role="tabpanel" id="treasure-tab" aria-labelledby="loot_individual" class="is-hidden"
       <section>
         INDIVIDUAL TREASURE TABLES COMING SOON
       </section>
