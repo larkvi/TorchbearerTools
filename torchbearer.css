@@ -1,17 +1,17 @@
-    /* Makeshift CSS Reset */  
-    {  
-        margin: 0;  
-        padding: 0;  
-    }  
-      
-    /* Tell the browser to render HTML 5 elements as block */  
-    header, footer, aside, nav, article {  
-        display: block;  
-    }  
-      
+    /* Makeshift CSS Reset */
+    {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Tell the browser to render HTML 5 elements as block */
+    header, footer, aside, nav, article {
+        display: block;
+    }
+
     body {  
         margin: 0 auto;  
-        width: 976px;  
+        width: 85%;
         font: 16px/20px Times New Roman, Palatino, serif;  
         background: white;  
     }  
@@ -26,11 +26,7 @@
         padding-bottom: 8px;  
     }  
     
-    .content {  
-    width: inherit;
-    display: table;  
-	}  
-  
+
     .LeftContent {  
         display: table-cell;  
         width: 475px;  
