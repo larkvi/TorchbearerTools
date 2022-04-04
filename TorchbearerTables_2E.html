@@ -4,8 +4,9 @@
 
   <title>Torchbearer Tools</title>
 
-  <link rel="stylesheet" href="http://larkvi.com/misc/torchbearer.css" type="text/css" media="screen"/>
+  <link rel="stylesheet" href="tabs.css" type="text/css" media="screen"/>
 
+  <link rel="stylesheet" href="http://larkvi.com/misc/torchbearer.css" type="text/css" media="screen"/>
 </head>
 <body>
 
@@ -1460,7 +1461,6 @@
   }
 
 </script>
-
 <section>
 
   <header><h1>Torchbearer Tools (2nd. Edition)</h1></header>
@@ -1476,543 +1476,560 @@
 </section>
 
 <div class="content">
-  <section>
-    <form>
-      <fieldset>
-        <legend>Camp Events (<i>Scholar&#8217;s Guide</i>. 90&ndash;96, 264&ndash;278.)</legend>
-        This roller produces book results, but note the advice on p. 264:
-        <blockquote>The game master should incorporate camp events with a critical eye. Bend them, break
-          them and bind them into the ongoing story. Modify them to suit, but never let the adventurers
-          off easy&mdash;and never deny them a lucky break.
-        </blockquote>
-        <p>
-          <label>Where is the Camp?</label>
-          <input type="radio"
-                 name="CampArea"
-                 id="AncientRuinCamp"
-                 value="0"
-                 checked/>
-          <label for="AncientRuinCamp">Ancient Ruin</label>
-
-          <input type="radio"
-                 name="CampArea"
-                 id="DungeonCamp"
-                 value="1"/>
-          <label for="DungeonCamp">Dungeon</label>
-
-          <input type="radio"
-                 name="CampArea"
-                 id="NaturalCaveCamp"
-                 value="2"/>
-          <label for="NaturalCaveCamp">Natural Cave</label>
-
-          <input type="radio"
-                 name="CampArea"
-                 id="NearTownCamp"
-                 value="3"/>
-          <label for="NearTownCamp">Outside or Near Town</label>
-
-          <input type="radio"
-                 name="CampArea"
-                 id="SquattingCamp"
-                 value="4"/>
-          <label for="SquattingCamp">Squatting in Town</label>
-
-          <input type="radio"
-                 name="CampArea"
-                 id="WildernessCamp"
-                 value="5"/>
-          <label for="WildernessCamp">Wilderness</label>
-        </p>
-        <p>
-          <label>How Safe is the Camp?</label>
-          <input type="radio"
-                 name="CampSafety"
-                 id="TypicalCamp"
-                 value="0"
-                 checked/>
-          <label for="TypicalCamp">Typical</label>
-
-          <input type="radio"
-                 name="CampSafety"
-                 id="UnsafeCamp"
-                 value="-2"/>
-          <label for="UnsafeCamp">Unsafe</label>
-
-          <input type="radio"
-                 name="CampSafety"
-                 id="DangerousCamp"
-                 value="-3"/>
-          <label for="DangerousCamp">Dangerous</label>
-        </p>
-        <p>
-          <label>Did you light a fire?</label>
-          <input type="radio"
-                 name="Fire"
-                 id="yesFire"
-                 value="0"
-                 checked="checked"/>
-          <label for="yesFire">Yes</label>
-
-          <input type="radio"
-                 name="Fire"
-                 id="noFire"
-                 value="1"/>
-          <label for="noFire">No (cannot perform actions that require a fire; all recovery +1
-            Ob.)</label>
-        </p>
-
-        <p>
-          <label>Did you set a watch?</label>
-          <input type="radio"
-                 name="Watch"
-                 id="yesWatch"
-                 value="1"/>
-          <label for="yesWatch">Yes</label>
-
-          <input type="radio"
-                 name="Watch"
-                 id="noWatch"
-                 value="0"
-                 checked="checked"/>
-          <label for="noWatch">No</label>
-        </p>
-        <p>
-          <label>Party members:</label>
-          <input type="checkbox"
-                 name="Ranger"
-                 id="Ranger"
-                 value="1"/>
-          <label for="Ranger">Ranger (for Wilderness Camps)</label>
-          <input type="checkbox"
-                 name="Outcast"
-                 id="Outcast"
-                 value="1"/>
-          <label for="Outcast">Outcast (for Dungeons and Dwarven Ruins)</label>
-          <input type="checkbox"
-                 name="DwarfRuin"
-                 id="DwarfRuin"
-                 value="1"/>
-          <label for="DwarfRuin">Dwarven Ruin (for Ancient Ruins, if Outcast in party)</label>
-        </p>
-        <p>
-          <label>Did you use the Survivalist skill to find or make:</label>
-          <input type="checkbox"
-                 name="Shelter"
-                 id="Shelter"
-                 value="1"/>
-          <label for="Shelter">Shelter for an Outdoor Camp</label>
-          <input type="checkbox"
-                 name="Concealment"
-                 id="Concealment"
-                 value="1"/>
-          <label for="Concealment">A Site with Concealment</label>
-        </p>
-        <legend>Other Modifiers (p. 93)</legend>
-        <blockquote>
-          <ul>
-            <li>Some camp events add bonuses to future camp events rolls.</li>
-            <li>A previous camp disaster in this area while on this adventure imposes a -1 penalty on
-              further camp events rolls. Each additional disaster imposes a cumulative penalty. A
-              disaster is any event that forces an early end to a camp phase, regardless if the watch
-              averts it or not.
-            </li>
-            <li>The game master can impose a -1 camp events penalty if they feel one is warranted due to
-              natural phenomena (like droughts, storms or earthquakes), if the adventurers have
-              angered some terrible foe who hunts them, or if they are under the ban of some horrid
-              curse.
-            </li>
-          </ul>
-        </blockquote>
-        <label for="MiscCampModifiers">Other Modifiers:</label>
-        <input type="number" name="MiscCampModifiers" id="MiscCampModifiers" min="-10" max="10" value="0"/>
-        <p>
-          <label for="MakeCamp">Camp When Ready:</label>
-          <input type="button" id="MakeCamp" value="Make Camp!" onClick="makeCamp();">
-        </p>
-      </fieldset>
-    </form>
-  </section>
-  <section>
-    <p id="CampResults">What awaits you?</p>
-  </section>
-  <section>
-    <form>
-      <fieldset>
-        <legend>Town Events (<i>Scholar&#8217;s Guide</i>. 97&ndash;125, 279&ndash;302.)</legend>
-        This roller produces book results, but note the advice on p. 279:
-        <blockquote>The individual town events leave a lot of room for interpretation. When something odd
-          comes up, roll with it. It&#8217;s the game master&#8217;s job to call for tests or single out
-          victims of calamity and sort through the chaos.
-        </blockquote>
-        <blockquote>Some town events will provide a small benefit or penalty. Be sure to color these
-          results so that they mesh with the current events of the campaign.
-        </blockquote>
+  <ul id="menu">
+    <li><a href="#camp">Camp</a></li>
+    <li><a href="#town">Town</a></li>
+    <li><a href="#loot">Loot</a></li>
+    <li><a href="#weather">Weather</a></li>
+  </ul>
+  <div class="tab-folder">
+    <div id="town" class="tab-content">
+      <section>
+        <form>
+          <fieldset>
+            <legend>Town Events (<i>Scholar&#8217;s Guide</i>. 97&ndash;125, 279&ndash;302.)</legend>
+            This roller produces book results, but note the advice on p. 279:
+            <blockquote>The individual town events leave a lot of room for interpretation. When something odd
+              comes up, roll with it. It&#8217;s the game master&#8217;s job to call for tests or single out
+              victims of calamity and sort through the chaos.
+            </blockquote>
+            <blockquote>Some town events will provide a small benefit or penalty. Be sure to color these
+              results so that they mesh with the current events of the campaign.
+            </blockquote>
 
 
-        <div class="floatLeft">
-          <p>
-            <label>What type of town is it?</label>
-          </p>
-        </div>
-        <div class="floatRight">
-          <p>
-            <input type="radio"
-                   name="TownType"
-                   id="BustlingMetropolisTown"
-                   value="0"
-                   checked/>
-            <label for="BustlingMetropolisTown">Bustling Metropolis</label>
-            <input type="radio"
-                   name="TownType"
-                   id="BusyCrossroadsTown"
-                   value="1"/>
-            <label for="BusyCrossroadsTown">Busy Crossroads</label>
-            <input type="radio"
-                   name="TownType"
-                   id="DwarvenHallsTown"
-                   value="2"/>
-            <label for="DwarvenHallsTown">Dwarven Halls</label>
-            <input type="radio"
-                   name="TownType"
-                   id="ElfHomeTown"
-                   value="3"/>
-            <label for="ElfHomeTown">Elfhome</label>
-            <input type="radio"
-                   name="TownType"
-                   id="ReligiousBastionTown"
-                   value="4"/>
-            <label for="ReligiousBastionTown">Religious Bastion</label>
-            <input type="radio"
-                   name="TownType"
-                   id="RemoteVillageTown"
-                   value="5"/>
-            <label for="RemoteVillageTown">Remote Village</label>
-            <input type="radio"
-                   name="TownType"
-                   id="WizardsTowerTown"
-                   value="6"/>
-            <label for="WizardsTowerTown">Wizard's Tower</label>
-          </p>
-          <p>
-            <label>Additional options from the <i>Lore Master&#8217;s Manual</i>. 196&ndash;211.</label>
-          </p>
-          <p>
-            <input type="radio"
-                   name="TownType"
-                   id="BorderlandFortressTown"
-                   value="7"/>
-            <label for="BorderlandFortressTown">Borderland Fortress</label>
-            <input type="radio"
-                   name="TownType"
-                   id="DilapidatedPortTown"
-                   value="8"/>
-            <label for="DilapidatedPortTown">Dilapidated Port</label>
-            <input type="radio"
-                   name="TownType"
-                   id="ForgottenTempleTown"
-                   value="9"/>
-            <label for="ForgottenTempleTown">Forgotten Temple Complex</label>
-            <input type="radio"
-                   name="TownType"
-                   id="NomadCaravanTown"
-                   value="10"/>
-            <label for="NomadCaravanTown">Nomad Caravan</label>
-            <input type="radio"
-                   name="TownType"
-                   id="ProsperousWayhouseTown"
-                   value="11"/>
-            <label for="ProsperousWayhouseTown">Prosperous Wayhouse</label>
-            <input type="radio"
-                   name="TownType"
-                   id="ShireTown"
-                   value="12"/>
-            <label for="ShireTown">Shire</label>
-            <input type="radio"
-                   name="TownType"
-                   id="SteadingTown"
-                   value="13"/>
-            <label for="SteadingTown">Steading</label>
-            <input type="radio"
-                   name="TownType"
-                   id="WalledTown"
-                   value="14"/>
-            <label for="WalledTown">Walled Town</label>
-          </p>
-          <label>Town Roll Modifiers (p. 280.):</label>
-          <blockquote>
-            Town Events Roll Bonuses
-            Town events rolls are difficult to modify in one&#8217;s favor. There are only a handful
-            of possible bonuses:
-            <ul>
-              <li>The Hearthmistress&#8217;s Favor, gained by praying at a shrine, grants +1 to
-                the next town events roll.
-              </li>
-              <li>A Steward skill test to maintain the works and projects of a settlement grants
-                +1 to the next town events roll for that particular settlement.
-              </li>
-              <li>A skald who establishes a court of the wise in a settlement grants it +1 to town
-                events rolls so long as the court remains.
-              </li>
-              <li>Increate theurges add +1 to town events rolls for settlements allied with
-                them.
-              </li>
-            </ul>
-            Town Events Roll Penalties
-            <ul>
-              <li>Each disaster event rolled causes an ongoing -1 penalty to town events rolls for
-                this settlement. Each additional disaster imposes a cumulative penalty.
-                Adventures may endeavor to ameliorate disasters or certain town events may
-                mitigate their effects and remove the penalty. A disaster is any event that
-                forces an early end to a town phase or destroys a facility, location or amenity.
-              </li>
-              <li>Increate theurges suffer -1 to town events rolls in settlements opposed to
-                them.
-              </li>
-            </ul>
+            <div class="floatLeft">
+              <p>
+                <label>What type of town is it?</label>
+              </p>
+            </div>
+            <div class="floatRight">
+              <p>
+                <input type="radio"
+                       name="TownType"
+                       id="BustlingMetropolisTown"
+                       value="0"
+                       checked/>
+                <label for="BustlingMetropolisTown">Bustling Metropolis</label>
+                <input type="radio"
+                       name="TownType"
+                       id="BusyCrossroadsTown"
+                       value="1"/>
+                <label for="BusyCrossroadsTown">Busy Crossroads</label>
+                <input type="radio"
+                       name="TownType"
+                       id="DwarvenHallsTown"
+                       value="2"/>
+                <label for="DwarvenHallsTown">Dwarven Halls</label>
+                <input type="radio"
+                       name="TownType"
+                       id="ElfHomeTown"
+                       value="3"/>
+                <label for="ElfHomeTown">Elfhome</label>
+                <input type="radio"
+                       name="TownType"
+                       id="ReligiousBastionTown"
+                       value="4"/>
+                <label for="ReligiousBastionTown">Religious Bastion</label>
+                <input type="radio"
+                       name="TownType"
+                       id="RemoteVillageTown"
+                       value="5"/>
+                <label for="RemoteVillageTown">Remote Village</label>
+                <input type="radio"
+                       name="TownType"
+                       id="WizardsTowerTown"
+                       value="6"/>
+                <label for="WizardsTowerTown">Wizard's Tower</label>
+              </p>
+              <p>
+                <label>Additional options from the <i>Lore Master&#8217;s Manual</i>. 196&ndash;211.</label>
+              </p>
+              <p>
+                <input type="radio"
+                       name="TownType"
+                       id="BorderlandFortressTown"
+                       value="7"/>
+                <label for="BorderlandFortressTown">Borderland Fortress</label>
+                <input type="radio"
+                       name="TownType"
+                       id="DilapidatedPortTown"
+                       value="8"/>
+                <label for="DilapidatedPortTown">Dilapidated Port</label>
+                <input type="radio"
+                       name="TownType"
+                       id="ForgottenTempleTown"
+                       value="9"/>
+                <label for="ForgottenTempleTown">Forgotten Temple Complex</label>
+                <input type="radio"
+                       name="TownType"
+                       id="NomadCaravanTown"
+                       value="10"/>
+                <label for="NomadCaravanTown">Nomad Caravan</label>
+                <input type="radio"
+                       name="TownType"
+                       id="ProsperousWayhouseTown"
+                       value="11"/>
+                <label for="ProsperousWayhouseTown">Prosperous Wayhouse</label>
+                <input type="radio"
+                       name="TownType"
+                       id="ShireTown"
+                       value="12"/>
+                <label for="ShireTown">Shire</label>
+                <input type="radio"
+                       name="TownType"
+                       id="SteadingTown"
+                       value="13"/>
+                <label for="SteadingTown">Steading</label>
+                <input type="radio"
+                       name="TownType"
+                       id="WalledTown"
+                       value="14"/>
+                <label for="WalledTown">Walled Town</label>
+              </p>
+              <label>Town Roll Modifiers (p. 280.):</label>
+              <blockquote>
+                Town Events Roll Bonuses
+                Town events rolls are difficult to modify in one&#8217;s favor. There are only a handful
+                of possible bonuses:
+                <ul>
+                  <li>The Hearthmistress&#8217;s Favor, gained by praying at a shrine, grants +1 to
+                    the next town events roll.
+                  </li>
+                  <li>A Steward skill test to maintain the works and projects of a settlement grants
+                    +1 to the next town events roll for that particular settlement.
+                  </li>
+                  <li>A skald who establishes a court of the wise in a settlement grants it +1 to town
+                    events rolls so long as the court remains.
+                  </li>
+                  <li>Increate theurges add +1 to town events rolls for settlements allied with
+                    them.
+                  </li>
+                </ul>
+                Town Events Roll Penalties
+                <ul>
+                  <li>Each disaster event rolled causes an ongoing -1 penalty to town events rolls for
+                    this settlement. Each additional disaster imposes a cumulative penalty.
+                    Adventures may endeavor to ameliorate disasters or certain town events may
+                    mitigate their effects and remove the penalty. A disaster is any event that
+                    forces an early end to a town phase or destroys a facility, location or amenity.
+                  </li>
+                  <li>Increate theurges suffer -1 to town events rolls in settlements opposed to
+                    them.
+                  </li>
+                </ul>
 
-          </blockquote>
-          <label for="TownRollModifiers">Town Events Modifiers: </label>
-          <input type="number" name="TownRollModifiers" id="TownRollModifiers" min="-10" max="10"
-                 value="0"/>
-        </div>
+              </blockquote>
+              <label for="TownRollModifiers">Town Events Modifiers: </label>
+              <input type="number" name="TownRollModifiers" id="TownRollModifiers" min="-10" max="10"
+                     value="0"/>
+            </div>
 
-        <label for="EnterTown">Entering Town . . . . . . . . . . . . . . </label>
-        <input type=button id="EnterTown" value="Enter Town!" onClick="enterTown();">
-      </fieldset>
-    </form>
-  </section>
-  <section>
-    <p id="TownResults">What awaits you?</p>
-  </section>
-  <section>
-    <form>
-      <fieldset>
-        <legend>Tavern Rumours (<i>Scholar&#8217;s Guide</i>. 298&ndash;299.)</legend>
-        <label for="GenerateRumour">Buy a Round! . . . . . . . . . . </label>
-        <input type=button id="GenerateRumour" value="Generate Rumour" onClick="generateRumour();">
+            <label for="EnterTown">Entering Town . . . . . . . . . . . . . . </label>
+            <input type=button id="EnterTown" value="Enter Town!" onClick="enterTown();">
+          </fieldset>
+        </form>
+      </section>
+      <section>
+        <p id="TownResults">What awaits you?</p>
+      </section>
+      <section>
+        <form>
+          <fieldset>
+            <legend>Tavern Rumours (<i>Scholar&#8217;s Guide</i>. 298&ndash;299.)</legend>
+            <label for="GenerateRumour">Buy a Round! . . . . . . . . . . </label>
+            <input type=button id="GenerateRumour" value="Generate Rumour" onClick="generateRumour();">
 
-      </fieldset>
-    </form>
-    <p id="RumourResults">What awaits you?</p>
-  </section>
-  <section>
-    <form>
-      <fieldset>
-        <legend>Telling Tales (<i>Scholar&#8217;s Guide</i>. 111&ndash;112.)</legend>
-        <p>
-          <input type="radio"
-                 name="TellingTales"
-                 id="TellTalesPass"
-                 value="0"
-                 checked/>
-          <label for="TellTalesPass"><i>Success!</i></label>
-          <input type="radio"
-                 name="TellingTales"
-                 id="TellTalesFail"
-                 value="1"/>
-          <label for="TellTalesFail"><i>Failure!</i></label>
-        </p>
-        <label for="TellTales">Tell your story! . . . . . . . . </label>
-        <input type=button id="TellTales" value="Tell Tales" onClick="tellTales();">
+          </fieldset>
+        </form>
+        <p id="RumourResults">What awaits you?</p>
+      </section>
+      <section>
+        <form>
+          <fieldset>
+            <legend>Telling Tales (<i>Scholar&#8217;s Guide</i>. 111&ndash;112.)</legend>
+            <p>
+              <input type="radio"
+                     name="TellingTales"
+                     id="TellTalesPass"
+                     value="0"
+                     checked/>
+              <label for="TellTalesPass"><i>Success!</i></label>
+              <input type="radio"
+                     name="TellingTales"
+                     id="TellTalesFail"
+                     value="1"/>
+              <label for="TellTalesFail"><i>Failure!</i></label>
+            </p>
+            <label for="TellTales">Tell your story! . . . . . . . . </label>
+            <input type=button id="TellTales" value="Tell Tales" onClick="tellTales();">
 
-      </fieldset>
-    </form>
-    <p id="TellingTalesResults">What awaits you?</p>
-  </section>
-  <section>
-    <form>
-      <fieldset>
-        <legend>Street Events (<i>Scholar&#8217;s Guide</i>. 109.)</legend>
-        <label for="StreetEvent">Hit the streets! . . . . . . . . . . </label>
-        <input type=button id="StreetEvent" value="Sleep Rough" onClick="streetEvent();">
-      </fieldset>
-    </form>
-    <p id="StreetResults">What awaits you?</p>
-  </section>
-  <section>
-    <form>
-      <fieldset>
-        <legend>Shrine Omens (<i>Scholar&#8217;s Guide</i>. 107&ndash;108.)</legend>
-        <p>
-          <input type="radio"
-                 name="ShrineOmens"
-                 id="ImmortalOmens"
-                 value="0"
-                 checked/>
-          <label for="ImmortalOmens"><i>Immortal Omens</i></label>
-          <input type="radio"
-                 name="ShrineOmens"
-                 id="PropitiateOmens"
-                 value="1"/>
-          <label for="PropitiateOmens"><i>Propitiate Omens</i></label>
-        </p>
-        <label for="ReadOmen">What do the Immortals have in store? . . . . . . . . </label>
-        <input type=button id="ReadOmen" value="Read Omen" onClick="shrineOmen();">
+          </fieldset>
+        </form>
+        <p id="TellingTalesResults">What awaits you?</p>
+      </section>
+      <section>
+        <form>
+          <fieldset>
+            <legend>Street Events (<i>Scholar&#8217;s Guide</i>. 109.)</legend>
+            <label for="StreetEvent">Hit the streets! . . . . . . . . . . </label>
+            <input type=button id="StreetEvent" value="Sleep Rough" onClick="streetEvent();">
+          </fieldset>
+        </form>
+        <p id="StreetResults">What awaits you?</p>
+      </section>
+      <section>
+        <form>
+          <fieldset>
+            <legend>Shrine Omens (<i>Scholar&#8217;s Guide</i>. 107&ndash;108.)</legend>
+            <p>
+              <input type="radio"
+                     name="ShrineOmens"
+                     id="ImmortalOmens"
+                     value="0"
+                     checked/>
+              <label for="ImmortalOmens"><i>Immortal Omens</i></label>
+              <input type="radio"
+                     name="ShrineOmens"
+                     id="PropitiateOmens"
+                     value="1"/>
+              <label for="PropitiateOmens"><i>Propitiate Omens</i></label>
+            </p>
+            <label for="ReadOmen">What do the Immortals have in store? . . . . . . . . </label>
+            <input type=button id="ReadOmen" value="Read Omen" onClick="shrineOmen();">
 
-      </fieldset>
-    </form>
-    <p id="ShrineOmenResults">What awaits you?</p>
-  </section>
-  <section>
-    <form>
-      <fieldset>
-        <legend>Haggling (<i>Scholar&#8217;s Guide</i>. 106.)</legend>
-        <p>
-          <input type="radio"
-                 name="Haggling"
-                 id="HaggleSuccess"
-                 value="0"
-                 checked/>
-          <label for="HaggleSuccess"><i>Success.</i></label>
-          <input type="radio"
-                 name="Haggling"
-                 id="HaggleFail"
-                 value="1"/>
-          <label for="HaggleFail"><i>Failure.</i></label>
-        </p>
-        <label for="HaggleButton">Can you find a bargain> . . . . . . . . </label>
-        <input type=button id="HaggleButton" value="Haggle" onClick="haggle();">
+          </fieldset>
+        </form>
+        <p id="ShrineOmenResults">What awaits you?</p>
+      </section>
+      <section>
+        <form>
+          <fieldset>
+            <legend>Haggling (<i>Scholar&#8217;s Guide</i>. 106.)</legend>
+            <p>
+              <input type="radio"
+                     name="Haggling"
+                     id="HaggleSuccess"
+                     value="0"
+                     checked/>
+              <label for="HaggleSuccess"><i>Success.</i></label>
+              <input type="radio"
+                     name="Haggling"
+                     id="HaggleFail"
+                     value="1"/>
+              <label for="HaggleFail"><i>Failure.</i></label>
+            </p>
+            <label for="HaggleButton">Can you find a bargain> . . . . . . . . </label>
+            <input type=button id="HaggleButton" value="Haggle" onClick="haggle();">
 
-      </fieldset>
-    </form>
-    <p id="HagglingResults">What awaits you?</p>
-  </section>
-  <section>
-    <form>
-      <fieldset>
-        <legend>Guild Table (<i>Lore Master&#8217;s Manual</i>. 198.)</legend>
-        <label for="GenerateGuild">Which guild? . . . . . . . . . . </label>
-        <input type=button id="GenerateGuild" value="Generate Guild" onClick="generateGuild();">
-      </fieldset>
-    </form>
-    <p id="GuildResults">What awaits you?</p>
-  </section>
-  <section>
+          </fieldset>
+        </form>
+        <p id="HagglingResults">What awaits you?</p>
+      </section>
+      <section>
+        <form>
+          <fieldset>
+            <legend>Guild Table (<i>Lore Master&#8217;s Manual</i>. 198.)</legend>
+            <label for="GenerateGuild">Which guild? . . . . . . . . . . </label>
+            <input type=button id="GenerateGuild" value="Generate Guild" onClick="generateGuild();">
+          </fieldset>
+        </form>
+        <p id="GuildResults">What awaits you?</p>
+      </section>
+      <section>
 
-    <form>
-      <fieldset>
-        <legend>Home Events (<i>Lore Master&#8217;s Manual</i>. 234&ndash;235.)</legend>
-        <p>
-          <label for="HouseRollModifiers">Home Ownership Modifiers: </label>
-          <input type="number" name="HouseRollModifiers" id="HouseRollModifiers" min="-10" max="10"
-                 value="0">
-        </p>
-        <p>
-          <label for="HouseEvents">Exciting adventures in homeownership await: </label>
-          <input type=button id="HouseEvents" value="Home Ownership is Fun!" onClick="generateHouseEvent();">
-        </p>
-      </fieldset>
-    </form>
-    <p id="HouseResults">What awaits you?</p>
-  </section>
-  <section>
-
-    <form>
-      <fieldset>
-        <legend>Weather (<i>Lore Master&#8217;s Manual</i>. 153&ndash;159.)</legend>
-        <p>
-          <label>Season: </label>
-          <input type="radio"
-                 name="Weather"
-                 id="SpringWeather"
-                 value="spring"
-                 checked/>
-          <label for="SpringWeather">Spring</label>
-          <input type="radio"
-                 name="Weather"
-                 id="SummerWeather"
-                 value="summer"/>
-          <label for="SummerWeather">Summer</label>
-          <input type="radio"
-                 name="Weather"
-                 id="FallWeather"
-                 value="fall"/>
-          <label for="FallWeather">Autumn</label>
-          <input type="radio"
-                 name="Weather"
-                 id="WinterWeather"
-                 value="winter"/>
-          <label for="WinterWeather">Winter</label>
-        </p>
-        <p>
-          <label>Season Time: </label>
-          <input type="radio"
-                 name="SeasonTime"
-                 id="SeasonTime_Early"
-                 value="-1"/>
-          <label for="SeasonTime_Early">Early</label>
-          <input type="radio"
-                 name="SeasonTime"
-                 id="SeasonTime_MidSeason"
-                 value="0"
-                 checked/>
-          <label for="SeasonTime_MidSeason">Mid-Season</label>
-          <input type="radio"
-                 name="SeasonTime"
-                 id="SeasonTime_Late"
-                 value="1"/>
-          <label for="SeasonTime_Late">Late</label>
-        </p>
-        <p>
-          <label>Watch the weather: </label>
-          <input type=button value="It looks like..." onClick="generateWeather();">
-        </p></fieldset>
-    </form>
-    <p id="WeatherResults">What awaits you?</p>
-  </section>
-  <section>
-    <form>
-      <fieldset>
-        <legend>Generate Loot (<i>Scholar&#8217;s Guide</i>. 150&ndash;170. <i>Lore
-          Master&#8217;s Manual</i>. 240&ndash;244.)
-        </legend>
-        <p><i>Editor&#8217;s note</i>: The amount of loot generated by the tables in the books seems to be much lower
-          than the amount of loot that Thor and Luke actually include in their adventures, based upon published
-          adventures and play reports. Using these numbers without additional placed valuables will result in much
-          poorer characters who will have a much more difficult time in town.</p>
-        <blockquote>
-          <ul>
-            <li>Might 1: Roll once on Loot Table 2 for every three creatures.</li>
-            <li>Might 2: Roll once on Loot Table 2 for every two creatures.</li>
-            <li>Might 3: Roll once on Loot Table 3 for each creature.</li>
-            <li>Might 4: Roll once on Loot Table 3 for each creature. At the game master&#8217;s discretion, they may
-              make an
-              additional roll on the Treasure & Valuables 2 subtable for M4 creatures.
-            </li>
-            <li>Might 5: Roll once on Loot Table 4 for each creature.</li>
-            <li>Might 6: Roll twice on Loot Table 4 for each creature.</li>
-            <li>Might 7: Roll twice on Loot Table 5 for each creature.</li>
-            <li>Might 8: Roll thrice on Loot Table 5 for each creature.</li>
-          </ul>
-          <ul>
-            <li>Loot Table 1: Twist encounters with M1-2 creatures, when generating items found while using the
-              Scavenger skill and for any other shrug-of-the-shoulders-I-dunno-there-might-be-loot needs.
-            </li>
-            <li>Loot Table 2: Twist encounters with M3-4 creatures</li>
-            <li>Loot Table 3: Twist encounters with M5 creatures</li>
-          </ul>
-        </blockquote>
-        <label for="LootTable1">Loot Table 1: </label>
-        <input type="number" id="LootTable1" name="LootTables" min="0" max="99" value="0">
-        <label for="LootTable2">Loot Table 2: </label>
-        <input type="number" id="LootTable2" name="LootTables" min="0" max="99" value="0">
-        <label for="LootTable3">Loot Table 3: </label>
-        <input type="number" id="LootTable3" name="LootTables" min="0" max="99" value="0">
-        <label for="LootTable4">Loot Table 4: </label>
-        <input type="number" id="LootTable4" name="LootTables" min="0" max="99" value="0">
-        <label for="LootTable5">Loot Table 5: </label>
-        <input type="number" id="LootTable5" name="LootTables" min="0" max="99" value="0">
-        <input type=button id="ShowTheLoot" value="Roll that Loot!" onClick="showLoot();">
-      </fieldset>
-    </form>
-  </section>
-  <div>
+        <form>
+          <fieldset>
+            <legend>Home Events (<i>Lore Master&#8217;s Manual</i>. 234&ndash;235.)</legend>
+            <p>
+              <label for="HouseRollModifiers">Home Ownership Modifiers: </label>
+              <input type="number" name="HouseRollModifiers" id="HouseRollModifiers" min="-10" max="10"
+                     value="0">
+            </p>
+            <p>
+              <label for="HouseEvents">Exciting adventures in homeownership await: </label>
+              <input type=button id="HouseEvents" value="Home Ownership is Fun!" onClick="generateHouseEvent();">
+            </p>
+          </fieldset>
+        </form>
+        <p id="HouseResults">What awaits you?</p>
+      </section>
+    </div>
+    <div id="weather" class="tab-content">
+      <section>
+        <form>
+          <fieldset>
+            <legend>Weather (<i>Lore Master&#8217;s Manual</i>. 153&ndash;159.)</legend>
+            <p>
+              <label>Season: </label>
+              <input type="radio"
+                     name="Weather"
+                     id="SpringWeather"
+                     value="spring"
+                     checked/>
+              <label for="SpringWeather">Spring</label>
+              <input type="radio"
+                     name="Weather"
+                     id="SummerWeather"
+                     value="summer"/>
+              <label for="SummerWeather">Summer</label>
+              <input type="radio"
+                     name="Weather"
+                     id="FallWeather"
+                     value="fall"/>
+              <label for="FallWeather">Autumn</label>
+              <input type="radio"
+                     name="Weather"
+                     id="WinterWeather"
+                     value="winter"/>
+              <label for="WinterWeather">Winter</label>
+            </p>
+            <p>
+              <label>Season Time: </label>
+              <input type="radio"
+                     name="SeasonTime"
+                     id="SeasonTime_Early"
+                     value="-1"/>
+              <label for="SeasonTime_Early">Early</label>
+              <input type="radio"
+                     name="SeasonTime"
+                     id="SeasonTime_MidSeason"
+                     value="0"
+                     checked/>
+              <label for="SeasonTime_MidSeason">Mid-Season</label>
+              <input type="radio"
+                     name="SeasonTime"
+                     id="SeasonTime_Late"
+                     value="1"/>
+              <label for="SeasonTime_Late">Late</label>
+            </p>
+            <p>
+              <label>Watch the weather: </label>
+              <input type=button value="It looks like..." onClick="generateWeather();">
+            </p></fieldset>
+        </form>
+        <p id="WeatherResults">What awaits you?</p>
+      </section>
+    </div>
+    <div id="loot" class="tab-content">
     <section>
-      <p id="LootResults">What awaits you?</p>
+      <form>
+        <fieldset>
+          <legend>Generate Loot (<i>Scholar&#8217;s Guide</i>. 150&ndash;170. <i>Lore
+            Master&#8217;s Manual</i>. 240&ndash;244.)
+          </legend>
+          <p><i>Editor&#8217;s note</i>: The amount of loot generated by the tables in the books seems to be much lower
+            than the amount of loot that Thor and Luke actually include in their adventures, based upon published
+            adventures and play reports. Using these numbers without additional placed valuables will result in much
+            poorer characters who will have a much more difficult time in town.</p>
+          <blockquote>
+            <ul>
+              <li>Might 1: Roll once on Loot Table 2 for every three creatures.</li>
+              <li>Might 2: Roll once on Loot Table 2 for every two creatures.</li>
+              <li>Might 3: Roll once on Loot Table 3 for each creature.</li>
+              <li>Might 4: Roll once on Loot Table 3 for each creature. At the game master&#8217;s discretion, they may
+                make an
+                additional roll on the Treasure & Valuables 2 subtable for M4 creatures.
+              </li>
+              <li>Might 5: Roll once on Loot Table 4 for each creature.</li>
+              <li>Might 6: Roll twice on Loot Table 4 for each creature.</li>
+              <li>Might 7: Roll twice on Loot Table 5 for each creature.</li>
+              <li>Might 8: Roll thrice on Loot Table 5 for each creature.</li>
+            </ul>
+            <ul>
+              <li>Loot Table 1: Twist encounters with M1-2 creatures, when generating items found while using the
+                Scavenger skill and for any other shrug-of-the-shoulders-I-dunno-there-might-be-loot needs.
+              </li>
+              <li>Loot Table 2: Twist encounters with M3-4 creatures</li>
+              <li>Loot Table 3: Twist encounters with M5 creatures</li>
+            </ul>
+          </blockquote>
+          <label for="LootTable1">Loot Table 1: </label>
+          <input type="number" id="LootTable1" name="LootTables" min="0" max="99" value="0">
+          <label for="LootTable2">Loot Table 2: </label>
+          <input type="number" id="LootTable2" name="LootTables" min="0" max="99" value="0">
+          <label for="LootTable3">Loot Table 3: </label>
+          <input type="number" id="LootTable3" name="LootTables" min="0" max="99" value="0">
+          <label for="LootTable4">Loot Table 4: </label>
+          <input type="number" id="LootTable4" name="LootTables" min="0" max="99" value="0">
+          <label for="LootTable5">Loot Table 5: </label>
+          <input type="number" id="LootTable5" name="LootTables" min="0" max="99" value="0">
+          <input type=button id="ShowTheLoot" value="Roll that Loot!" onClick="showLoot();">
+        </fieldset>
+      </form>
     </section>
+    <div>
+      <section>
+        <p id="LootResults">What awaits you?</p>
+      </section>
+    </div>
+  </div>
+    <!-- NB the css displays the last tab-content div as the active one-->
+    <div id="camp" class="tab-content">
+      <section>
+        <form>
+          <fieldset>
+            <legend>Camp Events (<i>Scholar&#8217;s Guide</i>. 90&ndash;96, 264&ndash;278.)</legend>
+            This roller produces book results, but note the advice on p. 264:
+            <blockquote>The game master should incorporate camp events with a critical eye. Bend them, break
+              them and bind them into the ongoing story. Modify them to suit, but never let the adventurers
+              off easy&mdash;and never deny them a lucky break.
+            </blockquote>
+            <p>
+              <label>Where is the Camp?</label>
+              <input type="radio"
+                     name="CampArea"
+                     id="AncientRuinCamp"
+                     value="0"
+                     checked/>
+              <label for="AncientRuinCamp">Ancient Ruin</label>
+
+              <input type="radio"
+                     name="CampArea"
+                     id="DungeonCamp"
+                     value="1"/>
+              <label for="DungeonCamp">Dungeon</label>
+
+              <input type="radio"
+                     name="CampArea"
+                     id="NaturalCaveCamp"
+                     value="2"/>
+              <label for="NaturalCaveCamp">Natural Cave</label>
+
+              <input type="radio"
+                     name="CampArea"
+                     id="NearTownCamp"
+                     value="3"/>
+              <label for="NearTownCamp">Outside or Near Town</label>
+
+              <input type="radio"
+                     name="CampArea"
+                     id="SquattingCamp"
+                     value="4"/>
+              <label for="SquattingCamp">Squatting in Town</label>
+
+              <input type="radio"
+                     name="CampArea"
+                     id="WildernessCamp"
+                     value="5"/>
+              <label for="WildernessCamp">Wilderness</label>
+            </p>
+            <p>
+              <label>How Safe is the Camp?</label>
+              <input type="radio"
+                     name="CampSafety"
+                     id="TypicalCamp"
+                     value="0"
+                     checked/>
+              <label for="TypicalCamp">Typical</label>
+
+              <input type="radio"
+                     name="CampSafety"
+                     id="UnsafeCamp"
+                     value="-2"/>
+              <label for="UnsafeCamp">Unsafe</label>
+
+              <input type="radio"
+                     name="CampSafety"
+                     id="DangerousCamp"
+                     value="-3"/>
+              <label for="DangerousCamp">Dangerous</label>
+            </p>
+            <p>
+              <label>Did you light a fire?</label>
+              <input type="radio"
+                     name="Fire"
+                     id="yesFire"
+                     value="0"
+                     checked="checked"/>
+              <label for="yesFire">Yes</label>
+
+              <input type="radio"
+                     name="Fire"
+                     id="noFire"
+                     value="1"/>
+              <label for="noFire">No (cannot perform actions that require a fire; all recovery +1
+                Ob.)</label>
+            </p>
+
+            <p>
+              <label>Did you set a watch?</label>
+              <input type="radio"
+                     name="Watch"
+                     id="yesWatch"
+                     value="1"/>
+              <label for="yesWatch">Yes</label>
+
+              <input type="radio"
+                     name="Watch"
+                     id="noWatch"
+                     value="0"
+                     checked="checked"/>
+              <label for="noWatch">No</label>
+            </p>
+            <p>
+              <label>Party members:</label>
+              <input type="checkbox"
+                     name="Ranger"
+                     id="Ranger"
+                     value="1"/>
+              <label for="Ranger">Ranger (for Wilderness Camps)</label>
+              <input type="checkbox"
+                     name="Outcast"
+                     id="Outcast"
+                     value="1"/>
+              <label for="Outcast">Outcast (for Dungeons and Dwarven Ruins)</label>
+              <input type="checkbox"
+                     name="DwarfRuin"
+                     id="DwarfRuin"
+                     value="1"/>
+              <label for="DwarfRuin">Dwarven Ruin (for Ancient Ruins, if Outcast in party)</label>
+            </p>
+            <p>
+              <label>Did you use the Survivalist skill to find or make:</label>
+              <input type="checkbox"
+                     name="Shelter"
+                     id="Shelter"
+                     value="1"/>
+              <label for="Shelter">Shelter for an Outdoor Camp</label>
+              <input type="checkbox"
+                     name="Concealment"
+                     id="Concealment"
+                     value="1"/>
+              <label for="Concealment">A Site with Concealment</label>
+            </p>
+            <legend>Other Modifiers (p. 93)</legend>
+            <blockquote>
+              <ul>
+                <li>Some camp events add bonuses to future camp events rolls.</li>
+                <li>A previous camp disaster in this area while on this adventure imposes a -1 penalty on
+                  further camp events rolls. Each additional disaster imposes a cumulative penalty. A
+                  disaster is any event that forces an early end to a camp phase, regardless if the watch
+                  averts it or not.
+                </li>
+                <li>The game master can impose a -1 camp events penalty if they feel one is warranted due to
+                  natural phenomena (like droughts, storms or earthquakes), if the adventurers have
+                  angered some terrible foe who hunts them, or if they are under the ban of some horrid
+                  curse.
+                </li>
+              </ul>
+            </blockquote>
+            <label for="MiscCampModifiers">Other Modifiers:</label>
+            <input type="number" name="MiscCampModifiers" id="MiscCampModifiers" min="-10" max="10" value="0"/>
+            <p>
+              <label for="MakeCamp">Camp When Ready:</label>
+              <input type="button" id="MakeCamp" value="Make Camp!" onClick="makeCamp();">
+            </p>
+          </fieldset>
+        </form>
+      </section>
+      <section>
+        <p id="CampResults">What awaits you?</p>
+      </section>
+    </div>
   </div>
 </div>
+<hr>
 <footer>
   <p>The Torchbearer RPG is by Thor Olavsrud and Luke Crane. <a href="http://www.torchbearerrpg.com/">www.torchbearerrpg.com/</a><br/>
     Art by kind permission of Michael Prescott&mdash;see the finished version on page 30 of the Torchbearer (1E)
