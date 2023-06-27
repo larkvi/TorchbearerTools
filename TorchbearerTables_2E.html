@@ -1452,7 +1452,7 @@
   }
 
   function interpretRoll(treasure) {
-    console.log('interpreting', treasure);
+    console.log('interpreting, type: ', typeof treasure, 'result: ', treasure);
     if (typeof treasure === "string") {
       // raw treasure value, therefore accumulate
       accumulateLoot(treasure);
@@ -1637,7 +1637,7 @@
   function shrineOmen() {
     let resultsLoc = document.getElementById("ShrineOmenResults");
     let omenSuccess = parseInt(getRadioValues("ShrineOmens"));
-    let omenRoll = roll(2, 6, -2);
+    let omenRoll = roll((1 + omenSuccess), 6, -(1 + omenSuccess));
     interpretRoll(shrineOmens[omenSuccess][omenRoll]);
     printAccumulatedTreasure(resultsLoc);
   }
